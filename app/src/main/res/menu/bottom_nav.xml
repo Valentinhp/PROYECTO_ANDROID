@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@drawable/ic_home"
+        android:title="Inicio" />
+
+    <item
+        android:id="@+id/nav_vehiculos"
+        android:icon="@drawable/ic_directions_car"
+        android:title="Vehículos" />
+
+    <item
+        android:id="@+id/nav_recordatorios"
+        android:icon="@drawable/ic_alarm"
+        android:title="Recordatorios" />
+
+    <item
+        android:id="@+id/nav_reportes"
+        android:icon="@drawable/ic_chart"
+        android:title="Reportes" />
+
+    <item
+        android:id="@+id/nav_mas"
+        android:icon="@drawable/ic_mas"
+        android:title="Más" />
+
+</menu>

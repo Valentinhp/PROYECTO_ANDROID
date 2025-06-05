@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_inicio">
+
+    <!-- Fragmentos principales del BottomNav -->
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.project.rc_mecha_maint.ui.inicio.FragmentInicio"
+        android:label="Inicio" />
+
+    <fragment
+        android:id="@+id/nav_vehiculos"
+        android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentVehiculos"
+        android:label="Vehículos" />
+
+    <fragment
+        android:id="@+id/nav_recordatorios"
+        android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
+        android:label="Recordatorios" />
+
+    <fragment
+        android:id="@+id/nav_reportes"
+        android:name="com.project.rc_mecha_maint.ui.reportes.FragmentReportes"
+        android:label="Reportes" />
+
+    <!-- Fragmentos secundarios (accedidos desde el menú “Más”) -->
+    <fragment
+        android:id="@+id/nav_historial"
+        android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentHistorial"
+        android:label="Historial" />
+
+    <fragment
+        android:id="@+id/nav_facturas"
+        android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentFacturas"
+        android:label="Facturas" />
+
+    <fragment
+        android:id="@+id/nav_costos"
+        android:name="com.project.rc_mecha_maint.ui.mas.costos.FragmentCostos"
+        android:label="Costos" />
+
+    <fragment
+        android:id="@+id/nav_comparador"
+        android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
+        android:label="Comparador" />
+
+    <fragment
+        android:id="@+id/nav_talleres"
+        android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentTalleres"
+        android:label="Talleres" />
+
+    <fragment
+        android:id="@+id/nav_diagnostico"
+        android:name="com.project.rc_mecha_maint.ui.mas.diagnostico.FragmentDiagnostico"
+        android:label="Diagnóstico" />
+
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
+        android:label="Perfil" />
+</navigation>

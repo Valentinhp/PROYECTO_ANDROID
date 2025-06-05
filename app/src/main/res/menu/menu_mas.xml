@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_historial"
+        android:title="Historial" />
+
+    <item
+        android:id="@+id/nav_facturas"
+        android:title="Facturas" />
+
+    <item
+        android:id="@+id/nav_costos"
+        android:title="Costos" />
+
+    <item
+        android:id="@+id/nav_comparador"
+        android:title="Comparador" />
+
+    <item
+        android:id="@+id/nav_talleres"
+        android:title="Talleres" />
+
+    <item
+        android:id="@+id/nav_diagnostico"
+        android:title="Diagnóstico" />
+
+    <item
+        android:id="@+id/nav_perfil"
+        android:title="Perfil" />
+</menu>
