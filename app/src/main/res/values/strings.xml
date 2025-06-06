@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="preview_factura">Previsualización de factura</string>
+    <string name="miniatura_factura">Miniatura de factura</string>
+
 </resources>

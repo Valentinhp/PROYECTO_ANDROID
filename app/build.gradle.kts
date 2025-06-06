@@ -113,6 +113,8 @@ dependencies {
 
     // Google Maps
     implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("io.coil-kt:coil:2.3.0")
+
 
     // Pruebas
     testImplementation("junit:junit:4.13.2")

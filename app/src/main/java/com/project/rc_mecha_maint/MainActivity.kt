@@ -1,12 +1,12 @@
 package com.project.rc_mecha_maint
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.rc_mecha_maint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,13 +19,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Referencia al BottomNavigationView
+        // 1) Referencia al BottomNavigationView
         val navView: BottomNavigationView = binding.navView
 
-        // NavController apuntando al NavHostFragment
+        // 2) NavController apuntando al NavHostFragment (ID coincide con activity_main.xml)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // Cada uno de estos IDs coincide con los fragmentos principales en nav_graph.xml
+        // 3) IDs de los fragmentos principales definidos en nav_graph.xml
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_inicio,
@@ -35,10 +35,16 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // Configuramos la ActionBar para que se sincronice con el NavController
+        // 4) Sincronizar la barra de acción con el NavController
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Hacemos que el BottomNavigationView navegue con el NavController
+        // 5) Hacer que el BottomNavigationView funcione con el NavController
         navView.setupWithNavController(navController)
+    }
+
+    // 6) Habilitar el botón "Up" (flecha atrás en el ActionBar)
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

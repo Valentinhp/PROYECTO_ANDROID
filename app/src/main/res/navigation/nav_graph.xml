@@ -44,41 +44,89 @@
         android:name="com.project.rc_mecha_maint.ui.reportes.FragmentReportes"
         android:label="Reportes" />
 
-    <!-- Fragmentos secundarios (accedidos desde el menú “Más”) -->
+    <!-- Fragment Historial (recibe vehicleId) -->
     <fragment
         android:id="@+id/nav_historial"
         android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentHistorial"
-        android:label="Historial" />
+        android:label="Historial"
+        tools:layout="@layout/fragment_historial">
 
+        <!-- Argumento para filtrar historial por vehículo -->
+        <argument
+            android:name="vehicleId"
+            app:argType="long" />
+
+        <!-- Acción Historial → Facturas (pasa historyId implícito en código) -->
+        <action
+            android:id="@+id/action_historial_to_facturas"
+            app:destination="@id/nav_facturas" />
+    </fragment>
+
+    <!-- Fragment Facturas (recibe historyId) -->
     <fragment
         android:id="@+id/nav_facturas"
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentFacturas"
-        android:label="Facturas" />
+        android:label="Facturas"
+        tools:layout="@layout/fragment_facturas">
 
+        <!-- Argumento para filtrar facturas por historial -->
+        <argument
+            android:name="historyId"
+            app:argType="long" />
+
+        <!-- Acción Facturas → SubirFactura -->
+        <action
+            android:id="@+id/action_facturas_to_subirFactura"
+            app:destination="@id/nav_subirFactura" />
+    </fragment>
+
+    <!-- Fragment Subir Factura (recibe historyId) -->
+    <fragment
+        android:id="@+id/nav_subirFactura"
+        android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentSubirFactura"
+        android:label="Subir Factura"
+        tools:layout="@layout/fragment_subir_factura">
+
+        <!-- Argumento para asociar factura a historial -->
+        <argument
+            android:name="historyId"
+            app:argType="long" />
+    </fragment>
+
+    <!-- Fragment Costos -->
     <fragment
         android:id="@+id/nav_costos"
         android:name="com.project.rc_mecha_maint.ui.mas.costos.FragmentCostos"
-        android:label="Costos" />
+        android:label="Costos"
+        tools:layout="@layout/fragment_costos" />
 
+    <!-- Fragment Comparador -->
     <fragment
         android:id="@+id/nav_comparador"
         android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
-        android:label="Comparador" />
+        android:label="Comparador"
+        tools:layout="@layout/fragment_comparador" />
 
+    <!-- Fragment Talleres -->
     <fragment
         android:id="@+id/nav_talleres"
         android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentTalleres"
-        android:label="Talleres" />
+        android:label="Talleres"
+        tools:layout="@layout/fragment_talleres" />
 
+    <!-- Fragment Diagnóstico -->
     <fragment
         android:id="@+id/nav_diagnostico"
         android:name="com.project.rc_mecha_maint.ui.mas.diagnostico.FragmentDiagnostico"
-        android:label="Diagnóstico" />
+        android:label="Diagnóstico"
+        tools:layout="@layout/fragment_diagnostico" />
 
+    <!-- Fragment Perfil -->
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
-        android:label="Perfil" />
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
 
     <!-- Fragment del formulario de Vehículo -->
     <fragment
