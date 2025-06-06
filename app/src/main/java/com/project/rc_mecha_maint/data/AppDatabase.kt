@@ -4,18 +4,32 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+
 import com.project.rc_mecha_maint.data.dao.VehicleDao
 import com.project.rc_mecha_maint.data.entity.Vehicle
+import com.project.rc_mecha_maint.data.dao.ReminderDao
+import com.project.rc_mecha_maint.data.entity.Reminder
 
 /**
  * Clase abstracta que define la base de datos Room.
- * Indica la(s) entidad(es) y la versión. También expone el DAO.
+ * Aquí registramos todas las entidades (Vehicle y Reminder)
+ * y exponemos sus DAOs correspondientes.
  */
-@Database(entities = [Vehicle::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        Vehicle::class,
+        Reminder::class        // Nueva entidad para recordatorios
+    ],
+    version = 2,               // Si ya existía la versión 1 con solo Vehicle, Room la reconstruirá al agregar Reminder
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
-    // Método para obtener el DAO de vehículos
+    // DAO para operaciones sobre la tabla de vehículos
     abstract fun vehicleDao(): VehicleDao
+
+    // DAO para operaciones sobre la tabla de recordatorios
+    abstract fun reminderDao(): ReminderDao
 
     companion object {
         // Nombre del archivo de base de datos
@@ -37,7 +51,7 @@ abstract class AppDatabase : RoomDatabase() {
                     DB_NAME
                 )
                     .fallbackToDestructiveMigration()
-                    // En caso de cambio de versión, destruye y vuelve a crear.
+                    // En caso de cambio de versión, destruye y vuelve a crear
                     .build()
                 INSTANCE = instance
                 instance

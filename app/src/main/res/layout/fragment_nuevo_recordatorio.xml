@@ -1,11 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.recordatorios.FragmentNuevoRecordatorio">
+    android:padding="16dp">
 
-    <!-- Vacío (Sprint 0) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Campo para tipo de mantenimiento -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de mantenimiento">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón que abre DatePickerDialog para elegir la fecha -->
+        <Button
+            android:id="@+id/btnSeleccionarFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar fecha"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Mostramos la fecha elegida en un TextView -->
+        <TextView
+            android:id="@+id/tvFechaSeleccionada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha: no seleccionada"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Kilometraje -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kilometraje"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etKilometraje"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Descripción -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción (opcional)"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Switch o CheckBox para notificar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notificar"
+                android:layout_marginEnd="8dp"/>
+
+            <Switch
+                android:id="@+id/switchNotificar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Botón Guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

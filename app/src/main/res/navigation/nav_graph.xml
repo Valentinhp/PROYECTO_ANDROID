@@ -25,11 +25,20 @@
             app:destination="@id/nav_nuevoVehiculo" />
     </fragment>
 
+    <!-- Fragment Recordatorios (lista) -->
     <fragment
         android:id="@+id/nav_recordatorios"
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
-        android:label="Recordatorios" />
+        android:label="Recordatorios"
+        tools:layout="@layout/fragment_recordatorios">
 
+        <!-- Acción para ir al formulario de nuevo/editar recordatorio -->
+        <action
+            android:id="@+id/action_recordatorios_to_nuevoRecordatorio"
+            app:destination="@id/nav_nuevoRecordatorio" />
+    </fragment>
+
+    <!-- Fragment Reportes -->
     <fragment
         android:id="@+id/nav_reportes"
         android:name="com.project.rc_mecha_maint.ui.reportes.FragmentReportes"
@@ -90,6 +99,28 @@
             android:id="@+id/action_nuevoVehiculo_to_vehiculos"
             app:destination="@id/nav_vehiculos"
             app:popUpTo="@id/nav_vehiculos"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Fragment del formulario de Nuevo Recordatorio -->
+    <fragment
+        android:id="@+id/nav_nuevoRecordatorio"
+        android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentNuevoRecordatorio"
+        android:label="Nuevo Recordatorio"
+        tools:layout="@layout/fragment_nuevo_recordatorio">
+
+        <!-- Argumento opcional: si venimos a editar, enviamos un Reminder -->
+        <argument
+            android:name="reminder"
+            app:argType="com.project.rc_mecha_maint.data.entity.Reminder"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <!-- Acción para volver a la lista de recordatorios -->
+        <action
+            android:id="@+id/action_nuevoRecordatorio_to_recordatorios"
+            app:destination="@id/nav_recordatorios"
+            app:popUpTo="@id/nav_recordatorios"
             app:popUpToInclusive="true" />
     </fragment>
 
