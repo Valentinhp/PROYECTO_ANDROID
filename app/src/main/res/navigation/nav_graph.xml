@@ -18,8 +18,6 @@
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentVehiculos"
         android:label="Vehículos"
         tools:layout="@layout/fragment_vehiculos">
-
-        <!-- Acción para ir al formulario (nuevo o editar) -->
         <action
             android:id="@+id/action_vehiculos_to_nuevoVehiculo"
             app:destination="@id/nav_nuevoVehiculo" />
@@ -31,8 +29,6 @@
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
         android:label="Recordatorios"
         tools:layout="@layout/fragment_recordatorios">
-
-        <!-- Acción para ir al formulario de nuevo/editar recordatorio -->
         <action
             android:id="@+id/action_recordatorios_to_nuevoRecordatorio"
             app:destination="@id/nav_nuevoRecordatorio" />
@@ -50,13 +46,9 @@
         android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentHistorial"
         android:label="Historial"
         tools:layout="@layout/fragment_historial">
-
-        <!-- Argumento para filtrar historial por vehículo -->
         <argument
             android:name="vehicleId"
             app:argType="long" />
-
-        <!-- Acción Historial → Facturas (pasa historyId implícito en código) -->
         <action
             android:id="@+id/action_historial_to_facturas"
             app:destination="@id/nav_facturas" />
@@ -68,13 +60,9 @@
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentFacturas"
         android:label="Facturas"
         tools:layout="@layout/fragment_facturas">
-
-        <!-- Argumento para filtrar facturas por historial -->
         <argument
             android:name="historyId"
             app:argType="long" />
-
-        <!-- Acción Facturas → SubirFactura -->
         <action
             android:id="@+id/action_facturas_to_subirFactura"
             app:destination="@id/nav_subirFactura" />
@@ -86,8 +74,6 @@
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentSubirFactura"
         android:label="Subir Factura"
         tools:layout="@layout/fragment_subir_factura">
-
-        <!-- Argumento para asociar factura a historial -->
         <argument
             android:name="historyId"
             app:argType="long" />
@@ -134,15 +120,11 @@
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentNuevoVehiculo"
         android:label="Agregar/Editar Vehículo"
         tools:layout="@layout/fragment_nuevo_vehiculo">
-
-        <!-- Argumento opcional: si venimos a editar, enviamos un Vehicle -->
         <argument
             android:name="vehicle"
             app:argType="com.project.rc_mecha_maint.data.entity.Vehicle"
             app:nullable="true"
             android:defaultValue="@null" />
-
-        <!-- Acción para volver a la lista de vehículos -->
         <action
             android:id="@+id/action_nuevoVehiculo_to_vehiculos"
             app:destination="@id/nav_vehiculos"
@@ -156,15 +138,11 @@
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentNuevoRecordatorio"
         android:label="Nuevo Recordatorio"
         tools:layout="@layout/fragment_nuevo_recordatorio">
-
-        <!-- Argumento opcional: si venimos a editar, enviamos un Reminder -->
         <argument
             android:name="reminder"
             app:argType="com.project.rc_mecha_maint.data.entity.Reminder"
             app:nullable="true"
             android:defaultValue="@null" />
-
-        <!-- Acción para volver a la lista de recordatorios -->
         <action
             android:id="@+id/action_nuevoRecordatorio_to_recordatorios"
             app:destination="@id/nav_recordatorios"

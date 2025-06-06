@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- RecyclerView para mostrar todas las facturas -->
+    <!-- 1) RecyclerView para mostrar todas las facturas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFacturas"
         android:layout_width="match_parent"
@@ -13,12 +13,17 @@
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <!-- FAB para agregar factura -->
+    <!--
+        2) FAB para agregar factura.
+           Importante: usamos app:layout_anchor para decir "ancla este FAB a recyclerFacturas".
+           Y app:layout_anchorGravity para ubicarlo abajo y a la derecha de ese RecyclerView.
+    -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAgregarFactura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        app:layout_anchor="@id/recyclerFacturas"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_mas" />
 
