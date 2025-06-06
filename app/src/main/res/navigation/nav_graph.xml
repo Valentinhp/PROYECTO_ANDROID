@@ -2,6 +2,7 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/nav_inicio">
 
@@ -11,10 +12,18 @@
         android:name="com.project.rc_mecha_maint.ui.inicio.FragmentInicio"
         android:label="Inicio" />
 
+    <!-- Fragment Vehículos (lista) -->
     <fragment
         android:id="@+id/nav_vehiculos"
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentVehiculos"
-        android:label="Vehículos" />
+        android:label="Vehículos"
+        tools:layout="@layout/fragment_vehiculos">
+
+        <!-- Acción para ir al formulario (nuevo o editar) -->
+        <action
+            android:id="@+id/action_vehiculos_to_nuevoVehiculo"
+            app:destination="@id/nav_nuevoVehiculo" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_recordatorios"
@@ -61,4 +70,27 @@
         android:id="@+id/nav_perfil"
         android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
         android:label="Perfil" />
+
+    <!-- Fragment del formulario de Vehículo -->
+    <fragment
+        android:id="@+id/nav_nuevoVehiculo"
+        android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentNuevoVehiculo"
+        android:label="Agregar/Editar Vehículo"
+        tools:layout="@layout/fragment_nuevo_vehiculo">
+
+        <!-- Argumento opcional: si venimos a editar, enviamos un Vehicle -->
+        <argument
+            android:name="vehicle"
+            app:argType="com.project.rc_mecha_maint.data.entity.Vehicle"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <!-- Acción para volver a la lista de vehículos -->
+        <action
+            android:id="@+id/action_nuevoVehiculo_to_vehiculos"
+            app:destination="@id/nav_vehiculos"
+            app:popUpTo="@id/nav_vehiculos"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 </navigation>

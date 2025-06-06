@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
->
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <!-- Vacío (Sprint 0) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Mostramos marca y modelo juntos en una línea -->
+        <TextView
+            android:id="@+id/textViewMarcaModelo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Marca - Modelo"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Año debajo de marca-modelo -->
+        <TextView
+            android:id="@+id/textViewAnio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewMarcaModelo"
+            android:text="Año: 2025"
+            android:textSize="14sp" />
+
+        <!-- Matrícula a la derecha, mismo nivel que marca-modelo -->
+        <TextView
+            android:id="@+id/textViewMatricula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="ABC-123"
+            android:textSize="14sp" />
+
+        <!-- Botón Editar (ícono) en la parte derecha, abajo -->
+        <ImageButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Editar"
+            android:src="@android:drawable/ic_menu_edit"
+            android:tint="?attr/colorPrimary" />
+
+        <!-- Botón Eliminar al lado izquierdo del botón Editar -->
+        <ImageButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/buttonEdit"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="@android:color/holo_red_dark" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
