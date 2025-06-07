@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Color de fondo del BottomSheet (ajusta a tu color) -->
-    <solid android:color="@android:color/white" />
+    <solid android:color="@color/bottom_sheet_background" />
 
     <!-- Aquí definimos que solo las esquinas de arriba estén redondeadas -->
     <corners
