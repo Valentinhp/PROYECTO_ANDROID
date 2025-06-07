@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.costos.FragmentCostos">
+    android:layout_height="match_parent">
 
-    <!-- Vacío (Sprint 0) -->
+    <TextView
+        android:id="@+id/tvTotalCostos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total gastado este mes: $0.00"
+        android:textSize="18sp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvAvgCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Promedio por servicio: $0.00"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnVerReportes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver reportes"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

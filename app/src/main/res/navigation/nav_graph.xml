@@ -38,7 +38,8 @@
     <fragment
         android:id="@+id/nav_reportes"
         android:name="com.project.rc_mecha_maint.ui.reportes.FragmentReportes"
-        android:label="Reportes" />
+        android:label="Reportes"
+        tools:layout="@layout/fragment_reportes" />
 
     <!-- Fragment Historial (recibe vehicleId) -->
     <fragment
@@ -84,7 +85,12 @@
         android:id="@+id/nav_costos"
         android:name="com.project.rc_mecha_maint.ui.mas.costos.FragmentCostos"
         android:label="Costos"
-        tools:layout="@layout/fragment_costos" />
+        tools:layout="@layout/fragment_costos">
+        <!-- acción de Costos → Reportes -->
+        <action
+            android:id="@+id/action_costos_to_reportes"
+            app:destination="@id/nav_reportes" />
+    </fragment>
 
     <!-- Fragment Comparador -->
     <fragment
@@ -114,7 +120,7 @@
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
 
-    <!-- Fragment del formulario de Vehículo -->
+    <!-- Formulario de Vehículo -->
     <fragment
         android:id="@+id/nav_nuevoVehiculo"
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentNuevoVehiculo"
@@ -132,7 +138,7 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- Fragment del formulario de Nuevo Recordatorio -->
+    <!-- Formulario de Nuevo Recordatorio -->
     <fragment
         android:id="@+id/nav_nuevoRecordatorio"
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentNuevoRecordatorio"
