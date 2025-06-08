@@ -142,15 +142,28 @@
 
     <!-- 11. Comparador -->
     <fragment
-        android:id="@+id/fragmentComparador"
-        android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
-        android:label="Comparador"
-        tools:layout="@layout/fragment_comparador">
-        <!-- Desde aquí voy al detalle de un taller -->
-        <action
-            android:id="@+id/action_comparador_to_detalleTaller"
-            app:destination="@id/fragmentDetalleTaller" />
-    </fragment>
+        android:id="@+id/nav_comparador"
+    android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
+    android:label="Comparador"
+    tools:layout="@layout/fragment_comparador">
+
+    <!-- Desde Comparador al detalle del taller -->
+    <action
+        android:id="@+id/action_comparador_to_detalleTaller"
+        app:destination="@id/fragmentDetalleTaller" />
+</fragment>
+
+    <!-- ──── ACCIONES GLOBALES (opcional, pero evita futuros crashes) ──── -->
+<action
+android:id="@+id/action_global_nav_comparador"
+app:destination="@id/nav_comparador"
+app:launchSingleTop="true" />
+
+<action
+android:id="@+id/action_global_nav_talleres"
+app:destination="@id/nav_talleres"
+app:launchSingleTop="true" />
+
 
     <!-- 12. Lista de Talleres -->
     <fragment

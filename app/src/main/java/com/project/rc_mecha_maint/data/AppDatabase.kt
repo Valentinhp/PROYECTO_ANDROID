@@ -17,7 +17,7 @@ import com.project.rc_mecha_maint.data.entity.*
  *
  * Cada DAO expone las operaciones CRUD para su tabla.
  *
- * Versión: 4 (se subió porque se agregó Workshop)
+ * Versión: 9 (sube +1 cada vez que cambias entidades o DAOs)
  */
 @Database(
     entities = [
@@ -25,46 +25,37 @@ import com.project.rc_mecha_maint.data.entity.*
         Reminder::class,
         History::class,
         Invoice::class,
-        Workshop::class // <-- NUEVA entidad agregada
+        Workshop::class
     ],
-    version = 4,
+    version = 9,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    // 1) DAO para vehículos
     abstract fun vehicleDao(): VehicleDao
-
-    // 2) DAO para recordatorios
     abstract fun reminderDao(): ReminderDao
-
-    // 3) DAO para historial
     abstract fun historyDao(): HistoryDao
-
-    // 4) DAO para facturas
     abstract fun invoiceDao(): InvoiceDao
-
-    // 5) DAO para talleres
-    abstract fun workshopDao(): WorkshopDao  // <-- NUEVO DAO agregado
+    abstract fun workshopDao(): WorkshopDao
 
     companion object {
-        private const val DB_NAME = "app_database.db"
-
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+        /**
+         * Obtiene el singleton de la base de datos, thread-safe.
+         * Si no existe, la construye con fallbackToDestructiveMigration().
+         */
+        fun getInstance(context: Context): AppDatabase =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    DB_NAME
+                    "app_database.db"
                 )
-                    .fallbackToDestructiveMigration() // borra y recrea si cambia versión
+                    .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE = instance
-                instance
+                    .also { INSTANCE = it }
             }
-        }
     }
 }

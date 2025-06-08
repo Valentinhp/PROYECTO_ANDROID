@@ -12,4 +12,13 @@
     <string name="descripcion_taller">Descripción del taller</string>
 
 
+    <string-array name="servicios">
+        <item>Cambio de aceite</item>
+        <item>Frenos</item>
+        <item>Suspensión</item>
+        <item>Alineación</item>
+        <item>Batería</item>
+    </string-array>
+
+
 </resources>
