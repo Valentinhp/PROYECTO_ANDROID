@@ -13,6 +13,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")           // <-- Agregado aquí
 
+
 }
 
 android {
@@ -112,7 +113,6 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0")
 
     // Google Maps
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("io.coil-kt:coil:2.3.0")
 
 
@@ -120,6 +120,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+
+// Esto es para que Room encuentre el JDBC de SQLite en Windows
+    kapt("org.xerial:sqlite-jdbc:3.36.0.3")
 
 
 }

@@ -6,5 +6,10 @@
     <string name="preview_factura">Previsualización de factura</string>
     <string name="miniatura_factura">Miniatura de factura</string>
     <string name="agregar_factura">Agregar factura</string>
+    <string name="llamar">Llamar</string>
+    <string name="ver_mapa">Ver en mapa</string>
+    <string name="buscar">Buscar</string>
+    <string name="descripcion_taller">Descripción del taller</string>
+
 
 </resources>

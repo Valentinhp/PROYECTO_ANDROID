@@ -10,7 +10,6 @@
     <!-- Para notificaciones -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Para ubicación de alta precisión -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Si pides ACCESS_FINE_LOCATION, también hay que pedir ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 

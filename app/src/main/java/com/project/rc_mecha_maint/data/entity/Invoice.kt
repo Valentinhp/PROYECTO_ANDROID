@@ -22,4 +22,5 @@ data class Invoice(
     val rutaImagen: String,
     val fechaTimestamp: Long,
     val monto: Double
+
 )

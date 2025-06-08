@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "Auto Fix Express",
+    "direccion": "Av. Central #123, Aguascalientes",
+    "latitud": 21.8800,
+    "longitud": -102.2960,
+    "telefono": "4491234567",
+    "fotoUrl": "https://picsum.photos/seed/fix/400/300"
+  },
+  {
+    "nombre": "Mecánica López",
+    "direccion": "Calle Reforma 45, Aguascalientes",
+    "latitud": 21.8855,
+    "longitud": -102.2912,
+    "telefono": "4497654321",
+    "fotoUrl": "https://picsum.photos/seed/lopez/400/300"
+  }
+]
