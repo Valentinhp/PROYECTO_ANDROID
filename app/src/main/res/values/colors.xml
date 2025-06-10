@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="bottom_sheet_background">?android:colorBackground</color>
+    <!-- Paleta centralizada -->
+    <color name="colorPrimary">#173448</color>           <!-- Azul profundo -->
+    <color name="colorPrimaryVariant">#101A25</color>    <!-- Azul casi negro -->
+    <color name="colorSecondary">#AA302A</color>         <!-- Rojo encendido -->
+    <color name="colorSecondaryVariant">#7D1F18</color>  <!-- Rojo oscuro -->
 
+    <color name="colorBackground">#D5D2D1</color>        <!-- Gris claro -->
+    <color name="colorSurface">#263A4B</color>           <!-- Azul grisáceo -->
+    <color name="colorSurfaceVariant">#231E1E</color>    <!-- Gris carbón -->
+
+    <!-- Textos sobre fondos -->
+    <color name="onPrimary">#FFFFFF</color>              <!-- Texto sobre primary -->
+    <color name="onSecondary">#FFFFFF</color>            <!-- Texto sobre secondary -->
+    <color name="onBackground">#151E27</color>           <!-- Texto sobre background -->
+    <color name="onSurface">#151E27</color>              <!-- Texto sobre surface -->
+
+    <!-- Detalles y bordes -->
+    <color name="colorAccentLight">#2E5D7D</color>       <!-- Azul acero claro -->
+    <color name="colorOutline">#545E66</color>           <!-- Gris metálico -->
+
+    <!-- Recursos que faltaban en tu build -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="profile_bg">#263A4B</color>              <!-- Usa Surface como fondo de perfil -->
+    <color name="bottom_sheet_background">#231E1E</color><!-- Usa SurfaceVariant para bottom sheet -->
 </resources>

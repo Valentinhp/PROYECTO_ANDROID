@@ -115,7 +115,6 @@ dependencies {
     // Google Maps
     implementation("io.coil-kt:coil:2.3.0")
 
-
     // Pruebas
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -124,6 +123,14 @@ dependencies {
 
 // Esto es para que Room encuentre el JDBC de SQLite en Windows
     kapt("org.xerial:sqlite-jdbc:3.36.0.3")
+
+
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("androidx.core:core-ktx:1.9.0")
+
+
 
 
 }

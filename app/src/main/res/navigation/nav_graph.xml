@@ -19,25 +19,22 @@
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentVehiculos"
         android:label="Vehículos"
         tools:layout="@layout/fragment_vehiculos">
-        <!-- Acción: ir a Agregar/Editar Vehículo -->
         <action
             android:id="@+id/action_vehiculos_to_nuevoVehiculo"
             app:destination="@id/nav_nuevoVehiculo" />
     </fragment>
 
-    <!-- 3. Formulario Agregar/Editar Vehículo -->
+    <!-- 3. Agregar/Editar Vehículo -->
     <fragment
         android:id="@+id/nav_nuevoVehiculo"
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentNuevoVehiculo"
         android:label="Agregar/Editar Vehículo"
         tools:layout="@layout/fragment_nuevo_vehiculo">
-        <!-- Recibe un objeto Vehicle (opcional) -->
         <argument
             android:name="vehicle"
             app:argType="com.project.rc_mecha_maint.data.entity.Vehicle"
             app:nullable="true"
             android:defaultValue="@null" />
-        <!-- Al guardar, vuelve a la lista de vehículos -->
         <action
             android:id="@+id/action_nuevoVehiculo_to_vehiculos"
             app:destination="@id/nav_vehiculos"
@@ -51,25 +48,22 @@
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
         android:label="Recordatorios"
         tools:layout="@layout/fragment_recordatorios">
-        <!-- Acción: ir a Nuevo Recordatorio -->
         <action
             android:id="@+id/action_recordatorios_to_nuevoRecordatorio"
             app:destination="@id/nav_nuevoRecordatorio" />
     </fragment>
 
-    <!-- 5. Formulario Nuevo Recordatorio -->
+    <!-- 5. Agregar/Editar Recordatorio -->
     <fragment
         android:id="@+id/nav_nuevoRecordatorio"
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentNuevoRecordatorio"
         android:label="Nuevo Recordatorio"
         tools:layout="@layout/fragment_nuevo_recordatorio">
-        <!-- Recibe un objeto Reminder (opcional) -->
         <argument
             android:name="reminder"
             app:argType="com.project.rc_mecha_maint.data.entity.Reminder"
             app:nullable="true"
             android:defaultValue="@null" />
-        <!-- Al guardar, vuelve a la lista de recordatorios -->
         <action
             android:id="@+id/action_nuevoRecordatorio_to_recordatorios"
             app:destination="@id/nav_recordatorios"
@@ -84,33 +78,29 @@
         android:label="Reportes"
         tools:layout="@layout/fragment_reportes" />
 
-    <!-- 7. Historial (de un vehículo) -->
+    <!-- 7. Historial de un Vehículo -->
     <fragment
         android:id="@+id/nav_historial"
         android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentHistorial"
         android:label="Historial"
         tools:layout="@layout/fragment_historial">
-        <!-- Recibe el ID del vehículo -->
         <argument
             android:name="vehicleId"
             app:argType="long" />
-        <!-- Acción: ir a Facturas de ese historial -->
         <action
             android:id="@+id/action_historial_to_facturas"
             app:destination="@id/nav_facturas" />
     </fragment>
 
-    <!-- 8. Facturas (de un historial) -->
+    <!-- 8. Facturas de un Historial -->
     <fragment
         android:id="@+id/nav_facturas"
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentFacturas"
         android:label="Facturas"
         tools:layout="@layout/fragment_facturas">
-        <!-- Recibe el ID del historial -->
         <argument
             android:name="historyId"
             app:argType="long" />
-        <!-- Acción: ir a Subir Factura -->
         <action
             android:id="@+id/action_facturas_to_subirFactura"
             app:destination="@id/nav_subirFactura" />
@@ -122,7 +112,6 @@
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentSubirFactura"
         android:label="Subir Factura"
         tools:layout="@layout/fragment_subir_factura">
-        <!-- Recibe el ID del historial -->
         <argument
             android:name="historyId"
             app:argType="long" />
@@ -134,7 +123,6 @@
         android:name="com.project.rc_mecha_maint.ui.mas.costos.FragmentCostos"
         android:label="Costos"
         tools:layout="@layout/fragment_costos">
-        <!-- Acción: volver a Reportes -->
         <action
             android:id="@+id/action_costos_to_reportes"
             app:destination="@id/nav_reportes" />
@@ -143,27 +131,23 @@
     <!-- 11. Comparador -->
     <fragment
         android:id="@+id/nav_comparador"
-    android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
-    android:label="Comparador"
-    tools:layout="@layout/fragment_comparador">
+        android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
+        android:label="Comparador"
+        tools:layout="@layout/fragment_comparador">
+        <action
+            android:id="@+id/action_comparador_to_detalleTaller"
+            app:destination="@id/fragmentDetalleTaller" />
+    </fragment>
 
-    <!-- Desde Comparador al detalle del taller -->
+    <!-- Acciones globales -->
     <action
-        android:id="@+id/action_comparador_to_detalleTaller"
-        app:destination="@id/fragmentDetalleTaller" />
-</fragment>
-
-    <!-- ──── ACCIONES GLOBALES (opcional, pero evita futuros crashes) ──── -->
-<action
-android:id="@+id/action_global_nav_comparador"
-app:destination="@id/nav_comparador"
-app:launchSingleTop="true" />
-
-<action
-android:id="@+id/action_global_nav_talleres"
-app:destination="@id/nav_talleres"
-app:launchSingleTop="true" />
-
+        android:id="@+id/action_global_nav_comparador"
+        app:destination="@id/nav_comparador"
+        app:launchSingleTop="true" />
+    <action
+        android:id="@+id/action_global_nav_talleres"
+        app:destination="@id/nav_talleres"
+        app:launchSingleTop="true" />
 
     <!-- 12. Lista de Talleres -->
     <fragment
@@ -171,7 +155,6 @@ app:launchSingleTop="true" />
         android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentTalleres"
         android:label="Talleres"
         tools:layout="@layout/fragment_talleres">
-        <!-- Acción: ir al detalle de un taller -->
         <action
             android:id="@+id/action_talleres_to_detalleTaller"
             app:destination="@id/fragmentDetalleTaller" />
@@ -183,7 +166,6 @@ app:launchSingleTop="true" />
         android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentDetalleTaller"
         android:label="Detalle Taller"
         tools:layout="@layout/fragment_detalle_taller">
-        <!-- Argumento: ID del taller seleccionado -->
         <argument
             android:name="tallerId"
             app:argType="long" />
@@ -194,9 +176,24 @@ app:launchSingleTop="true" />
         android:id="@+id/nav_diagnostico"
         android:name="com.project.rc_mecha_maint.ui.mas.diagnostico.FragmentDiagnostico"
         android:label="Diagnóstico"
-        tools:layout="@layout/fragment_diagnostico" />
+        tools:layout="@layout/fragment_diagnostico">
+        <action
+            android:id="@+id/actionFragmentDiagnosticoToFragmentResultadoDiag"
+            app:destination="@id/fragmentResultadoDiag" />
+    </fragment>
 
-    <!-- 15. Perfil de Usuario -->
+    <!-- 15. Resultado Diagnóstico -->
+    <fragment
+        android:id="@+id/fragmentResultadoDiag"
+        android:name="com.project.rc_mecha_maint.ui.mas.diagnostico.FragmentResultadoDiag"
+        android:label="Resultado Diagnóstico"
+        tools:layout="@layout/fragment_resultado_diag">
+        <argument
+            android:name="failure"
+            app:argType="com.project.rc_mecha_maint.data.entity.Failure" />
+    </fragment>
+
+    <!-- 16. Perfil de Usuario -->
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
