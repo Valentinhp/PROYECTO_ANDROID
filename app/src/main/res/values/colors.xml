@@ -26,3 +26,6 @@
     <color name="profile_bg">#263A4B</color>              <!-- Usa Surface como fondo de perfil -->
     <color name="bottom_sheet_background">#231E1E</color><!-- Usa SurfaceVariant para bottom sheet -->
 </resources>
+
+
+
