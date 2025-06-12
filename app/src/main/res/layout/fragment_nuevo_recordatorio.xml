@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDeepBlue"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#173448">
 
     <LinearLayout
         android:orientation="vertical"
@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tipo de servicio"
-            app:hintTextColor="@color/colorLightGray"
-            app:boxStrokeColor="@color/colorSteelBlueLight">
+            app:hintTextColor="#D5D2D1"
+            app:boxStrokeColor="#2E5D7D">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLightGray"
-                android:hintTextColor="@color/colorMetalGray"/>
+                android:textColor="#D5D2D1"
+                android:textColorHint="#545E66"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Fecha seleccionada -->
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Fecha: --/--/----"
             android:layout_marginTop="12dp"
-            android:textColor="@color/colorLightGray"/>
+            android:textColor="#D5D2D1"/>
 
         <Button
             android:id="@+id/btnSeleccionarFecha"
@@ -42,8 +42,8 @@
             android:layout_height="wrap_content"
             android:text="Seleccionar fecha"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/colorSteelBlueLight"
-            android:textColor="@color/colorLightGray"/>
+            android:backgroundTint="#2E5D7D"
+            android:textColor="#D5D2D1"/>
 
         <!-- Kilometraje -->
         <com.google.android.material.textfield.TextInputLayout
@@ -51,15 +51,15 @@
             android:layout_height="wrap_content"
             android:hint="Kilometraje"
             android:layout_marginTop="12dp"
-            app:hintTextColor="@color/colorLightGray"
-            app:boxStrokeColor="@color/colorSteelBlueLight">
+            app:hintTextColor="#D5D2D1"
+            app:boxStrokeColor="#2E5D7D">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etKilometraje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:textColor="@color/colorLightGray"
-                android:hintTextColor="@color/colorMetalGray"/>
+                android:textColor="#D5D2D1"
+                android:textColorHint="#545E66"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Descripción -->
@@ -68,14 +68,14 @@
             android:layout_height="wrap_content"
             android:hint="Descripción"
             android:layout_marginTop="12dp"
-            app:hintTextColor="@color/colorLightGray"
-            app:boxStrokeColor="@color/colorSteelBlueLight">
+            app:hintTextColor="#D5D2D1"
+            app:boxStrokeColor="#2E5D7D">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLightGray"
-                android:hintTextColor="@color/colorMetalGray"/>
+                android:textColor="#D5D2D1"
+                android:textColorHint="#545E66"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Switch Notificar -->
@@ -90,13 +90,13 @@
                 android:layout_height="wrap_content"
                 android:text="Notificar"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/colorLightGray"/>
+                android:textColor="#D5D2D1"/>
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchNotificar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:thumbTint="@color/colorRedBright"
-                android:trackTint="@color/colorBlueGray"/>
+                android:thumbTint="#AA302A"
+                android:trackTint="#263A4B"/>
         </LinearLayout>
 
         <!-- Botón Guardar -->
@@ -106,7 +106,8 @@
             android:layout_height="wrap_content"
             android:text="Guardar"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@color/colorRedBright"
-            android:textColor="@color/colorLightGray"/>
+            android:backgroundTint="#AA302A"
+            android:textColor="#D5D2D1"/>
+
     </LinearLayout>
 </ScrollView>
