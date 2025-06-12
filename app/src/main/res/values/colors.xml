@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta centralizada -->
-    <color name="colorPrimary">#173448</color>           <!-- Azul profundo -->
-    <color name="colorPrimaryVariant">#101A25</color>    <!-- Azul casi negro -->
-    <color name="colorSecondary">#AA302A</color>         <!-- Rojo encendido -->
-    <color name="colorSecondaryVariant">#7D1F18</color>  <!-- Rojo oscuro -->
+    <!-- Paleta principal -->
+    <color name="colorPrimary">#173448</color>            <!-- Azul profundo -->
+    <color name="colorPrimaryVariant">#101A25</color>     <!-- Azul casi negro -->
+    <color name="colorSecondary">#AA302A</color>          <!-- Rojo encendido -->
+    <color name="colorSecondaryVariant">#7D1F18</color>   <!-- Rojo oscuro -->
 
-    <color name="colorBackground">#D5D2D1</color>        <!-- Gris claro -->
-    <color name="colorSurface">#263A4B</color>           <!-- Azul grisáceo -->
-    <color name="colorSurfaceVariant">#231E1E</color>    <!-- Gris carbón -->
+    <!-- Fondos -->
+    <color name="colorBackground">#D5D2D1</color>         <!-- Gris claro -->
+    <color name="colorSurface">#263A4B</color>            <!-- Azul grisáceo -->
+    <color name="colorSurfaceVariant">#231E1E</color>     <!-- Gris carbón -->
+
+    <!-- Detalles -->
+    <color name="colorAccentLight">#2E5D7D</color>        <!-- Azul acero claro -->
+    <color name="colorOutline">#545E66</color>            <!-- Gris metálico -->
 
     <!-- Textos sobre fondos -->
-    <color name="onPrimary">#FFFFFF</color>              <!-- Texto sobre primary -->
-    <color name="onSecondary">#FFFFFF</color>            <!-- Texto sobre secondary -->
-    <color name="onBackground">#151E27</color>           <!-- Texto sobre background -->
-    <color name="onSurface">#151E27</color>              <!-- Texto sobre surface -->
+    <color name="onPrimary">#FFFFFF</color>               <!-- Texto sobre Primary -->
+    <color name="onSecondary">#FFFFFF</color>             <!-- Texto sobre Secondary -->
+    <color name="onBackground">#151E27</color>            <!-- Texto sobre Background -->
+    <color name="onSurface">#FFFFFF</color>               <!-- Texto sobre Surface -->
 
-    <!-- Detalles y bordes -->
-    <color name="colorAccentLight">#2E5D7D</color>       <!-- Azul acero claro -->
-    <color name="colorOutline">#545E66</color>           <!-- Gris metálico -->
-
-    <!-- Recursos que faltaban en tu build -->
+    <!-- Extras -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="profile_bg">#263A4B</color>              <!-- Usa Surface como fondo de perfil -->
-    <color name="bottom_sheet_background">#231E1E</color><!-- Usa SurfaceVariant para bottom sheet -->
+    <!-- Alias para usar en layouts -->
+    <color name="profile_bg">@color/colorSurface</color>
+    <color name="bottom_sheet_background">@color/colorSurfaceVariant</color>
 </resources>
-
-
-

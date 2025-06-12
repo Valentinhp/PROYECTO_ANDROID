@@ -1,17 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollInicio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
-    android:padding="16dp"
-    android:gravity="center">
+    android:background="@color/colorPrimaryVariant"
+    android:padding="16dp">
 
-    <!-- Un texto simple que indica que esta es la pantalla de inicio -->
+<LinearLayout
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<!-- Logo de la app -->
+<ImageView
+    android:id="@+id/imgLogo"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:layout_gravity="center"
+    android:src="@drawable/ic_logo"
+    android:contentDescription="Logo de la app"
+    android:layout_marginBottom="24dp" />
+
+<!-- Tarjeta: Próximo mantenimiento -->
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/cardProximo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/colorPrimary"
+app:cardCornerRadius="12dp"
+app:cardElevation="8dp">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Título -->
     <TextView
-        android:id="@+id/text_inicio"
+        android:id="@+id/tvProximoTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¡Bienvenido!"
+        android:text="Próximo mantenimiento"
         android:textSize="20sp"
-        android:textStyle="bold" />
-</FrameLayout>
+        android:textStyle="bold"
+        android:textColor="@color/onPrimary" />
+
+    <!-- Detalle dinámico -->
+    <TextView
+        android:id="@+id/tvProximoDetalle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cargando..."
+        android:textSize="16sp"
+        android:textColor="@color/onPrimary"
+    android:layout_marginTop="4dp" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+    <!-- Tarjeta: Total gastado este mes -->
+<com.google.android.material.card.MaterialCardView
+android:id="@+id/cardGasto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="24dp"
+app:cardBackgroundColor="@color/colorAccentLight"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp">
+
+<LinearLayout
+android:orientation="vertical"
+android:padding="16dp"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<!-- Título -->
+<TextView
+    android:id="@+id/tvGastoTitulo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Total gastado este mes"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:textColor="@color/onPrimary" />
+
+<!-- Detalle dinámico -->
+<TextView
+    android:id="@+id/tvGastoDetalle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Cargando..."
+    android:textSize="16sp"
+    android:textColor="@color/onPrimary"
+android:layout_marginTop="4dp" />
+</LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Botón principal -->
+<Button
+android:id="@+id/btnVerHistorial"
+android:layout_width="match_parent"
+android:layout_height="48dp"
+android:text="VER HISTORIAL COMPLETO"
+android:textAllCaps="false"
+android:textSize="16sp"
+android:textColor="@color/onSecondary"
+    android:backgroundTint="@color/colorSecondary" />
+
+    </LinearLayout>
+    </ScrollView>

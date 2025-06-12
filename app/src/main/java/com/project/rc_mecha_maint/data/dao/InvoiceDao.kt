@@ -48,4 +48,16 @@ interface InvoiceDao {
     //    Devuelve un LiveData<Double?> con el promedio (null si no hay registros).
     @Query("SELECT AVG(monto) FROM invoice_table")
     fun getAverageCost(): LiveData<Double?>
+
+
+    /**
+     * Suma todos los montos entre start y end
+     * Devuelve null si no hay facturas
+     */
+    @Query("""
+      SELECT SUM(monto) 
+      FROM invoice_table 
+      WHERE fechaTimestamp BETWEEN :start AND :end
+    """)
+    suspend fun getTotalSpent(start: Long, end: Long): Double?
 }

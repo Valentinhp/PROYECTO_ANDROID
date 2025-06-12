@@ -11,7 +11,13 @@
         android:id="@+id/nav_inicio"
         android:name="com.project.rc_mecha_maint.ui.inicio.FragmentInicio"
         android:label="Inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio">
+
+        <!-- ACTION: Inicio → Historial -->
+        <action
+            android:id="@+id/action_nav_inicio_to_nav_historial"
+            app:destination="@id/nav_historial" />
+    </fragment>
 
     <!-- 2. Lista de Vehículos -->
     <fragment
@@ -199,5 +205,4 @@
         android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
-
 </navigation>
