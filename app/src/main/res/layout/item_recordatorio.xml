@@ -1,72 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp">
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="8dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp"
+    android:padding="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:layout_height="wrap_content">
 
-        <!-- Fecha formateada del recordatorio -->
         <TextView
             android:id="@+id/tvFecha"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="01/01/2025"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnEditar" />
+            android:textStyle="bold"
+            android:textSize="14sp"/>
 
-        <!-- Tipo de mantenimiento -->
         <TextView
             android:id="@+id/tvTipo"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tvFecha"
             android:text="Cambio de aceite"
-            app:layout_constraintStart_toStartOf="@id/tvFecha"
-            app:layout_constraintTop_toBottomOf="@id/tvFecha"
-            app:layout_constraintEnd_toStartOf="@id/btnEditar"
-            android:layout_marginTop="4dp"/>
+            android:textSize="14sp"/>
 
-        <!-- Kilometraje -->
         <TextView
             android:id="@+id/tvKilometraje"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Km: 12000"
-            app:layout_constraintStart_toStartOf="@id/tvTipo"
-            app:layout_constraintTop_toBottomOf="@id/tvTipo"
-            android:layout_marginTop="4dp"/>
+            android:layout_below="@id/tvTipo"
+            android:text="Km: 10000"
+            android:textSize="14sp"/>
 
-        <!-- Botón editar -->
         <ImageButton
             android:id="@+id/btnEditar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Editar"
             android:src="@drawable/ic_edit"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:contentDescription="@string/edit"/>
 
-        <!-- Botón eliminar -->
         <ImageButton
             android:id="@+id/btnEliminar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/btnEditar"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Eliminar"
             android:src="@drawable/ic_delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnEditar"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:contentDescription="@string/delete"/>
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

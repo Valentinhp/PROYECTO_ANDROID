@@ -12,8 +12,6 @@
         android:name="com.project.rc_mecha_maint.ui.inicio.FragmentInicio"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio">
-
-        <!-- ACTION: Inicio → Historial -->
         <action
             android:id="@+id/action_nav_inicio_to_nav_historial"
             app:destination="@id/nav_historial" />
@@ -54,6 +52,7 @@
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
         android:label="Recordatorios"
         tools:layout="@layout/fragment_recordatorios">
+        <!-- Esta acción genera: FragmentRecordatoriosDirections.actionRecordatoriosToNuevoRecordatorio(...) -->
         <action
             android:id="@+id/action_recordatorios_to_nuevoRecordatorio"
             app:destination="@id/nav_nuevoRecordatorio" />

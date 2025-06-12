@@ -11,7 +11,6 @@
     <string name="buscar">Buscar</string>
     <string name="descripcion_taller">Descripción del taller</string>
 
-
     <string-array name="servicios">
         <item>Cambio de aceite</item>
         <item>Frenos</item>
@@ -20,5 +19,12 @@
         <item>Batería</item>
     </string-array>
 
+    <string name="add_recordatorio">Agregar nuevo recordatorio</string>
 
+    <!-- Añadimos estas dos para los botones de editar/eliminar -->
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <string name="edit_invoice">Editar factura</string>
+    <string name="delete_invoice">Eliminar factura</string>
 </resources>
