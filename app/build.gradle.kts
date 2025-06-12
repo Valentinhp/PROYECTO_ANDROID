@@ -95,6 +95,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    kapt ("com.github.bumptech.glide:compiler:4.15.1")
+
     // Room
     implementation("androidx.room:room-runtime:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")
@@ -129,6 +132,10 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.core:core-ktx:1.9.0")
+
+
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 
 
 

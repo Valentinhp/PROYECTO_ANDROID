@@ -3,18 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ================= Permisos ================= -->
-    <!-- Para usar la cámara -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- Para leer almacenamiento externo (si lo necesitas realmente) -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Para notificaciones -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Para ubicación de alta precisión -->
-    <!-- Si pides ACCESS_FINE_LOCATION, también hay que pedir ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Solo si realmente necesitas leer fotos de galería -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
 
     <!-- ================= Features ================= -->
-    <!-- Si declaras permiso de cámara, se recomienda declarar el feature así: -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -29,10 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RC_MECHA_MAINT_S"
         android:enableOnBackInvokedCallback="true"
-
         tools:targetApi="31">
 
-        <!-- MainActivity que lanza la app -->
+        <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,25 +37,18 @@
             </intent-filter>
         </activity>
 
-        <!-- ====== FileProvider para compartir fotos sin error ====== -->
+        <!-- FileProvider para capturar y compartir fotos -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!-- ========================================================== -->
 
-        <!-- Si NO tienes realmente una clase NotificationReceiver,
-             elimina o comenta esta sección. -->
-        <!--
-        <receiver
-            android:name=".receiver.NotificationReceiver"
-            android:exported="false" />
-        -->
+        <!-- Otros receivers, services, etc. -->
 
     </application>
 </manifest>

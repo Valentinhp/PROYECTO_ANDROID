@@ -2,4 +2,6 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Permite compartir cualquier archivo dentro de cacheDir -->
     <cache-path name="cache" path="." />
+    <external-files-path name="images" path="Pictures"/>
+
 </paths>

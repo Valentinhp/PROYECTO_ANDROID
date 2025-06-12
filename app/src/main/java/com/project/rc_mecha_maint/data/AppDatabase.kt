@@ -19,7 +19,7 @@ import com.project.rc_mecha_maint.data.entity.* // Asegúrate de que Maintenance
         UserProfile::class,
         Maintenance::class      // <-- Nueva entidad
     ],
-    version = 10,               // <-- Sube la versión (antes 9)
+    version = 11,               // <-- Sube la versión (antes 9)
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -3,26 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
-    <!-- RecyclerView para mostrar la lista de vehículos -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewVehicles"
+    <!-- Pull-to-refresh + lista -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshVehicles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- Botón flotante (FAB) para agregar un vehículo -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewVehicles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- FAB para agregar -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddVehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="Agregar vehículo"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_mas"
+        app:tint="@color/onSecondary"
+        app:backgroundTint="@color/colorSecondary"
         app:layout_anchor="@id/recyclerViewVehicles"
         app:layout_anchorGravity="bottom|end"
-        android:layout_margin="16dp"
-        />
-
+        android:layout_margin="16dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:padding="16dp">
 
     <LinearLayout
@@ -10,16 +12,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Vista previa de la foto -->
+        <ImageView
+            android:id="@+id/imgVehiclePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@color/colorOutline"
+            android:contentDescription="Foto del vehículo"/>
+
+        <!-- Botones para elegir imagen -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tomar foto"
+                android:textColor="@color/onPrimary"
+                android:backgroundTint="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/btnChooseGallery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Galería"
+                android:textColor="@color/onPrimary"
+                android:backgroundTint="@color/colorAccentLight"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
         <!-- Campo Marca -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutMarca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Marca">
+            android:hint="Marca"
+            android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextMarca"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/onBackground"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo Modelo -->
@@ -28,11 +72,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Modelo"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextModelo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/onBackground"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo Año -->
@@ -41,12 +89,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Año"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextAnio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/onBackground"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo Matrícula -->
@@ -55,11 +107,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Matrícula"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextMatricula"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/onBackground"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Botón Guardar -->
@@ -67,7 +123,9 @@
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text="Guardar vehículo"
+            android:textColor="@color/onPrimary"
+            android:backgroundTint="@color/colorSecondary"
             android:layout_marginTop="24dp"/>
     </LinearLayout>
 </ScrollView>

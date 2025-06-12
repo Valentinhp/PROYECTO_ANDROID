@@ -6,15 +6,17 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 /**
- * Ahora con @Parcelize y : Parcelable hacemos que Vehicle sea “parcelizable”.
+ * Ahora con @Parcelize hacemos que Vehicle sea Parcelable,
+ * y guardamos la URI de la foto en photoUri.
  */
 @Parcelize
-@Entity(tableName = "vehicles")
+@Entity(tableName = "vehicles")  // O usa "vehicle_table" si tu DAO lo espera
 data class Vehicle(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val marca: String,
     val modelo: String,
     val anio: Int,
-    val matricula: String
+    val matricula: String,
+    val photoUri: String? = null     // <-- URI de la foto tomada
 ) : Parcelable
