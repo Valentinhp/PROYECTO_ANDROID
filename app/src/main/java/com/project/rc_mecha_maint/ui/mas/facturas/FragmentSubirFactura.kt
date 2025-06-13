@@ -23,27 +23,20 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.project.rc_mecha_maint.R
 import com.project.rc_mecha_maint.data.AppDatabase
+import com.project.rc_mecha_maint.data.entity.Invoice
 import com.project.rc_mecha_maint.data.repository.InvoiceRepository
-import com.project.rc_mecha_maint.data.dao.InvoiceDao
 import com.project.rc_mecha_maint.ui.mas.facturas.InvoiceViewModel
 import com.project.rc_mecha_maint.ui.mas.facturas.InvoiceViewModelFactory
 import java.io.File
 import java.util.regex.Pattern
 
-
-import com.project.rc_mecha_maint.data.entity.Invoice
-
-
-
 class FragmentSubirFactura : Fragment() {
 
-    // —————————————————————————
-    // 1) Propiedades para el ViewModel y el historyId
-    // —————————————————————————
+    // 1) ViewModel y argumento historyId
     private lateinit var viewModel: InvoiceViewModel
     private var historyId: Long = 0L
 
-    // Vistas del layout
+    // 2) Vistas
     private lateinit var imagePreview: ImageView
     private lateinit var btnTomarFoto: Button
     private lateinit var btnElegirGaleria: Button
@@ -53,7 +46,7 @@ class FragmentSubirFactura : Fragment() {
 
     private lateinit var imageUri: Uri
 
-    // Lanzadores de actividad (cámara, galería, permisos)
+    // 3) Lanzador de permisos de cámara
     private val permisoCamaraLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { concedido ->
@@ -62,6 +55,7 @@ class FragmentSubirFactura : Fragment() {
             "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
     }
 
+    // 4) Lanzador para tomar foto
     private val tomarFotoLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { exito ->
@@ -70,6 +64,7 @@ class FragmentSubirFactura : Fragment() {
             "No se tomó la foto", Toast.LENGTH_SHORT).show()
     }
 
+    // 5) Lanzador para elegir imagen de galería
     private val galeriaLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
@@ -87,11 +82,8 @@ class FragmentSubirFactura : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // —————————————————————————
-        // 2) Leer historyId y crear ViewModel
-        // —————————————————————————
+        // 6) Inicializa ViewModel con historyId
         historyId = arguments?.getLong(FragmentFacturas.ARG_HISTORY_ID) ?: 0L
-
         val dao  = AppDatabase.getInstance(requireContext()).invoiceDao()
         val repo = InvoiceRepository(dao)
         viewModel = ViewModelProvider(
@@ -99,9 +91,7 @@ class FragmentSubirFactura : Fragment() {
             InvoiceViewModelFactory(repo)
         )[InvoiceViewModel::class.java]
 
-        // —————————————————————————
-        // 3) Conectar vistas
-        // —————————————————————————
+        // 7) Conecta vistas
         imagePreview      = view.findViewById(R.id.imagePreview)
         btnTomarFoto      = view.findViewById(R.id.btnTomarFoto)
         btnElegirGaleria  = view.findViewById(R.id.btnElegirGaleria)
@@ -109,18 +99,19 @@ class FragmentSubirFactura : Fragment() {
         editMontoOCR      = view.findViewById(R.id.editMontoOCR)
         btnGuardarFactura = view.findViewById(R.id.btnGuardarFactura)
 
-        // Iniciar botones deshabilitados
+        // 8) Botones iniciales
         btnProcesarOCR.isEnabled    = false
         btnGuardarFactura.isEnabled = false
 
-        // Listeners
+        // 9) Listeners
         btnTomarFoto.setOnClickListener { pedirPermisoOCamara() }
         btnElegirGaleria.setOnClickListener { galeriaLauncher.launch("image/*") }
         btnProcesarOCR.setOnClickListener { procesarOCR() }
         btnGuardarFactura.setOnClickListener { guardarFactura() }
     }
 
-    // Pide permiso o abre cámara si ya está dado
+    // -- Gestión de permisos y cámara --
+
     private fun pedirPermisoOCamara() {
         val permiso = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.CAMERA
@@ -133,13 +124,20 @@ class FragmentSubirFactura : Fragment() {
     }
 
     private fun abrirCamara() {
+        // Nombre único para el archivo
         val nombreArchivo = "factura_${System.currentTimeMillis()}.jpg"
         val archivo = File(requireContext().cacheDir, nombreArchivo)
+
+        // -----------------------------------
+        // Aquí va LA LÍNEA CLAVE CORREGIDA:
+        // -----------------------------------
+        val authority = "${requireContext().packageName}.fileprovider"
         imageUri = FileProvider.getUriForFile(
             requireContext(),
-            "${requireContext().packageName}.provider",
+            authority,   // ¡debe coincidir con AndroidManifest!
             archivo
         )
+
         tomarFotoLauncher.launch(imageUri)
     }
 
@@ -156,6 +154,8 @@ class FragmentSubirFactura : Fragment() {
                 "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
         }
     }
+
+    // -- Procesamiento OCR --
 
     private fun procesarOCR() {
         try {
@@ -186,7 +186,8 @@ class FragmentSubirFactura : Fragment() {
         }
     }
 
-    /** 4) Inserta la factura en la BD y vuelve al listado */
+    // -- Guardar factura en BD --
+
     private fun guardarFactura() {
         val textoMonto = editMontoOCR.text.toString().trim()
         if (textoMonto.isEmpty()) {
@@ -194,27 +195,14 @@ class FragmentSubirFactura : Fragment() {
                 "Ingresa el monto antes de guardar", Toast.LENGTH_SHORT).show()
             return
         }
-        // Convertir a Double
         val montoDouble = textoMonto.replace(",", ".").toDoubleOrNull() ?: 0.0
-
-        // Crear objeto Invoice
         val nuevaFactura = Invoice(
             historyId      = historyId,
             rutaImagen     = imageUri.toString(),
             fechaTimestamp = System.currentTimeMillis(),
             monto          = montoDouble
         )
-
-        // INSERT en la base de datos
         viewModel.insertInvoice(nuevaFactura)
-
-        // Volver al fragmento de lista, que se refrescará solo
         findNavController().popBackStack()
-    }
-
-    private fun borrarTemporal() {
-        try {
-            File(imageUri.path ?: return).takeIf { it.exists() }?.delete()
-        } catch (_: Exception) { }
     }
 }
