@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.project.rc_mecha_maint.data.dao.*    // Asegúrate de que MaintenanceDao esté aquí
-import com.project.rc_mecha_maint.data.entity.* // Asegúrate de que Maintenance esté aquí
+import com.project.rc_mecha_maint.data.dao.*
+import com.project.rc_mecha_maint.data.entity.*
 
 @Database(
     entities = [
@@ -17,9 +17,10 @@ import com.project.rc_mecha_maint.data.entity.* // Asegúrate de que Maintenance
         Symptom::class,
         Failure::class,
         UserProfile::class,
-        Maintenance::class      // <-- Nueva entidad
+        Maintenance::class,
+        AutoparteEntity::class // ✅ Agregado
     ],
-    version = 13,               // <-- Sube la versión (antes 9)
+    version = 14, // ✅ Aumenta la versión si antes era 13
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -32,8 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun symptomDao(): SymptomDao
     abstract fun failureDao(): FailureDao
     abstract fun userProfileDao(): UserProfileDao
-
-    abstract fun maintenanceDao(): MaintenanceDao  // <-- Nuevo DAO
+    abstract fun maintenanceDao(): MaintenanceDao
+    abstract fun autoparteDao(): AutoparteDao  // ✅ Corregido el nombre del método
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
