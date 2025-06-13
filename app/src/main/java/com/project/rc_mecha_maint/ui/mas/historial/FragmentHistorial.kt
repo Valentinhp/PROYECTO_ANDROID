@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.rc_mecha_maint.R
@@ -14,17 +13,14 @@ import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.repository.HistoryRepository
 import com.project.rc_mecha_maint.databinding.FragmentHistorialBinding
 
-/**
- * FragmentHistorial: muestra la lista de históricos para un vehicleId dado.
- * Recibe el argumento "vehicleId" desde quien llame a este fragment.
- */
 class FragmentHistorial : Fragment() {
 
     private var _binding: FragmentHistorialBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HistoryViewModel
+    private lateinit var repository: HistoryRepository
     private lateinit var adapter: HistoryAdapter
+    private var vehicleId: Long = 0L
 
     companion object {
         const val ARG_VEHICLE_ID = "vehicleId"
@@ -41,39 +37,50 @@ class FragmentHistorial : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1) Obtener el vehicleId de los argumentos
-        val vehicleId = arguments?.getLong(ARG_VEHICLE_ID) ?: 0L
+        // 1) Leer el vehicleId que te pasaron
+        vehicleId = arguments?.getLong(ARG_VEHICLE_ID) ?: 0L
 
-        // 2) Inicializar ViewModel + Repositorio
-        val dao = AppDatabase.getInstance(requireContext()).historyDao()
-        val repo = HistoryRepository(dao)
-        viewModel = ViewModelProvider(this, HistoryViewModelFactory(repo))
-            .get(HistoryViewModel::class.java)
-
-        // 3) Configurar RecyclerView y Adapter
+        // 2) Configurar RecyclerView con LayoutManager y adapter
         adapter = HistoryAdapter(
             onAgregarFactura = { history ->
-                // Navegar a FragmentSubirFactura, pasando historyId en Bundle
+                // Navegar a subir factura
                 findNavController().navigate(
                     R.id.nav_subirFactura,
                     bundleOf("historyId" to history.id)
                 )
             },
             onVerFacturas = { history ->
-                // Navegar a FragmentFacturas, pasando historyId en Bundle
+                // Navegar a lista de facturas
                 findNavController().navigate(
                     R.id.nav_facturas,
                     bundleOf("historyId" to history.id)
                 )
             }
         )
-
         binding.recyclerHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerHistory.adapter = adapter
 
-        // 4) Observar LiveData de historial y actualizar lista
-        viewModel.getHistoryByVehicle(vehicleId).observe(viewLifecycleOwner) { lista ->
+        // 3) FAB para registrar mantenimiento nuevo
+        binding.fabAgregar.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_nav_historial_to_nav_registrarMantenimiento,
+                bundleOf(ARG_VEHICLE_ID to vehicleId)
+            )
+        }
+
+        // 4) Inicializar repositorio y observar datos
+        val dao = AppDatabase.getInstance(requireContext()).historyDao()
+        repository = HistoryRepository(dao)
+        repository.getHistoryByVehicle(vehicleId).observe(viewLifecycleOwner) { lista ->
             adapter.submitList(lista)
+            // Mostrar mensaje vacío si no hay datos
+            if (lista.isEmpty()) {
+                binding.recyclerHistory.visibility = View.GONE
+                binding.tvEmpty.visibility = View.VISIBLE
+            } else {
+                binding.recyclerHistory.visibility = View.VISIBLE
+                binding.tvEmpty.visibility = View.GONE
+            }
         }
     }
 

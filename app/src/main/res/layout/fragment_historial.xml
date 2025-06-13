@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- RecyclerView para mostrar la lista de historial -->
+    <!-- RecyclerView para mostrar la lista -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHistory"
         android:layout_width="0dp"
@@ -15,16 +15,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- (Opcional) Spinner para elegir vehículo, si no se pasa como argumento -->
-    <!--
-    <Spinner
-        android:id="@+id/spinnerVehiculos"
-        android:layout_width="match_parent"
+    <!-- Mensaje cuando no hay datos -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:prompt="@string/selecciona_vehiculo"
-        app:layout_constraintTop_toTopOf="parent" />
-    -->
+        android:text="No hay mantenimientos registrados"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Botón flotante para agregar un mantenimiento -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Agregar mantenimiento"
+        android:src="@drawable/ic_mas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/nav_inicio">
 
-    <!-- 1. Pantalla de Inicio -->
+    <!-- 1. Inicio -->
     <fragment
         android:id="@+id/nav_inicio"
         android:name="com.project.rc_mecha_maint.ui.inicio.FragmentInicio"
@@ -17,7 +17,7 @@
             app:destination="@id/nav_historial" />
     </fragment>
 
-    <!-- 2. Lista de Vehículos -->
+    <!-- 2. Vehículos -->
     <fragment
         android:id="@+id/nav_vehiculos"
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentVehiculos"
@@ -28,7 +28,7 @@
             app:destination="@id/nav_nuevoVehiculo" />
     </fragment>
 
-    <!-- 3. Agregar/Editar Vehículo -->
+    <!-- 3. Nuevo/Editar Vehículo -->
     <fragment
         android:id="@+id/nav_nuevoVehiculo"
         android:name="com.project.rc_mecha_maint.ui.vehiculos.FragmentNuevoVehiculo"
@@ -46,19 +46,18 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- 4. Lista de Recordatorios -->
+    <!-- 4. Recordatorios -->
     <fragment
         android:id="@+id/nav_recordatorios"
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentRecordatorios"
         android:label="Recordatorios"
         tools:layout="@layout/fragment_recordatorios">
-        <!-- Esta acción genera: FragmentRecordatoriosDirections.actionRecordatoriosToNuevoRecordatorio(...) -->
         <action
             android:id="@+id/action_recordatorios_to_nuevoRecordatorio"
             app:destination="@id/nav_nuevoRecordatorio" />
     </fragment>
 
-    <!-- 5. Agregar/Editar Recordatorio -->
+    <!-- 5. Nuevo/Editar Recordatorio -->
     <fragment
         android:id="@+id/nav_nuevoRecordatorio"
         android:name="com.project.rc_mecha_maint.ui.recordatorios.FragmentNuevoRecordatorio"
@@ -83,7 +82,7 @@
         android:label="Reportes"
         tools:layout="@layout/fragment_reportes" />
 
-    <!-- 7. Historial de un Vehículo -->
+    <!-- 7. Historial -->
     <fragment
         android:id="@+id/nav_historial"
         android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentHistorial"
@@ -93,11 +92,14 @@
             android:name="vehicleId"
             app:argType="long" />
         <action
+            android:id="@+id/action_nav_historial_to_nav_registrarMantenimiento"
+            app:destination="@id/nav_registrarMantenimiento" />
+        <action
             android:id="@+id/action_historial_to_facturas"
             app:destination="@id/nav_facturas" />
     </fragment>
 
-    <!-- 8. Facturas de un Historial -->
+    <!-- 8. Facturas -->
     <fragment
         android:id="@+id/nav_facturas"
         android:name="com.project.rc_mecha_maint.ui.mas.facturas.FragmentFacturas"
@@ -154,7 +156,7 @@
         app:destination="@id/nav_talleres"
         app:launchSingleTop="true" />
 
-    <!-- 12. Lista de Talleres -->
+    <!-- 12. Talleres -->
     <fragment
         android:id="@+id/nav_talleres"
         android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentTalleres"
@@ -165,7 +167,7 @@
             app:destination="@id/fragmentDetalleTaller" />
     </fragment>
 
-    <!-- 13. Detalle de Taller -->
+    <!-- 13. Detalle Taller -->
     <fragment
         android:id="@+id/fragmentDetalleTaller"
         android:name="com.project.rc_mecha_maint.ui.mas.talleres.FragmentDetalleTaller"
@@ -198,10 +200,27 @@
             app:argType="com.project.rc_mecha_maint.data.entity.Failure" />
     </fragment>
 
-    <!-- 16. Perfil de Usuario -->
+    <!-- 16. Perfil -->
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.project.rc_mecha_maint.ui.mas.perfil.FragmentPerfil"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
+
+    <!-- 17. Registrar Mantenimiento -->
+    <fragment
+        android:id="@+id/nav_registrarMantenimiento"
+        android:name="com.project.rc_mecha_maint.ui.mas.historial.FragmentRegistrarMantenimiento"
+        android:label="Registrar Mantenimiento"
+        tools:layout="@layout/fragment_registrar_mantenimiento">
+        <argument
+            android:name="vehicleId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_nav_registrarMantenimiento_to_nav_historial"
+            app:destination="@id/nav_historial"
+            app:popUpTo="@id/nav_historial"
+            app:popUpToInclusive="false" />
+    </fragment>
+
 </navigation>
