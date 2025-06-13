@@ -1,28 +1,61 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout android:orientation="vertical" android:padding="16dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView android:id="@+id/imgFoto"
-            android:layout_width="match_parent" android:layout_height="200dp"
-            android:scaleType="centerCrop"/>
+        <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/descripcion_taller"/>
 
-        <TextView android:id="@+id/txtNombre" android:textStyle="bold" android:textSize="20sp"
-            android:layout_marginTop="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <TextView android:id="@+id/txtDireccion" android:layout_marginTop="4dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <LinearLayout android:orientation="horizontal" android:layout_marginTop="8dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <Button android:id="@+id/btnCall" android:text="@string/llamar"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <Button android:id="@+id/btnMaps" android:text="@string/ver_mapa"
+            <Button
+                android:id="@+id/btnLlamar"
+                android:text="@string/llamar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btnMapa"
+                android:text="@string/ver_mapa"
                 android:layout_marginStart="8dp"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

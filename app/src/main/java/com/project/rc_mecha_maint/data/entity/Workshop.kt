@@ -5,14 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-/**
- * Taller mecánico.
- * id = autogenerado → podemos editar / borrar con Room.
- */
+// @Parcelize convierte automáticamente esta clase en Parcelable
 @Parcelize
 @Entity(tableName = "workshop_table")
 data class Workshop(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val nombre: String,
     val direccion: String,
     val latitud: Double,

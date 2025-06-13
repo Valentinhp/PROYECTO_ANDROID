@@ -1,60 +1,45 @@
 package com.project.rc_mecha_maint.ui.mas.talleres
-import androidx.room.Room
-import android.content.Context
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Workshop
-import com.project.rc_mecha_maint.data.repository.WorkshopRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-
+import kotlinx.coroutines.withContext
 
 class WorkshopViewModel(app: Application) : AndroidViewModel(app) {
+    private val dao = AppDatabase.getInstance(app).workshopDao()
 
-    private val repo = WorkshopRepository(
-        AppDatabase.getInstance(app).workshopDao()
-    )
+    // 1) Todos los talleres
+    val talleres: LiveData<List<Workshop>> = dao.getAll().asLiveData()
 
-    /** LiveData observado por el fragmento. */
-    val workshops = repo.workshops
+    // 2) Un taller por ID
+    fun getById(id: Long): LiveData<Workshop?> =
+        dao.getById(id).asLiveData()
 
-    init { precargarSiEsPrimeraVez() }
-
-    /** Precarga JSON -> DB si la tabla está vacía. */
-    private fun precargarSiEsPrimeraVez() = viewModelScope.launch(Dispatchers.IO) {
-        if (repo.yaHayDatos()) return@launch
-        repo.precargar(leerJson())
+    // 3) Inserta o actualiza un taller
+    fun saveWorkshop(workshop: Workshop) {
+        viewModelScope.launch {
+            dao.insert(workshop)
+        }
     }
 
-    /** Alta / Edición. */
-    fun save(w: Workshop) = viewModelScope.launch { repo.save(w) }
-
-    /** Borrado. */
-    fun delete(w: Workshop) = viewModelScope.launch { repo.delete(w) }
-
-    /** Lee assets/workshops.json y devuelve lista. */
-    private fun leerJson(): List<Workshop> {
-        val texto = getApplication<Application>()
-            .assets.open("workshops.json")
-            .bufferedReader().use { it.readText() }
-
-        val arr = JSONArray(texto)
-        val list = mutableListOf<Workshop>()
-        for (i in 0 until arr.length()) {
-            val o = arr.getJSONObject(i)
-            list += Workshop(
-                nombre    = o.getString("nombre"),
-                direccion = o.getString("direccion"),
-                latitud   = o.getDouble("latitud"),
-                longitud  = o.getDouble("longitud"),
-                telefono  = o.getString("telefono"),
-                fotoUrl   = o.getString("fotoUrl")
+    // 4) Carga inicial desde assets (JSON)
+    fun loadFromAssets() {
+        viewModelScope.launch {
+            val json = withContext(Dispatchers.IO) {
+                getApplication<Application>().assets
+                    .open("workshops.json")
+                    .bufferedReader().use { it.readText() }
+            }
+            val list: List<Workshop> = Gson().fromJson(
+                json,
+                object : TypeToken<List<Workshop>>() {}.type
             )
+            dao.insertAll(list)
         }
-        return list
     }
 }

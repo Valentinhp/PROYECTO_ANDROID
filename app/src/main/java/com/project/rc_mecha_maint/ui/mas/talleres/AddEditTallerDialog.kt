@@ -2,62 +2,66 @@ package com.project.rc_mecha_maint.ui.mas.talleres
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.project.rc_mecha_maint.databinding.DialogAddEditTallerBinding
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.project.rc_mecha_maint.data.entity.Workshop
+import com.project.rc_mecha_maint.databinding.DialogAddEditTallerBinding
 
 class AddEditTallerDialog : DialogFragment() {
 
-    private lateinit var b: DialogAddEditTallerBinding
-    private val vm by activityViewModels<WorkshopViewModel>()
-    private var taller: Workshop? = null
+    private var _binding: DialogAddEditTallerBinding? = null
+    private val b get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        taller = arguments?.getParcelable(ARG_TALLER)
+    private val args by navArgs<AddEditTallerDialogArgs>()
+    private val vm by viewModels<WorkshopViewModel> {
+        WorkshopViewModelFactory(requireActivity().application)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        b = DialogAddEditTallerBinding.inflate(layoutInflater)
+        _binding = DialogAddEditTallerBinding.inflate(LayoutInflater.from(context))
 
-        // Modo edición: precarga datos
-        taller?.let { t ->
-            b.edtNombre.setText(t.nombre)
-            b.edtDireccion.setText(t.direccion)
-            b.edtTelefono.setText(t.telefono)
-            b.edtLat.setText(t.latitud.toString())
-            b.edtLng.setText(t.longitud.toString())
-            b.edtFoto.setText(t.fotoUrl)
+        // Si viene workshop, precargamos campos
+        val existing = args.workshop
+        existing?.let {
+            b.etName    .setText(it.nombre)
+            b.etAddress .setText(it.direccion)
+            b.etLat     .setText(it.latitud.toString())
+            b.etLng     .setText(it.longitud.toString())
+            b.etPhone   .setText(it.telefono)
+            b.etPhotoUrl.setText(it.fotoUrl)
         }
 
-        return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(if (taller == null) "Nuevo taller" else "Editar taller")
+        return AlertDialog.Builder(requireContext())
+            .setTitle(if (existing == null) "Agregar Taller" else "Editar Taller")
             .setView(b.root)
-            .setPositiveButton("Guardar") { _, _ -> guardar() }
+            .setPositiveButton("Guardar") { _, _ ->
+                val nombre    = b.etName   .text.toString()
+                val direccion = b.etAddress.text.toString()
+                val lat       = b.etLat    .text.toString().toDoubleOrNull() ?: 0.0
+                val lng       = b.etLng    .text.toString().toDoubleOrNull() ?: 0.0
+                val telefono  = b.etPhone  .text.toString()
+                val fotoUrl   = b.etPhotoUrl.text.toString()
+
+                val w = Workshop(
+                    id = existing?.id ?: 0L,
+                    nombre    = nombre,
+                    direccion = direccion,
+                    latitud   = lat,
+                    longitud  = lng,
+                    telefono  = telefono,
+                    fotoUrl   = fotoUrl
+                )
+                vm.saveWorkshop(w)
+            }
             .setNegativeButton("Cancelar", null)
             .create()
     }
 
-    private fun guardar() {
-        val nuevo = Workshop(
-            id        = taller?.id ?: 0,
-            nombre    = b.edtNombre.text.toString(),
-            direccion = b.edtDireccion.text.toString(),
-            latitud   = b.edtLat.text.toString().toDoubleOrNull() ?: 0.0,
-            longitud  = b.edtLng.text.toString().toDoubleOrNull() ?: 0.0,
-            telefono  = b.edtTelefono.text.toString(),
-            fotoUrl   = b.edtFoto.text.toString()
-        )
-        vm.save(nuevo)
-    }
-
-    companion object {
-        private const val ARG_TALLER = "taller"
-        fun nuevaInstancia(taller: Workshop?) =
-            AddEditTallerDialog().apply {
-                arguments = Bundle().apply { putParcelable(ARG_TALLER, taller) }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

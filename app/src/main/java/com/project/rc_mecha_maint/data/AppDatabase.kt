@@ -18,9 +18,9 @@ import com.project.rc_mecha_maint.data.entity.*
         Failure::class,
         UserProfile::class,
         Maintenance::class,
-        AutoparteEntity::class // ✅ Agregado
+        AutoparteEntity::class  // ✅ Incluida la tabla de autopartes
     ],
-    version = 14, // ✅ Aumenta la versión si antes era 13
+    version = 15,    // ✅ Subida de versión para migraciones
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -34,10 +34,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun failureDao(): FailureDao
     abstract fun userProfileDao(): UserProfileDao
     abstract fun maintenanceDao(): MaintenanceDao
-    abstract fun autoparteDao(): AutoparteDao  // ✅ Corregido el nombre del método
+    abstract fun autoparteDao(): AutoparteDao  // ✅ DAO para AutoparteEntity
 
     companion object {
-        @Volatile private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
@@ -46,7 +47,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "app_db"
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration()  // Destruye y recrea DB si cambia versión
                     .build()
                     .also { INSTANCE = it }
             }

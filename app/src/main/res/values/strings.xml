@@ -1,16 +1,46 @@
 <resources>
+    <!-- App -->
     <string name="app_name">RC_MECHA_MAINT_S</string>
+
+    <!-- Navegación -->
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!-- Facturas -->
     <string name="preview_factura">Previsualización de factura</string>
     <string name="miniatura_factura">Miniatura de factura</string>
     <string name="agregar_factura">Agregar factura</string>
+    <string name="edit_invoice">Editar factura</string>
+    <string name="delete_invoice">Eliminar factura</string>
+
+    <!-- Recordatorios -->
+    <string name="add_recordatorio">Agregar nuevo recordatorio</string>
+
+    <!-- Talleres -->
+    <string name="descripcion_taller">Descripción del taller</string>
     <string name="llamar">Llamar</string>
     <string name="ver_mapa">Ver en mapa</string>
-    <string name="buscar">Buscar</string>
-    <string name="descripcion_taller">Descripción del taller</string>
 
+    <!-- Campo detalle taller: foto -->
+    <string name="cd_taller_foto">Foto del taller</string>
+
+    <!-- Botones generales -->
+    <string name="buscar">Buscar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="guardar">Guardar</string>
+
+    <!-- Hints para campos de Taller -->
+    <string name="hint_nombre">Nombre del taller</string>
+    <string name="hint_direccion">Dirección</string>
+    <string name="hint_latitud">Latitud</string>
+    <string name="hint_longitud">Longitud</string>
+    <string name="hint_telefono">Teléfono</string>
+    <string name="hint_foto_url">URL de la foto</string>
+
+
+    <!-- Array de servicios -->
     <string-array name="servicios">
         <item>Cambio de aceite</item>
         <item>Frenos</item>
@@ -18,13 +48,4 @@
         <item>Alineación</item>
         <item>Batería</item>
     </string-array>
-
-    <string name="add_recordatorio">Agregar nuevo recordatorio</string>
-
-    <!-- Añadimos estas dos para los botones de editar/eliminar -->
-    <string name="edit">Editar</string>
-    <string name="delete">Eliminar</string>
-
-    <string name="edit_invoice">Editar factura</string>
-    <string name="delete_invoice">Eliminar factura</string>
 </resources>

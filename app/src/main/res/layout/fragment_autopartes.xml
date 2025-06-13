@@ -1,26 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etBuscarPieza"
+    <!-- Campo de búsqueda + botón -->
+    <LinearLayout
+        android:id="@+id/searchBar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etBuscarPieza"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Clave o descripción"
+            android:imeOptions="actionSearch"/>
+
+        <Button
+            android:id="@+id/btnBuscarPiezas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar"/>
+    </LinearLayout>
+
+    <!-- Progreso al cargar JSON -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:layout_gravity="center"/>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <TextView
+        android:id="@+id/tvNoResults"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Clave o descripción"/>
+        android:text="No se encontraron piezas"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-    <Button
-        android:id="@+id/btnBuscarPiezas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buscar pieza"/>
-
+    <!-- Lista de resultados -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAutopartes"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"/>
+
+</FrameLayout>

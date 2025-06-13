@@ -1,45 +1,49 @@
 package com.project.rc_mecha_maint.ui.mas.talleres
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.project.rc_mecha_maint.databinding.FragmentDetalleTallerBinding
-import com.project.rc_mecha_maint.data.entity.Workshop
 
 class FragmentDetalleTaller : Fragment() {
 
-    private var _b: FragmentDetalleTallerBinding? = null
-    private val b get() = _b!!
+    private var _binding: FragmentDetalleTallerBinding? = null
+    private val b get() = _binding!!
+
     private val args by navArgs<FragmentDetalleTallerArgs>()
-    private val vm by activityViewModels<WorkshopViewModel>()
+    private val workshop by lazy { args.workshop }
 
-    override fun onCreateView(i: LayoutInflater, c: ViewGroup?, s: Bundle?) =
-        FragmentDetalleTallerBinding.inflate(i, c, false).also { _b = it }.root
-
-    override fun onViewCreated(v: View, s: Bundle?) {
-        vm.workshops.observe(viewLifecycleOwner) { lista ->
-            lista.find { it.id == args.tallerId }?.let { mostrar(it) }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDetalleTallerBinding.inflate(inflater, container, false)
+        return b.root
     }
 
-    private fun mostrar(w: Workshop) = with(b) {
-        txtNombre.text = w.nombre
-        txtDireccion.text = w.direccion
-        imgFoto.load(w.fotoUrl) { crossfade(true) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        b.tvName   .text = workshop.nombre
+        b.tvAddress.text = workshop.direccion
+        b.tvPhone  .text = workshop.telefono
+        b.ivPhoto  .load(workshop.fotoUrl)
 
-        btnCall.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${w.telefono}")))
-        }
-        btnMaps.setOnClickListener {
-            val geo = "geo:${w.latitud},${w.longitud}?q=${Uri.encode(w.nombre)}"
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(geo)))
-        }
+        b.btnLlamar.setOnClickListener { llamarNumero(workshop.telefono) }
+        b.btnMapa  .setOnClickListener { abrirMapa(workshop.latitud, workshop.longitud) }
     }
 
-    override fun onDestroyView() { super.onDestroyView(); _b = null }
+    private fun llamarNumero(tel: String) {
+        // … implementa Intent.ACTION_DIAL con Uri.parse("tel:$tel")
+    }
+
+    private fun abrirMapa(lat: Double, lng: Double) {
+        // … implementa geo Intent con Uri.parse("geo:$lat,$lng?q=$lat,$lng(label)")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

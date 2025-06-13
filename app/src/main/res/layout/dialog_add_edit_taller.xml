@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="16dp"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -10,43 +11,44 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/edtNombre"
-            android:hint="Nombre"
-            android:inputType="textPersonName"
+            android:id="@+id/etName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_nombre"/>
 
         <EditText
-            android:id="@+id/edtDireccion"
-            android:hint="Dirección"
+            android:id="@+id/etAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_direccion"/>
 
         <EditText
-            android:id="@+id/edtTelefono"
-            android:hint="Teléfono"
+            android:id="@+id/etLat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_latitud"/>
+
+        <EditText
+            android:id="@+id/etLng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_longitud"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:hint="@string/hint_telefono"/>
 
         <EditText
-            android:id="@+id/edtLat"
-            android:hint="Latitud"
-            android:inputType="numberDecimal"
+            android:id="@+id/etPhotoUrl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:hint="@string/hint_foto_url"/>
 
-        <EditText
-            android:id="@+id/edtLng"
-            android:hint="Longitud"
-            android:inputType="numberDecimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/edtFoto"
-            android:hint="URL foto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

@@ -1,67 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="10dp">
-
-<LinearLayout
-android:orientation="horizontal"
-android:padding="8dp"
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-
-<!-- Foto del taller: agregué contentDescription -->
-<ImageView
-    android:id="@+id/imgFoto"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:scaleType="centerCrop"
-    android:src="@drawable/ic_workshop"
-    android:contentDescription="@string/descripcion_taller" />
-
-<!-- Nombre y dirección, con peso para tomar el espacio sobrante -->
-<LinearLayout
     android:orientation="vertical"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_marginStart="8dp">
+    android:padding="12dp"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/txtNombre"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvNombreTaller"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/txtDireccion"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvDireccionTaller"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13sp" />
+        android:textSize="14sp"/>
+
+    <!-- Botones de acción -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnLlamar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Llamar"/>
+
+        <Button
+            android:id="@+id/btnCotizar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cotizar"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
 </LinearLayout>
-
-<!-- Botón llamar: ahora con ancho/alto definidos -->
-<ImageButton
-    android:id="@+id/btnCall"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_call"
-    android:background="@null"
-    android:contentDescription="@string/llamar" />
-
-<!-- Botón ver mapa: ahora con ancho/alto definidos -->
-<ImageButton
-    android:id="@+id/btnMapa"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_map"
-    android:background="@null"
-    android:contentDescription="@string/ver_mapa" />
-
-</LinearLayout>
-    </androidx.cardview.widget.CardView>

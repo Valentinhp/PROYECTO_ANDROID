@@ -37,8 +37,7 @@
         <argument
             android:name="vehicle"
             app:argType="com.project.rc_mecha_maint.data.entity.Vehicle"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <action
             android:id="@+id/action_nuevoVehiculo_to_vehiculos"
             app:destination="@id/nav_vehiculos"
@@ -66,8 +65,7 @@
         <argument
             android:name="reminder"
             app:argType="com.project.rc_mecha_maint.data.entity.Reminder"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <action
             android:id="@+id/action_nuevoRecordatorio_to_recordatorios"
             app:destination="@id/nav_recordatorios"
@@ -135,19 +133,33 @@
             app:destination="@id/nav_reportes" />
     </fragment>
 
-    <!-- 11. Comparador (REHECHO) -->
+    <!-- 11. Comparador -->
     <fragment
         android:id="@+id/nav_comparador"
         android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparadorContainer"
         android:label="Comparador"
         tools:layout="@layout/fragment_comparador">
-        <!-- Si necesitas navegación desde Comparador a DetalleTaller, déjala aquí -->
+        <argument
+            android:name="workshop"
+            app:argType="com.project.rc_mecha_maint.data.entity.Workshop"
+            app:nullable="true" />
         <action
             android:id="@+id/action_comparador_to_detalleTaller"
             app:destination="@id/fragmentDetalleTaller" />
     </fragment>
 
-    <!-- Acciones globales -->
+    <!-- diálogo Añadir/Editar Taller -->
+    <dialog
+        android:id="@+id/addEditTallerDialog"
+        android:name="com.project.rc_mecha_maint.ui.mas.talleres.AddEditTallerDialog"
+        tools:layout="@layout/dialog_add_edit_taller">
+        <argument
+            android:name="workshop"
+            app:argType="com.project.rc_mecha_maint.data.entity.Workshop"
+            app:nullable="true" />
+    </dialog>
+
+    <!-- acciones globales -->
     <action
         android:id="@+id/action_global_nav_comparador"
         app:destination="@id/nav_comparador"
@@ -164,6 +176,9 @@
         android:label="Talleres"
         tools:layout="@layout/fragment_talleres">
         <action
+            android:id="@+id/action_talleres_to_addEditTallerDialog"
+            app:destination="@id/addEditTallerDialog" />
+        <action
             android:id="@+id/action_talleres_to_detalleTaller"
             app:destination="@id/fragmentDetalleTaller" />
     </fragment>
@@ -175,8 +190,8 @@
         android:label="Detalle Taller"
         tools:layout="@layout/fragment_detalle_taller">
         <argument
-            android:name="tallerId"
-            app:argType="long" />
+            android:name="workshop"
+            app:argType="com.project.rc_mecha_maint.data.entity.Workshop" />
     </fragment>
 
     <!-- 14. Diagnóstico -->
