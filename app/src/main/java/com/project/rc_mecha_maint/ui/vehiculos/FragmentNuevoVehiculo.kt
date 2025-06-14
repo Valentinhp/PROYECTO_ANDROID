@@ -45,6 +45,7 @@ class FragmentNuevoVehiculo : Fragment() {
     private lateinit var buttonSave: Button
 
     private var photoUri: Uri? = null
+    private var vehicleToEdit: Vehicle? = null
 
     // Cámara
     private val takePictureLauncher = registerForActivityResult(
@@ -67,8 +68,6 @@ class FragmentNuevoVehiculo : Fragment() {
         }
     }
 
-    private var vehicleToEdit: Vehicle? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -88,8 +87,13 @@ class FragmentNuevoVehiculo : Fragment() {
         editTextMatricula  = view.findViewById(R.id.editTextMatricula)
         buttonSave         = view.findViewById(R.id.buttonSave)
 
-        // Editar si viene Vehicle
-        vehicleToEdit = args.vehicle
+        // Intentar obtener vehicle, si existe es edición
+        try {
+            vehicleToEdit = args.vehicle
+        } catch (_: Exception) {
+            vehicleToEdit = null
+        }
+
         vehicleToEdit?.let { v ->
             editTextMarca.setText(v.marca)
             editTextModelo.setText(v.modelo)
@@ -101,7 +105,6 @@ class FragmentNuevoVehiculo : Fragment() {
             }
         }
 
-        // Disparar cámara
         btnTakePhoto.setOnClickListener {
             val file = createImageFile()
             photoUri = FileProvider.getUriForFile(
@@ -112,12 +115,10 @@ class FragmentNuevoVehiculo : Fragment() {
             takePictureLauncher.launch(photoUri)
         }
 
-        // Elegir de galería
         btnChooseGallery.setOnClickListener {
             pickGalleryLauncher.launch("image/*")
         }
 
-        // Guardar
         buttonSave.setOnClickListener { saveVehicle() }
 
         return view
