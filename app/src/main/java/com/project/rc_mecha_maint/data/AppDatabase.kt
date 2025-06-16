@@ -20,7 +20,7 @@ import com.project.rc_mecha_maint.data.entity.*
         Maintenance::class,
         AutoparteEntity::class  // ✅ Incluida la tabla de autopartes
     ],
-    version = 15,    // ✅ Subida de versión para migraciones
+    version = 16,    // ✅ Subida de versión para migraciones
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

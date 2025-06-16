@@ -14,6 +14,10 @@ import com.bumptech.glide.Glide
 import com.project.rc_mecha_maint.R
 import com.project.rc_mecha_maint.data.entity.Vehicle
 
+/**
+ * Adapter para mostrar la lista de vehículos,
+ * con botones de editar y eliminar.
+ */
 class VehicleAdapter(
     private val onEditClick: (Vehicle) -> Unit,
     private val onDeleteClick: (Vehicle) -> Unit
@@ -29,15 +33,18 @@ class VehicleAdapter(
         holder.bind(getItem(position))
 
     inner class VehicleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imgThumb  = itemView.findViewById<ImageView>(R.id.imgVehicleThumbnail)
-        private val tvName    = itemView.findViewById<TextView>(R.id.tvVehicleName)
-        private val tvInfo    = itemView.findViewById<TextView>(R.id.tvVehicleInfo)
-        private val btnEdit   = itemView.findViewById<ImageButton>(R.id.buttonEdit)
-        private val btnDelete = itemView.findViewById<ImageButton>(R.id.buttonDelete)
+        // Vistas del ítem
+        private val imgThumb            = itemView.findViewById<ImageView>(R.id.imgVehicleThumbnail)
+        private val tvName              = itemView.findViewById<TextView>(R.id.tvVehicleName)
+        private val tvInfo              = itemView.findViewById<TextView>(R.id.tvVehicleInfo)
+        private val tvKilometraje       = itemView.findViewById<TextView>(R.id.tvKilometraje)
+        private val tvTipoCombustible   = itemView.findViewById<TextView>(R.id.tvTipoCombustible)
+        private val btnEdit             = itemView.findViewById<ImageButton>(R.id.buttonEdit)
+        private val btnDelete           = itemView.findViewById<ImageButton>(R.id.buttonDelete)
 
         fun bind(vehicle: Vehicle) {
-            // Carga con Glide
-            if (vehicle.photoUri != null) {
+            // Cargar miniatura con Glide (o icono por defecto)
+            if (!vehicle.photoUri.isNullOrBlank()) {
                 Glide.with(itemView)
                     .load(Uri.parse(vehicle.photoUri))
                     .placeholder(R.drawable.ic_directions_car)
@@ -48,15 +55,20 @@ class VehicleAdapter(
                 imgThumb.setImageResource(R.drawable.ic_directions_car)
             }
 
-            tvName.text = "${vehicle.marca} ${vehicle.modelo}"
-            tvInfo.text = "Año: ${vehicle.anio} • Matrícula: ${vehicle.matricula}"
+            // Mostrar datos
+            tvName.text            = "${vehicle.marca} ${vehicle.modelo}"
+            tvInfo.text            = "Año: ${vehicle.anio} • Matrícula: ${vehicle.matricula}"
+            tvKilometraje.text     = "${vehicle.kilometraje} km"
+            tvTipoCombustible.text = vehicle.tipoCombustible
 
+            // Click listeners
             btnEdit.setOnClickListener   { onEditClick(vehicle) }
             btnDelete.setOnClickListener { onDeleteClick(vehicle) }
         }
     }
 }
 
+/** Callback para saber cuándo un ítem cambió y optimizar refresco */
 private class VehicleDiffCallback : DiffUtil.ItemCallback<Vehicle>() {
     override fun areItemsTheSame(old: Vehicle, new: Vehicle)    = old.id == new.id
     override fun areContentsTheSame(old: Vehicle, new: Vehicle) = old == new

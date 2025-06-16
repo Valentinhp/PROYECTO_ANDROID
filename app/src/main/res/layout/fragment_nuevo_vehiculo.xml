@@ -118,6 +118,41 @@
                 android:textColor="@color/onBackground"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- **Nuevo: Campo Kilometraje** -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutKilometraje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kilometraje"
+            android:layout_marginTop="12dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextKilometraje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/onBackground"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- **Nuevo: Campo Tipo de Combustible** -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutTipoCombustible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de combustible"
+            android:layout_marginTop="12dp"
+            app:boxStrokeColor="@color/colorOutline"
+            app:hintTextColor="@color/colorOutline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTipoCombustible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/onBackground"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Botón Guardar -->
         <Button
             android:id="@+id/buttonSave"

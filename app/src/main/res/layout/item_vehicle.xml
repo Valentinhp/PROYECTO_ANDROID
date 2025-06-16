@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
+            <!-- Marca y Modelo -->
             <TextView
                 android:id="@+id/tvVehicleName"
                 android:layout_width="wrap_content"
@@ -41,6 +42,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/onSurface"/>
 
+            <!-- Año y Matrícula -->
             <TextView
                 android:id="@+id/tvVehicleInfo"
                 android:layout_width="wrap_content"
@@ -49,6 +51,27 @@
                 android:textSize="14sp"
                 android:textColor="@color/colorOutline"
                 android:layout_marginTop="4dp"/>
+
+            <!-- NUEVO: Kilometraje -->
+            <TextView
+                android:id="@+id/tvKilometraje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 km"
+                android:textSize="14sp"
+                android:textColor="@color/colorOutline"
+                android:layout_marginTop="4dp"/>
+
+            <!-- NUEVO: Tipo de Combustible -->
+            <TextView
+                android:id="@+id/tvTipoCombustible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gasolina"
+                android:textSize="14sp"
+                android:textColor="@color/colorOutline"
+                android:layout_marginTop="2dp"/>
+
         </LinearLayout>
 
         <!-- Botones de acción -->
@@ -70,5 +93,6 @@
             app:tint="@color/colorSecondaryVariant"
             android:contentDescription="Eliminar vehículo"
             android:layout_marginStart="8dp"/>
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
