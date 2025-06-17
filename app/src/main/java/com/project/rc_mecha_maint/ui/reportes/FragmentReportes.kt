@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.project.rc_mecha_maint.databinding.FragmentReportesBinding
 import java.util.*
 
@@ -15,6 +16,12 @@ class FragmentReportes : Fragment() {
     private var _binding: FragmentReportesBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ReportesViewModel
+
+    // Nuevas variables para saber cuándo ya se cargaron todos los datos
+    private var gastosCargados = 0
+    private var facturasCargadas = 0
+    private val entriesGastos = mutableListOf<Entry>()
+    private val entriesFacturas = mutableListOf<BarEntry>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentReportesBinding.inflate(inflater, container, false)
@@ -25,17 +32,14 @@ class FragmentReportes : Fragment() {
     }
 
     private fun setupCharts() {
-        // Obtenemos fecha actual
+        // Obtenemos la fecha actual
         val ahora = Calendar.getInstance()
 
-        val entriesGastos = mutableListOf<Entry>()
-        val entriesFacturas = mutableListOf<BarEntry>()
-
-        // Iteramos los últimos 6 meses (0 = mes actual, -1 = mes pasado, ...)
+        // Iteramos los últimos 6 meses
         for (i in 5 downTo 0) {
             val cal = Calendar.getInstance().apply { add(Calendar.MONTH, -i) }
 
-            // Inicio: día 1 a las 00:00:00.000
+            // Rango de fechas del mes (inicio y fin)
             cal.set(Calendar.DAY_OF_MONTH, 1)
             cal.set(Calendar.HOUR_OF_DAY, 0)
             cal.set(Calendar.MINUTE, 0)
@@ -43,7 +47,6 @@ class FragmentReportes : Fragment() {
             cal.set(Calendar.MILLISECOND, 0)
             val inicio = cal.timeInMillis
 
-            // Fin: último día a las 23:59:59.999
             cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH))
             cal.set(Calendar.HOUR_OF_DAY, 23)
             cal.set(Calendar.MINUTE, 59)
@@ -51,18 +54,28 @@ class FragmentReportes : Fragment() {
             cal.set(Calendar.MILLISECOND, 999)
             val fin = cal.timeInMillis
 
-            // Observamos gasto y factura para este mes
+            // Consulta gastos
             viewModel.getTotalCost(inicio, fin).observe(viewLifecycleOwner) { total ->
                 entriesGastos.add(Entry((5 - i).toFloat(), (total ?: 0.0).toFloat()))
-                if (entriesGastos.size == 6) drawLineChart(entriesGastos)
+                gastosCargados++
+                if (gastosCargados == 6) {
+                    entriesGastos.sortBy { it.x }
+                    drawLineChart(entriesGastos)
+                }
             }
+
+            // Consulta facturas
             viewModel.getInvoiceCount(inicio, fin).observe(viewLifecycleOwner) { count ->
                 entriesFacturas.add(BarEntry((5 - i).toFloat(), count.toFloat()))
-                if (entriesFacturas.size == 6) drawBarChart(entriesFacturas)
+                facturasCargadas++
+                if (facturasCargadas == 6) {
+                    entriesFacturas.sortBy { it.x }
+                    drawBarChart(entriesFacturas)
+                }
             }
         }
 
-        // Total de este mes (i = 0)
+        // Mostrar el total gastado este mes
         val calMes = Calendar.getInstance().apply {
             set(Calendar.DAY_OF_MONTH, 1)
             set(Calendar.HOUR_OF_DAY, 0)
@@ -84,14 +97,18 @@ class FragmentReportes : Fragment() {
     }
 
     private fun drawLineChart(data: List<Entry>) {
-        val ds = LineDataSet(data, "Gastos últimos 6 meses")
-        binding.lineChartGastos.data = LineData(ds)
-        binding.lineChartGastos.invalidate() // refresca
+        val dataSet = LineDataSet(data, "Gastos últimos 6 meses")
+        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+        dataSet.valueTextSize = 12f
+        binding.lineChartGastos.data = LineData(dataSet)
+        binding.lineChartGastos.invalidate()
     }
 
     private fun drawBarChart(data: List<BarEntry>) {
-        val ds = BarDataSet(data, "Facturas últimos 6 meses")
-        binding.barChartFacturas.data = BarData(ds)
+        val dataSet = BarDataSet(data, "Facturas últimos 6 meses")
+        dataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        dataSet.valueTextSize = 12f
+        binding.barChartFacturas.data = BarData(dataSet)
         binding.barChartFacturas.invalidate()
     }
 
