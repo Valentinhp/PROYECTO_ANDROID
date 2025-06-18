@@ -1,3 +1,4 @@
+// app/src/main/java/com/project/rc_mecha_maint/MainActivity.kt
 package com.project.rc_mecha_maint
 
 import android.os.Bundle
@@ -6,11 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.appbar.MaterialToolbar
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Failure
 import com.project.rc_mecha_maint.data.entity.Symptom
+import com.project.rc_mecha_maint.data.entity.Workshop
 import com.project.rc_mecha_maint.databinding.ActivityMainBinding
 import com.project.rc_mecha_maint.ui.mas.MasBottomSheet
 import kotlinx.coroutines.Dispatchers
@@ -23,22 +25,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 0) Inflar el layout con ViewBinding
+
+        // 0) Inflar layout con ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1) Sembrar datos de diagnóstico desde assets/failures.json
+        // 1) Sembrar datos de diagnóstico y talleres
         seedFromAssets()
 
-        // 2) Configurar la Toolbar como ActionBar
-        //    a) Encuentra el view <MaterialToolbar> en el binding (debe tener android:id="@+id/toolbar")
-        val toolbar = binding.toolbar as MaterialToolbar
-        //    b) Indica a AppCompatActivity que use este toolbar
-        setSupportActionBar(toolbar)
+        // 2) Configurar toolbar como ActionBar
+        setSupportActionBar(binding.toolbar)
 
         // 3) Configurar NavController y AppBarConfiguration
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        //    Los IDs de los fragments que son raíz (no muestran flecha Up)
         val appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.nav_inicio,
@@ -47,44 +46,50 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_reportes
             )
         )
-        //    Conecta la ActionBar (toolbar) con el NavController
         setupActionBarWithNavController(navController, appBarConfig)
 
-        // 4) BottomNavigationView: manejar clicks
-        val navView: BottomNavigationView = binding.navView
-        navView.setOnItemSelectedListener { item ->
+        // 4) Manejar clicks del BottomNavigationView manualmente
+        binding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
+                // "Más": abre el BottomSheet
                 R.id.nav_mas -> {
                     MasBottomSheet().show(supportFragmentManager, "MasBottomSheet")
                     true
                 }
-                else -> {
+                // Resto de pestañas: navega al fragmento correspondiente
+                R.id.nav_inicio,
+                R.id.nav_vehiculos,
+                R.id.nav_recordatorios,
+                R.id.nav_reportes -> {
                     navController.navigate(item.itemId)
                     true
                 }
+                else -> false
             }
         }
     }
 
-    // Habilita la flecha “Up” en la Toolbar
+    // Habilita la flecha "Up" en la toolbar
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     /**
-     * Lee assets/failures.json y carga síntomas y fallas en Room
+     * Lee failures.json y talleres.json desde assets,
+     * e inserta síntomas, fallas y talleres en Room.
      */
     private fun seedFromAssets() {
         val db = AppDatabase.getInstance(this)
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val text = assets.open("failures.json")
+                // — Failures & Symptoms —
+                val failuresText = assets.open("failures.json")
                     .bufferedReader()
                     .use { it.readText() }
-                val root = JSONObject(text)
+                val root = JSONObject(failuresText)
 
-                // Crea lista de Symptom
+                // Symptoms
                 val syArr = root.getJSONArray("symptoms")
                 val symptoms = List(syArr.length()) { i ->
                     val o = syArr.getJSONObject(i)
@@ -94,27 +99,32 @@ class MainActivity : AppCompatActivity() {
                         categoria = o.getString("categoria")
                     )
                 }
+                db.symptomDao().insertAll(symptoms)
 
-                // Crea lista de Failure
+                // Failures
                 val faArr = root.getJSONArray("failures")
                 val failures = List(faArr.length()) { i ->
                     val o = faArr.getJSONObject(i)
-                    val sintomasJSON = o.getJSONArray("sintomas").toString()
                     Failure(
                         id            = o.getLong("id"),
                         nombreFalla   = o.getString("nombreFalla"),
                         descripcion   = o.getString("descripcion"),
                         recomendacion = o.getString("recomendacion"),
-                        sintomasJSON  = sintomasJSON
+                        sintomasJSON  = o.getJSONArray("sintomas").toString()
                     )
                 }
-
-                // Inserta (o reemplaza) en la base
-                db.symptomDao().insertAll(symptoms)
                 db.failureDao().insertAll(failures)
 
+                // — Talleres —
+                val talleresText = assets.open("talleres.json")
+                    .bufferedReader()
+                    .use { it.readText() }
+                val talleresType = object : TypeToken<List<Workshop>>() {}.type
+                val talleres: List<Workshop> = Gson().fromJson(talleresText, talleresType)
+                db.workshopDao().insertAll(talleres)
+
             } catch (e: Exception) {
-                e.printStackTrace() // Depuración en caso de error
+                e.printStackTrace()
             }
         }
     }

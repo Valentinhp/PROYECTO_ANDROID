@@ -136,17 +136,9 @@
     <!-- 11. Comparador -->
     <fragment
         android:id="@+id/nav_comparador"
-        android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparadorContainer"
+        android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
         android:label="Comparador"
-        tools:layout="@layout/fragment_comparador">
-        <argument
-            android:name="workshop"
-            app:argType="com.project.rc_mecha_maint.data.entity.Workshop"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_comparador_to_detalleTaller"
-            app:destination="@id/fragmentDetalleTaller" />
-    </fragment>
+        tools:layout="@layout/fragment_comparador" />
 
     <!-- diálogo Añadir/Editar Taller -->
     <dialog

@@ -1,5 +1,20 @@
 [
-  {"clave":"P-001","descripcion":"Filtro de aceite","precio":120.0,"proveedor":"Taller A"},
-  {"clave":"P-002","descripcion":"Pastillas de freno","precio":350.0,"proveedor":"Taller B"},
-  {"clave":"P-003","descripcion":"Bujía NGK","precio":45.0,"proveedor":"Taller C"}
+  {
+    "clave": "FILTRO_ACEITE",
+    "descripcion": "Filtro de aceite 10W-40",
+    "precio": 250.0,
+    "workshopId": 1
+  },
+  {
+    "clave": "FILTRO_ACEITE",
+    "descripcion": "Filtro de aceite 10W-40",
+    "precio": 270.0,
+    "workshopId": 2
+  },
+  {
+    "clave": "PASTILLAS_FRENO",
+    "descripcion": "Pastillas de freno delanteras",
+    "precio": 450.0,
+    "workshopId": 1
+  }
 ]

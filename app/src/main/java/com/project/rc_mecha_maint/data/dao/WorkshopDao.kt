@@ -1,3 +1,4 @@
+// app/src/main/java/com/project/rc_mecha_maint/data/dao/WorkshopDao.kt
 package com.project.rc_mecha_maint.data.dao
 
 import androidx.room.*
@@ -8,6 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface WorkshopDao {
     @Query("SELECT * FROM workshop_table")
     fun getAll(): Flow<List<Workshop>>
+
+    // Nuevo método para lectura síncrona de todos los talleres
+    @Query("SELECT * FROM workshop_table")
+    suspend fun getAllSync(): List<Workshop>
 
     @Query("SELECT * FROM workshop_table WHERE id = :id LIMIT 1")
     fun getById(id: Long): Flow<Workshop?>
@@ -26,5 +31,4 @@ interface WorkshopDao {
 
     @Query("SELECT COUNT(*) FROM workshop_table")
     fun count(): Flow<Int>
-
 }
