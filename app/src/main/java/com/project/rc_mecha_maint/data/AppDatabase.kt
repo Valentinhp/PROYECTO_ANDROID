@@ -20,7 +20,7 @@ import com.project.rc_mecha_maint.data.entity.*
         Maintenance::class,
         AutoparteEntity::class
     ],
-    version = 21,           // <-- Incrementado a 17
+    version = 22,           // <-- Incrementado a 17
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

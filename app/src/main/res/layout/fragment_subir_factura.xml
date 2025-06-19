@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="8dp">
 
-        <!-- ImageView para previsualizar la foto -->
+        <!-- Vista previa de la imagen -->
         <ImageView
             android:id="@+id/imagePreview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/preview_factura"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"
+            android:contentDescription="@string/miniatura_factura"
+            android:layout_marginBottom="12dp" />
 
-        <!-- Botones para “Tomar foto” o “Elegir de galería” -->
+        <!-- Botones Tomar foto / Galería -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:gravity="center"
+            android:layout_marginBottom="12dp">
 
             <Button
                 android:id="@+id/btnTomarFoto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tomar foto" />
+                android:text="Tomar Foto" />
 
             <Button
                 android:id="@+id/btnElegirGaleria"
@@ -39,23 +43,51 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Elegir de galería" />
+                android:text="Galería" />
         </LinearLayout>
 
-        <!-- Botón para procesar OCR -->
+        <!-- Botón Procesar OCR -->
         <Button
             android:id="@+id/btnProcesarOCR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:text="Procesar OCR" />
 
-        <!-- Campo editable para el monto extraído -->
+        <!-- Concepto -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Monto">
+            android:hint="Concepto"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editConcepto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Fecha (añadido) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFechaOCR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha (dd/MM/yyyy)"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFechaOCR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:importantForAutofill="no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Monto -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Monto"
+            android:layout_marginTop="12dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editMontoOCR"
@@ -64,12 +96,64 @@
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botón para guardar la factura -->
+        <!-- Categoría -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categoría"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Taller -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Taller"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTaller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Calificación -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calificación"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="0"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Cotización -->
+        <CheckBox
+            android:id="@+id/checkCotizacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Es solo una cotización?"
+            android:layout_marginTop="8dp" />
+
+        <!-- Botón Guardar -->
         <Button
             android:id="@+id/btnGuardarFactura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Guardar" />
+            android:text="Guardar"
+            android:layout_marginTop="24dp" />
+
     </LinearLayout>
 </ScrollView>

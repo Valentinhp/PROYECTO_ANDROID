@@ -5,204 +5,230 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import java.text.Normalizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.project.rc_mecha_maint.R
 import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Invoice
-import com.project.rc_mecha_maint.data.repository.InvoiceRepository
-import com.project.rc_mecha_maint.ui.mas.facturas.InvoiceViewModel
-import com.project.rc_mecha_maint.ui.mas.facturas.InvoiceViewModelFactory
+import com.project.rc_mecha_maint.databinding.FragmentSubirFacturaBinding
+import kotlinx.coroutines.launch
 import java.io.File
-import java.util.regex.Pattern
 
 class FragmentSubirFactura : Fragment() {
 
-    // 1) ViewModel y argumento historyId
-    private lateinit var viewModel: InvoiceViewModel
-    private var historyId: Long = 0L
-
-    // 2) Vistas
-    private lateinit var imagePreview: ImageView
-    private lateinit var btnTomarFoto: Button
-    private lateinit var btnElegirGaleria: Button
-    private lateinit var btnProcesarOCR: Button
-    private lateinit var editMontoOCR: TextInputEditText
-    private lateinit var btnGuardarFactura: Button
+    private var _binding: FragmentSubirFacturaBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var imageUri: Uri
+    private var historyId: Long = 0L
+    private lateinit var talleresNombres: List<String>
 
-    // 3) Lanzador de permisos de cámara
-    private val permisoCamaraLauncher = registerForActivityResult(
+    private val permisoCamara = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { concedido ->
-        if (concedido) abrirCamara()
-        else Toast.makeText(requireContext(),
-            "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
-    }
+    ) { granted -> if (granted) abrirCamara() else toast("Permiso de cámara denegado") }
 
-    // 4) Lanzador para tomar foto
-    private val tomarFotoLauncher = registerForActivityResult(
+    private val fotoLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
-    ) { exito ->
-        if (exito) mostrarImagen()
-        else Toast.makeText(requireContext(),
-            "No se tomó la foto", Toast.LENGTH_SHORT).show()
-    }
+    ) { ok -> if (ok) mostrarImagen() else toast("No se tomó la foto") }
 
-    // 5) Lanzador para elegir imagen de galería
     private val galeriaLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let {
-            imageUri = it
-            mostrarImagen()
-        }
-    }
+    ) { uri: Uri? -> uri?.let { imageUri = it; mostrarImagen() } }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_subir_factura, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // 6) Inicializa ViewModel con historyId
-        historyId = arguments?.getLong(FragmentFacturas.ARG_HISTORY_ID) ?: 0L
-        val dao  = AppDatabase.getInstance(requireContext()).invoiceDao()
-        val repo = InvoiceRepository(dao)
-        viewModel = ViewModelProvider(
-            this,
-            InvoiceViewModelFactory(repo)
-        )[InvoiceViewModel::class.java]
-
-        // 7) Conecta vistas
-        imagePreview      = view.findViewById(R.id.imagePreview)
-        btnTomarFoto      = view.findViewById(R.id.btnTomarFoto)
-        btnElegirGaleria  = view.findViewById(R.id.btnElegirGaleria)
-        btnProcesarOCR    = view.findViewById(R.id.btnProcesarOCR)
-        editMontoOCR      = view.findViewById(R.id.editMontoOCR)
-        btnGuardarFactura = view.findViewById(R.id.btnGuardarFactura)
-
-        // 8) Botones iniciales
-        btnProcesarOCR.isEnabled    = false
-        btnGuardarFactura.isEnabled = false
-
-        // 9) Listeners
-        btnTomarFoto.setOnClickListener { pedirPermisoOCamara() }
-        btnElegirGaleria.setOnClickListener { galeriaLauncher.launch("image/*") }
-        btnProcesarOCR.setOnClickListener { procesarOCR() }
-        btnGuardarFactura.setOnClickListener { guardarFactura() }
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSubirFacturaBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    // -- Gestión de permisos y cámara --
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        historyId = arguments?.getLong("historyId") ?: 0L
+
+        // Spinner de categorías (añadido "Mantenimiento")
+        val categorias = listOf(
+            "Aceite", "Frenos", "Motor",
+            "Suspensión", "Llantas", "Mantenimiento", "Otro"
+        )
+        binding.spinnerCategoria.adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categorias)
+
+        lifecycleScope.launch {
+            val dao      = AppDatabase.getInstance(requireContext()).workshopDao()
+            val talleres = dao.getAllSync()
+            talleresNombres = talleres.map { it.nombre }
+
+            binding.spinnerTaller.adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, talleresNombres)
+
+            binding.btnGuardarFactura.setOnClickListener { guardarFactura(talleres) }
+        }
+
+        binding.btnTomarFoto.setOnClickListener { pedirPermisoOCamara() }
+        binding.btnElegirGaleria.setOnClickListener { galeriaLauncher.launch("image/*") }
+        binding.btnProcesarOCR.setOnClickListener { procesarOCR() }
+    }
 
     private fun pedirPermisoOCamara() {
-        val permiso = ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.CAMERA
-        )
-        if (permiso == PackageManager.PERMISSION_GRANTED) {
-            abrirCamara()
-        } else {
-            permisoCamaraLauncher.launch(Manifest.permission.CAMERA)
-        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) abrirCamara()
+        else permisoCamara.launch(Manifest.permission.CAMERA)
     }
 
     private fun abrirCamara() {
-        // Nombre único para el archivo
-        val nombreArchivo = "factura_${System.currentTimeMillis()}.jpg"
-        val archivo = File(requireContext().cacheDir, nombreArchivo)
-
-        // -----------------------------------
-        // Aquí va LA LÍNEA CLAVE CORREGIDA:
-        // -----------------------------------
-        val authority = "${requireContext().packageName}.fileprovider"
-        imageUri = FileProvider.getUriForFile(
-            requireContext(),
-            authority,   // ¡debe coincidir con AndroidManifest!
-            archivo
+        val archivo  = File(requireContext().cacheDir, "fact_${System.currentTimeMillis()}.jpg")
+        imageUri     = FileProvider.getUriForFile(
+            requireContext(), "${requireContext().packageName}.fileprovider", archivo
         )
-
-        tomarFotoLauncher.launch(imageUri)
+        fotoLauncher.launch(imageUri)
     }
 
-    private fun mostrarImagen() {
-        try {
-            requireContext().contentResolver.openInputStream(imageUri).use { stream ->
-                val bmp = BitmapFactory.decodeStream(stream)
-                imagePreview.setImageBitmap(bmp)
-            }
-            btnProcesarOCR.isEnabled    = true
-            btnGuardarFactura.isEnabled = true
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(),
-                "Error al cargar la imagen", Toast.LENGTH_SHORT).show()
+    private fun mostrarImagen() = try {
+        requireContext().contentResolver.openInputStream(imageUri).use { stream ->
+            binding.imagePreview.setImageBitmap(BitmapFactory.decodeStream(stream))
         }
+    } catch (e: Exception) {
+        toast("Error al cargar imagen")
     }
-
-    // -- Procesamiento OCR --
 
     private fun procesarOCR() {
         try {
-            val imagen = InputImage.fromFilePath(requireContext(), imageUri)
-            val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-            recognizer.process(imagen)
-                .addOnSuccessListener { resultado ->
-                    val texto = resultado.text
-                    val patrón = Pattern.compile("\\d+[.,]?\\d*")
-                    val matcher = patrón.matcher(texto)
-                    if (matcher.find()) {
-                        val monto = matcher.group().replace(",", ".")
-                        editMontoOCR.setText(monto)
-                        Toast.makeText(requireContext(),
-                            "Monto detectado: $monto", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(),
-                            "No se encontró monto", Toast.LENGTH_SHORT).show()
+            val img     = InputImage.fromFilePath(requireContext(), imageUri)
+            val client  = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+            client.process(img)
+                .addOnSuccessListener { res ->
+                    val rawText = res.text
+
+                    // Normalizar texto alfabético (no tocamos estrellas ni fecha)
+                    val textoPlano = Normalizer
+                        .normalize(rawText, Normalizer.Form.NFD)
+                        .replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+                        .lowercase()
+
+                    val lineas = textoPlano.split("\n")
+                        .map { it.trim() }
+                        .filter { it.isNotEmpty() }
+
+                    fun idxOf(pref: String) = lineas.indexOfFirst { it.startsWith(pref) }
+                    fun lineaRegex(regex: Regex) =
+                        lineas.firstNotNullOfOrNull { ln -> regex.find(ln) }
+
+                    // ----- Fecha -----
+                    Regex("(\\d{1,2}[/-]\\d{1,2}[/-]\\d{2,4})").find(rawText)
+                        ?.groupValues?.get(1)
+                        ?.let { dateStr ->
+                            binding.editFechaOCR.setText(dateStr)
+                        }
+
+                    // ----- Monto -----
+                    Regex("(total|importe|monto|€|\\$)[^\\d]*(\\d{1,3}(?:[.,]\\d{3})*(?:[.,]\\d{2}))")
+                        .find(textoPlano)
+                        ?.groupValues?.get(2)
+                        ?.let { raw ->
+                            binding.editMontoOCR.setText(raw.replace(".", "").replace(",", "."))
+                        }
+
+                    // ----- Concepto -----
+                    idxOf("concepto").takeIf { it >= 0 && it + 1 < lineas.size }?.let { i ->
+                        binding.editConcepto.setText(
+                            lineas[i + 1].replaceFirstChar { c -> c.uppercase() }
+                        )
                     }
+
+                    // ----- Categoría -----
+                    idxOf("categoria").takeIf { it >= 0 && it + 1 < lineas.size }?.let { i ->
+                        val valorNorm = lineas[i + 1].lowercase()
+                        val adapter    = binding.spinnerCategoria.adapter
+                        (0 until adapter.count)
+                            .firstOrNull { idx ->
+                                (adapter.getItem(idx) as String).lowercase() == valorNorm
+                            }
+                            ?.let { binding.spinnerCategoria.setSelection(it) }
+                    }
+
+                    // ----- Taller -----
+                    idxOf("taller").takeIf { it >= 0 && it + 1 < lineas.size }?.let { i ->
+                        val raw = lineas[i + 1]
+                        val nomSolo = raw.replace(Regex("[★☆*]"), "").trim()
+                        talleresNombres.indexOfFirst { it.equals(nomSolo, true) }
+                            .takeIf { it >= 0 }
+                            ?.let { binding.spinnerTaller.setSelection(it) }
+                    }
+
+                    // ----- Estrellas -----
+                    // 1) Contamos rellenas (★ o *)
+                    val blackStars = rawText.count { it == '★' || it == '*' }
+                    // 2) Contamos vacías (☆)
+                    val whiteStars = rawText.count { it == '☆' }
+                    // Decidimos rating
+                    val rating = when {
+                        blackStars in 1..5 -> blackStars
+                        whiteStars in 1..5 -> 5 - whiteStars
+                        else -> null
+                    }
+                    rating?.let {
+                        binding.ratingBar.numStars = 5
+                        binding.ratingBar.stepSize = 1f
+                        binding.ratingBar.rating   = it.toFloat()
+                    }
+
+                    toast("Campos rellenados. Revisa y guarda.")
                 }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(),
-                        "Error en OCR", Toast.LENGTH_SHORT).show()
-                }
+                .addOnFailureListener { toast("Error OCR") }
         } catch (e: Exception) {
-            Toast.makeText(requireContext(),
-                "No se puede procesar OCR", Toast.LENGTH_SHORT).show()
+            toast("OCR falló")
         }
     }
 
-    // -- Guardar factura en BD --
+    private fun guardarFactura(talleres: List<com.project.rc_mecha_maint.data.entity.Workshop>) {
+        val concepto  = binding.editConcepto.text.toString().trim()
+        val monto     = binding.editMontoOCR.text.toString().replace(",", ".").toDoubleOrNull()
+        val fecha     = binding.editFechaOCR.text.toString().trim()
+        val idxTaller = binding.spinnerTaller.selectedItemPosition
 
-    private fun guardarFactura() {
-        val textoMonto = editMontoOCR.text.toString().trim()
-        if (textoMonto.isEmpty()) {
-            Toast.makeText(requireContext(),
-                "Ingresa el monto antes de guardar", Toast.LENGTH_SHORT).show()
+        if (concepto.isEmpty() || monto == null || fecha.isEmpty() || idxTaller < 0) {
+            toast("Completa los campos obligatorios")
             return
         }
-        val montoDouble = textoMonto.replace(",", ".").toDoubleOrNull() ?: 0.0
-        val nuevaFactura = Invoice(
+
+        val factura = Invoice(
             historyId      = historyId,
             rutaImagen     = imageUri.toString(),
             fechaTimestamp = System.currentTimeMillis(),
-            monto          = montoDouble
+            monto          = monto,
+            concepto       = concepto,
+            categoria      = binding.spinnerCategoria.selectedItem.toString(),
+            tallerId       = talleres[idxTaller].id,
+            calificacion   = binding.ratingBar.rating.toInt().takeIf { it > 0 },
+            esCotizacion   = binding.checkCotizacion.isChecked,
+            vehicleId      = null
         )
-        viewModel.insertInvoice(nuevaFactura)
-        findNavController().popBackStack()
+
+        lifecycleScope.launch {
+            AppDatabase.getInstance(requireContext()).invoiceDao().insert(factura)
+            toast("Factura guardada")
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun toast(msg: String) =
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

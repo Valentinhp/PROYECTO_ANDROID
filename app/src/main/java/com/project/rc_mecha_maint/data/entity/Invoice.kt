@@ -18,9 +18,16 @@ import androidx.room.PrimaryKey
 data class Invoice(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
+
     val historyId: Long,
     val rutaImagen: String,
     val fechaTimestamp: Long,
-    val monto: Double
+    val monto: Double,
 
+    val concepto: String,
+    val categoria: String,
+    val tallerId: Long,
+    val calificacion: Int? = null,
+    val esCotizacion: Boolean = false,
+    val vehicleId: Long? = null
 )
