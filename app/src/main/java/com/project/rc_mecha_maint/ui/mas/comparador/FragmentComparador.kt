@@ -1,4 +1,3 @@
-// app/src/main/java/com/project/rc_mecha_maint/ui/mas/comparador/FragmentComparador.kt
 package com.project.rc_mecha_maint.ui.mas.comparador
 
 import android.content.Intent
@@ -11,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -23,8 +23,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FragmentComparador : Fragment() {
+
     private var _b: FragmentComparadorBinding? = null
     private val b get() = _b!!
+
+    // Recogemos el argumento
+    private val args: FragmentComparadorArgs by navArgs()
+
     private lateinit var allAutopartes: List<AutoparteEntity>
     private lateinit var adapter: ComparadorAdapter
 
@@ -38,18 +43,16 @@ class FragmentComparador : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1) Configurar RecyclerView + Adapter
+        // 1) RecyclerView + Adapter
         adapter = ComparadorAdapter { phone ->
-            if (phone.isNotBlank()) {
-                startActivity(
-                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
-                )
-            }
+            if (phone.isNotBlank()) startActivity(
+                Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+            )
         }
         b.rvComparador.layoutManager = LinearLayoutManager(requireContext())
         b.rvComparador.adapter = adapter
 
-        // 2) Cargar JSON + Talleres desde Room, mapear a AutoparteEntity
+        // 2) Cargo JSON + Talleres
         lifecycleScope.launch(Dispatchers.IO) {
             val jsonText = requireContext().assets
                 .open("autopartes.json")
@@ -70,21 +73,26 @@ class FragmentComparador : Fragment() {
                     descripcion = j.descripcion,
                     proveedor   = tall?.nombre ?: "Taller #${j.workshopId}",
                     telefono    = tall?.telefono ?: "",
-                    precio      = j.precio.toFloat()    // convertir Double→Float
+                    precio      = j.precio.toFloat()
                 )
             }
 
-            // 3) Pasa al hilo UI para llenar el Spinner
             withContext(Dispatchers.Main) {
                 val descripciones = allAutopartes.map { it.descripcion }.distinct()
-                b.spinnerAutopartes.adapter = ArrayAdapter(
+
+                // Pre-selección si venimos de Diagnóstico
+                val selected = args.failureName
+                val spinnerAdapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
                     descripciones
                 ).apply {
-                    setDropDownViewResource(
-                        android.R.layout.simple_spinner_dropdown_item
-                    )
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+                b.spinnerAutopartes.adapter = spinnerAdapter
+                if (selected.isNotEmpty()) {
+                    val pos = descripciones.indexOf(selected)
+                    if (pos >= 0) b.spinnerAutopartes.setSelection(pos)
                 }
 
                 b.spinnerAutopartes.onItemSelectedListener =
@@ -92,11 +100,10 @@ class FragmentComparador : Fragment() {
                         override fun onItemSelected(
                             parent: AdapterView<*>, view: View?, position: Int, id: Long
                         ) {
-                            val selDesc = descripciones[position]
-                            val filtrado = allAutopartes.filter {
-                                it.descripcion == selDesc
-                            }
-                            adapter.submitList(filtrado)
+                            val sel = descripciones[position]
+                            adapter.submitList(
+                                allAutopartes.filter { it.descripcion == sel }
+                            )
                         }
                         override fun onNothingSelected(parent: AdapterView<*>) {
                             adapter.submitList(emptyList())
