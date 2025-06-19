@@ -138,9 +138,12 @@
         android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
         android:label="Comparador"
         tools:layout="@layout/fragment_comparador">
+
+        <!--  ARGUMENTO DEFINITIVO  -->
         <argument
-              android:name="failureName"
-               app:argType="string" />
+            android:name="failureName"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 
     <!-- Diálogo Añadir/Editar Taller -->
@@ -170,8 +173,8 @@
         android:label="Talleres"
         tools:layout="@layout/fragment_talleres">
         <argument
-           android:name="failureId"
-               app:argType="long" />
+            android:name="failureId"
+            app:argType="long" />
         <action
             android:id="@+id/action_talleres_to_addEditTallerDialog"
             app:destination="@id/addEditTallerDialog" />
