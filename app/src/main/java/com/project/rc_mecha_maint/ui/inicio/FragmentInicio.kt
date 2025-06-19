@@ -1,78 +1,69 @@
 package com.project.rc_mecha_maint.ui.inicio
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.project.rc_mecha_maint.R
-import com.project.rc_mecha_maint.data.AppDatabase
-import kotlinx.coroutines.launch
-import java.util.Calendar
-import java.util.concurrent.TimeUnit
+import com.project.rc_mecha_maint.databinding.FragmentInicioBinding
+import com.project.rc_mecha_maint.ui.reportes.ReportesViewModel
+import java.util.*
 
-class FragmentInicio : Fragment(R.layout.fragment_inicio) {
+class FragmentInicio : Fragment() {
 
-    private val maintenanceDao by lazy {
-        AppDatabase.getInstance(requireContext()).maintenanceDao()
+    private var _binding: FragmentInicioBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: ReportesViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentInicioBinding.inflate(inflater, container, false)
+        return binding.root
     }
-    private val invoiceDao by lazy {
-        AppDatabase.getInstance(requireContext()).invoiceDao()
-    }
-
-    private lateinit var tvProximoDetalle: TextView
-    private lateinit var tvGastoDetalle: TextView
-    private lateinit var btnVerHistorial: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 1) Vincular vistas
-        tvProximoDetalle = view.findViewById(R.id.tvProximoDetalle)
-        tvGastoDetalle   = view.findViewById(R.id.tvGastoDetalle)
-        btnVerHistorial  = view.findViewById(R.id.btnVerHistorial)
 
-        // 2) Cargar datos desde la base
-        lifecycleScope.launch {
-            cargarProximoMantenimiento()
-            cargarGastoMensual()
+        // Inicializamos el ViewModel
+        viewModel = ReportesViewModel(requireActivity().application)
+
+        // Cargamos y mostramos el gasto del mes
+        cargarGastoMensual()
+    }
+
+    private fun cargarGastoMensual() {
+        // Calcula el primer instante del mes en curso
+        val cal = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }
+        val inicioMes = cal.timeInMillis
 
-        // 3) Navegación usando la action nueva
-        btnVerHistorial.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_inicio_to_nav_historial)
+        // Calcula el último instante del mes en curso
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH))
+        cal.set(Calendar.HOUR_OF_DAY, 23)
+        cal.set(Calendar.MINUTE, 59)
+        cal.set(Calendar.SECOND, 59)
+        cal.set(Calendar.MILLISECOND, 999)
+        val finMes = cal.timeInMillis
+
+        // Observa el LiveData que devuelve el total gastado en facturas
+        viewModel.getTotalSpent(inicioMes, finMes).observe(viewLifecycleOwner) { total ->
+            val gasto = total ?: 0.0
+            // Aquí usamos el TextView que sí existe en el binding:
+            binding.tvGastoDetalle.text =
+                "Total gastado este mes: $${"%,.2f".format(gasto)}"
         }
     }
 
-    private suspend fun cargarProximoMantenimiento() {
-        val now = System.currentTimeMillis()
-        val next = maintenanceDao.getNextMaintenance(now)
-        if (next != null) {
-            val diff = next.fechaTimestamp - now
-            val dias = TimeUnit.MILLISECONDS.toDays(diff).coerceAtLeast(0)
-            tvProximoDetalle.text = "${next.tipoServicio} – $dias días restantes"
-        } else {
-            tvProximoDetalle.text = "Sin mantenimientos pendientes"
-        }
-    }
-
-    private suspend fun cargarGastoMensual() {
-        val (start, end) = mesActualRango()
-        val total = invoiceDao.getTotalSpent(start, end) ?: 0.0
-        tvGastoDetalle.text = "$ ${"%.2f".format(total)}"
-    }
-
-    private fun mesActualRango(): Pair<Long, Long> {
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.DAY_OF_MONTH, 1)
-        cal.set(Calendar.HOUR_OF_DAY, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-        val start = cal.timeInMillis
-        cal.add(Calendar.MONTH, 1)
-        val end = cal.timeInMillis - 1
-        return start to end
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

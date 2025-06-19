@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.project.rc_mecha_maint.data.entity.History
+import com.project.rc_mecha_maint.data.entity.CategoriaTotal
 
 @Dao
 interface HistoryDao {
@@ -32,10 +33,7 @@ interface HistoryDao {
     @Delete
     suspend fun delete(history: History)
 
-    // 5) Calcular la suma de todos los costos entre dos timestamps:
-    //    - inicio: marca de tiempo inicial (en milisegundos).
-    //    - fin:   marca de tiempo final (en milisegundos).
-    // Devuelve un LiveData que puede ser null si no hay registros en ese rango.
+    // 5) Calcular la suma de todos los costos entre dos timestamps.
     @Query("""
         SELECT SUM(costo)
         FROM history_table
@@ -44,7 +42,16 @@ interface HistoryDao {
     fun getTotalCostByDate(inicio: Long, fin: Long): LiveData<Double?>
 
     // 6) Obtener el costo promedio de todos los servicios registrados.
-    //    Devuelve un LiveData que puede ser null si la tabla está vacía.
     @Query("SELECT AVG(costo) FROM history_table")
     fun getAverageCost(): LiveData<Double?>
+
+    // 7) Distribución de gastos de mantenimiento por categoría (campo 'categoria').
+    @Query("""
+        SELECT categoria   AS categoria,
+               SUM(costo)  AS total
+          FROM history_table
+         WHERE fechaTimestamp BETWEEN :start AND :end
+      GROUP BY categoria
+    """)
+    fun getTotalByServiceCategory(start: Long, end: Long): LiveData<List<CategoriaTotal>>
 }

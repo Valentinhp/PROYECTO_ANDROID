@@ -1,4 +1,3 @@
-
 package com.project.rc_mecha_maint.ui.mas.historial
 
 import android.app.DatePickerDialog
@@ -61,19 +60,23 @@ class FragmentRegistrarMantenimiento : Fragment() {
             ).show()
         }
 
+        // Spinner de categorías
         val categorias = listOf("Aceite", "Frenos", "Motor", "Suspensión", "Llantas", "Otro")
         val catAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categorias)
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCategoria.adapter = catAdapter
         categoriaPredef?.let {
             val index = categorias.indexOf(it)
             if (index >= 0) binding.spinnerCategoria.setSelection(index)
         }
 
+        // Spinner de talleres
         lifecycleScope.launch {
             val dao = AppDatabase.getInstance(requireContext()).workshopDao()
             workshopList = dao.getAllSync()
             val nombres = workshopList.map { it.nombre }
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerTaller.adapter = adapter
 
             tallerPredef?.let { t ->
@@ -92,20 +95,27 @@ class FragmentRegistrarMantenimiento : Fragment() {
             val idxTaller = binding.spinnerTaller.selectedItemPosition
             val rating = binding.ratingBar.rating.toInt()
 
+            // Validaciones
             if (monto == null || idxTaller < 0 || binding.etFecha.text.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Completa todos los campos obligatorios", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val taller = workshopList[idxTaller]
-            val desc = "$categoria | Taller: ${taller.nombre}" + if (falla.isNotEmpty()) " | Falla: $falla" else ""
+            // Descripción concatenada
+            val desc = buildString {
+                append("$categoria | Taller: ${taller.nombre}")
+                if (falla.isNotEmpty()) append(" | Falla: $falla")
+            }
 
+            // Ahora sí incluimos 'categoria' al crear History
             val registro = History(
-                vehicleId = vehicleId,
-                fechaTimestamp = calendar.timeInMillis,
-                descripcion = desc,
-                costo = monto,
-                calificacion = if (rating > 0) rating else null
+                vehicleId     = vehicleId,
+                fechaTimestamp= calendar.timeInMillis,
+                descripcion   = desc,
+                categoria     = categoria,
+                costo         = monto,
+                calificacion  = if (rating > 0) rating else null
             )
 
             lifecycleScope.launch {
@@ -113,7 +123,7 @@ class FragmentRegistrarMantenimiento : Fragment() {
                 db.historyDao().insert(registro)
 
                 if (rating > 0) {
-                    val nuevoTotal = (taller.ratingCount + 1)
+                    val nuevoTotal = taller.ratingCount + 1
                     val nuevoPromedio = ((taller.rating * taller.ratingCount) + rating) / nuevoTotal
                     val actualizado = taller.copy(
                         rating = nuevoPromedio,

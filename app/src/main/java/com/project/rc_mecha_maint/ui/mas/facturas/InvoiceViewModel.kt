@@ -1,44 +1,46 @@
+// app/src/main/java/com/project/rc_mecha_maint/ui/mas/facturas/InvoiceViewModel.kt
 package com.project.rc_mecha_maint.ui.mas.facturas
 
-// ui/facturas/InvoiceViewModel.kt
-
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Invoice
 import com.project.rc_mecha_maint.data.repository.InvoiceRepository
 import kotlinx.coroutines.launch
 
-/**
- * InvoiceViewModel: conecta la UI de facturas con los datos.
- *
- * @param repository Repositorio para Invoice.
- */
-class InvoiceViewModel(private val repository: InvoiceRepository) : ViewModel() {
+class InvoiceViewModel(app: Application) : AndroidViewModel(app) {
 
-    // 1) Obtener las facturas de un historial
-    fun getInvoicesByHistory(historyId: Long): LiveData<List<Invoice>> {
-        return repository.getInvoicesByHistory(historyId)
+    private val repo: InvoiceRepository
+
+    init {
+        val db = AppDatabase.getInstance(app)
+        repo = InvoiceRepository(db.invoiceDao())
     }
 
-    // 2) Insertar nueva factura
+    /** Devuelve las facturas asociadas a un historyId */
+    fun getInvoicesByHistory(historyId: Long): LiveData<List<Invoice>> =
+        repo.getInvoicesByHistory(historyId)
+
+    /** Inserta una nueva factura en background */
     fun insertInvoice(invoice: Invoice) {
         viewModelScope.launch {
-            repository.insertInvoice(invoice)
+            repo.insert(invoice)
         }
     }
 
-    // 3) Eliminar factura
+    /** Elimina una factura existente */
     fun deleteInvoice(invoice: Invoice) {
         viewModelScope.launch {
-            repository.deleteInvoice(invoice)
+            repo.delete(invoice)
         }
     }
 
-    // 4) (Opcional) Reprocesar OCR: solo actualiza monto
+    /** Actualiza solo el monto de una factura dada su id */
     fun updateInvoiceMonto(id: Long, monto: Double) {
         viewModelScope.launch {
-            repository.updateInvoiceMonto(id, monto)
+            repo.updateMonto(id, monto)
         }
     }
 }

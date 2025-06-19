@@ -5,12 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.project.rc_mecha_maint.data.AppDatabase
+import com.project.rc_mecha_maint.data.entity.CategoriaTotal
 import com.project.rc_mecha_maint.data.repository.ReportesRepository
 
-/**
- * ViewModel para reportes y costos.
- * Ahora combina la suma de History + Invoice en un solo LiveData.
- */
 class ReportesViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repo: ReportesRepository
@@ -20,46 +17,56 @@ class ReportesViewModel(app: Application) : AndroidViewModel(app) {
         repo = ReportesRepository(db.historyDao(), db.invoiceDao())
     }
 
-    /**
-     * 1) Suma el costo de History entre dos timestamps (inicio, fin).
-     * 2) Suma todos los montos de Invoice.
-     * 3) Devuelve un LiveData<Double> que combina ambas sumas.
-     *
-     * inicio, fin: milisegundos UTC.
-     */
+    /** Historial + facturas en rango [inicio, fin]. */
     fun getTotalCost(inicio: Long, fin: Long): LiveData<Double> {
-        // LiveData con la suma de History
-        val historySum: LiveData<Double?> = repo.getTotalCost(inicio, fin)
-        // LiveData con la suma de todos los Invoice
-        val invoiceSum: LiveData<Double?> = repo.getTotalMonto()
-
-        // MediatorLiveData para emitir (historySum + invoiceSum)
+        val historySum = repo.getTotalCost(inicio, fin)
+        val invoiceSum = repo.getTotalSpent(inicio, fin)
         val combined = MediatorLiveData<Double>()
-
-        // Cuando cambie historySum, recalcular
         combined.addSource(historySum) { h ->
-            val inv = invoiceSum.value ?: 0.0
-            combined.value = (h ?: 0.0) + inv
+            combined.value = (h ?: 0.0) + (invoiceSum.value ?: 0.0)
+        }
+        combined.addSource(invoiceSum) { inv ->
+            combined.value = (historySum.value ?: 0.0) + (inv ?: 0.0)
+        }
+        return combined
+    }
+
+    /** Solo historial monto. */
+    fun getHistoryCost(start: Long, end: Long): LiveData<Double?> =
+        repo.getTotalCost(start, end)
+
+    /** Solo facturas monto. */
+    fun getInvoiceCost(start: Long, end: Long): LiveData<Double?> =
+        repo.getTotalSpent(start, end)
+
+    /** Alias para compatibilidad. */
+    fun getTotalSpent(start: Long, end: Long): LiveData<Double?> =
+        getInvoiceCost(start, end)
+
+    /** Conteo de facturas. */
+    fun getInvoiceCount(inicio: Long, fin: Long): LiveData<Int> =
+        repo.getInvoiceCount(inicio, fin)
+
+    /** Distribución combinada por categoría. */
+    fun getCombinedByCategory(start: Long, end: Long): LiveData<List<CategoriaTotal>> {
+        val historyCats = repo.getHistoryByCategory(start, end)
+        val invoiceCats = repo.getInvoiceByCategory(start, end)
+        val combined = MediatorLiveData<List<CategoriaTotal>>()
+
+        fun merge(h: List<CategoriaTotal>?, i: List<CategoriaTotal>?) {
+            val map = mutableMapOf<String, Double>()
+            (h ?: emptyList()).forEach { map[it.categoria] = (map[it.categoria] ?: 0.0) + (it.total ?: 0.0) }
+            (i ?: emptyList()).forEach { map[it.categoria] = (map[it.categoria] ?: 0.0) + (it.total ?: 0.0) }
+            combined.value = map.map { CategoriaTotal(it.key, it.value) }
         }
 
-        // Cuando cambie invoiceSum, recalcular
-        combined.addSource(invoiceSum) { inv ->
-            val hist = historySum.value ?: 0.0
-            combined.value = hist + (inv ?: 0.0)
-        }
+        combined.addSource(historyCats) { h -> merge(h, invoiceCats.value) }
+        combined.addSource(invoiceCats) { i -> merge(historyCats.value, i) }
 
         return combined
     }
 
-    /**
-     * Cuenta cuántas facturas hay entre dos fechas.
-     */
-    fun getInvoiceCount(inicio: Long, fin: Long): LiveData<Int> =
-        repo.getInvoiceCount(inicio, fin)
-
-    /**
-     * Calcula el costo promedio de las facturas.
-     */
+    /** Costo medio de facturas. */
     fun getAverageCost(): LiveData<Double?> =
         repo.getAverageCost()
 }

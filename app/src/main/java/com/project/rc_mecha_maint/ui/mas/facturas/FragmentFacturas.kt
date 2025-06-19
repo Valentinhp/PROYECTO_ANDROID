@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Workshop
-import com.project.rc_mecha_maint.data.repository.InvoiceRepository
 import com.project.rc_mecha_maint.databinding.FragmentFacturasBinding
 import kotlinx.coroutines.launch
 
@@ -41,21 +40,20 @@ class FragmentFacturas : Fragment() {
         // 1) Obtener historyId
         val historyId = arguments?.getLong(ARG_HISTORY_ID) ?: 0L
 
-        // 2) Inicializar ViewModel
-        val invoiceDao = AppDatabase.getInstance(requireContext()).invoiceDao()
-        val repo       = InvoiceRepository(invoiceDao)
-        viewModel = ViewModelProvider(this, InvoiceViewModelFactory(repo))
+        // 2) Inicializar ViewModel con su Factory (pasa Application, no repositorio)
+        val factory = InvoiceViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, factory)
             .get(InvoiceViewModel::class.java)
 
-        // Ya sabemos el layoutManager
+        // 3) Configurar RecyclerView
         binding.recyclerFacturas.layoutManager = LinearLayoutManager(requireContext())
 
-        // 3) Carga talleres y configura adapter dentro de una coroutine
+        // 4) Cargar talleres y configurar adapter dentro de una coroutine
         lifecycleScope.launch {
             val talleres: List<Workshop> = AppDatabase
                 .getInstance(requireContext())
                 .workshopDao()
-                .getAllSync()  // ahora OK, porque estamos en coroutine
+                .getAllSync()
 
             adapter = InvoiceAdapter(
                 talleres,
@@ -69,13 +67,13 @@ class FragmentFacturas : Fragment() {
 
             binding.recyclerFacturas.adapter = adapter
 
-            // 4) Observa facturas y pásalas al adapter
+            // 5) Observar las facturas y pasárselas al adapter
             viewModel.getInvoicesByHistory(historyId).observe(viewLifecycleOwner) { lista ->
                 adapter.submitList(lista)
             }
         }
 
-        // 5) FAB para agregar
+        // 6) FAB para agregar factura
         binding.fabAgregarFactura.setOnClickListener {
             val action = FragmentFacturasDirections
                 .actionFacturasToSubirFactura(historyId)
