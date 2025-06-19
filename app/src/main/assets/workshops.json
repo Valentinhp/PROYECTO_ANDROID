@@ -6,7 +6,8 @@
     "latitud": 21.8800,
     "longitud": -102.2960,
     "telefono": "4491234567",
-    "fotoUrl": "https://picsum.photos/seed/fix/400/300"
+    "fotoUrl": "https://picsum.photos/seed/fix/400/300",
+    "rating": 4.2
   },
   {
     "id": 2,
@@ -15,6 +16,7 @@
     "latitud": 21.8855,
     "longitud": -102.2912,
     "telefono": "4497654321",
-    "fotoUrl": "https://picsum.photos/seed/lopez/400/300"
+    "fotoUrl": "https://picsum.photos/seed/lopez/400/300",
+    "rating": 3.8
   }
 ]

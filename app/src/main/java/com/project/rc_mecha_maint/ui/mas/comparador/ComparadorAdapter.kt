@@ -10,7 +10,7 @@ import com.project.rc_mecha_maint.data.entity.AutoparteEntity
 import com.project.rc_mecha_maint.databinding.ItemComparadorBinding
 
 class ComparadorAdapter(
-    private val onLlamar: (AutoparteEntity) -> Unit
+    private val onLlamar: (String) -> Unit   // recibe el teléfono
 ) : ListAdapter<AutoparteEntity, ComparadorAdapter.VH>(DIFF) {
 
     companion object {
@@ -24,10 +24,15 @@ class ComparadorAdapter(
 
     inner class VH(val b: ItemComparadorBinding) :
         RecyclerView.ViewHolder(b.root) {
+
         fun bind(item: AutoparteEntity) {
+            // Mostramos nombre del taller y precio
             b.txtProveedor.text = item.proveedor
             b.txtPrecio.text    = "$${item.precio}"
-            b.btnLlamar.setOnClickListener { onLlamar(item) }
+
+            b.btnLlamar.setOnClickListener {
+                onLlamar(item.telefono)
+            }
         }
     }
 

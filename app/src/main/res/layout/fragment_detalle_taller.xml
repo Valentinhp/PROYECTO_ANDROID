@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- app/src/main/res/layout/fragment_detalle_taller.xml -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -26,9 +26,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <!-- RatingBar de solo lectura -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:isIndicator="true"
+            android:layout_marginTop="4dp"/>
+
         <TextView
             android:id="@+id/tvAddress"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -40,7 +50,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

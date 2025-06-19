@@ -16,5 +16,6 @@ data class Workshop(
     val latitud: Double,
     val longitud: Double,
     val telefono: String,
-    val fotoUrl: String
+    val fotoUrl: String,
+    val rating: Float = 0f      // ← nuevo campo
 ) : Parcelable

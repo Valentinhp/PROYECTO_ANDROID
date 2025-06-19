@@ -25,14 +25,11 @@ import kotlinx.coroutines.withContext
 class FragmentComparador : Fragment() {
     private var _b: FragmentComparadorBinding? = null
     private val b get() = _b!!
-
     private lateinit var allAutopartes: List<AutoparteEntity>
     private lateinit var adapter: ComparadorAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _b = FragmentComparadorBinding.inflate(inflater, container, false)
         return b.root
@@ -41,67 +38,64 @@ class FragmentComparador : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1) Preparar RecyclerView y Adapter
-        adapter = ComparadorAdapter { cotizacion ->
-            startActivity(
-                Intent(Intent.ACTION_DIAL, Uri.parse("tel:${cotizacion.proveedor}"))
-            )
+        // 1) Configurar RecyclerView + Adapter
+        adapter = ComparadorAdapter { phone ->
+            if (phone.isNotBlank()) {
+                startActivity(
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+                )
+            }
         }
         b.rvComparador.layoutManager = LinearLayoutManager(requireContext())
         b.rvComparador.adapter = adapter
 
-        // 2) Leer JSON + talleres, mapear a AutoparteEntity y llenar Spinner
+        // 2) Cargar JSON + Talleres desde Room, mapear a AutoparteEntity
         lifecycleScope.launch(Dispatchers.IO) {
-            // 2.1) JSON de cotizaciones
             val jsonText = requireContext().assets
                 .open("autopartes.json")
                 .bufferedReader().use { it.readText() }
             val listType = object : TypeToken<List<AutoparteJson>>() {}.type
             val listaJson: List<AutoparteJson> = Gson().fromJson(jsonText, listType)
 
-            // 2.2) Talleres de Room
             val talleres = AppDatabase
                 .getInstance(requireContext())
                 .workshopDao()
                 .getAllSync()
 
-            // 2.3) Mapeo a AutoparteEntity
-            allAutopartes = listaJson.mapIndexed { index: Int, j: AutoparteJson ->
+            allAutopartes = listaJson.mapIndexed { idx, j ->
                 val tall = talleres.find { it.id == j.workshopId }
                 AutoparteEntity(
-                    id = index.toLong(),
-                    clave = j.clave,
+                    id          = idx.toLong(),
+                    clave       = j.clave,
                     descripcion = j.descripcion,
-                    proveedor = tall?.nombre ?: "Taller #${j.workshopId}",
-                    precio = j.precio
+                    proveedor   = tall?.nombre ?: "Taller #${j.workshopId}",
+                    telefono    = tall?.telefono ?: "",
+                    precio      = j.precio.toFloat()    // convertir Double→Float
                 )
             }
 
-            // 2.4) Pasa al hilo UI para poblar Spinner y listener
+            // 3) Pasa al hilo UI para llenar el Spinner
             withContext(Dispatchers.Main) {
-                val descripciones = allAutopartes
-                    .map { it.descripcion }
-                    .distinct()
-
-                val spinnerAdapter = ArrayAdapter(
+                val descripciones = allAutopartes.map { it.descripcion }.distinct()
+                b.spinnerAutopartes.adapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
                     descripciones
                 ).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item
+                    )
                 }
-                b.spinnerAutopartes.adapter = spinnerAdapter
 
                 b.spinnerAutopartes.onItemSelectedListener =
                     object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View?,
-                            position: Int,
-                            id: Long
+                            parent: AdapterView<*>, view: View?, position: Int, id: Long
                         ) {
-                            val desc = descripciones[position]
-                            val filtrado = allAutopartes.filter { it.descripcion == desc }
+                            val selDesc = descripciones[position]
+                            val filtrado = allAutopartes.filter {
+                                it.descripcion == selDesc
+                            }
                             adapter.submitList(filtrado)
                         }
                         override fun onNothingSelected(parent: AdapterView<*>) {

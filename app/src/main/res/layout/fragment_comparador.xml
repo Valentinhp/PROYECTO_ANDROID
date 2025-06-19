@@ -19,13 +19,5 @@
         android:layout_marginTop="16dp"
         android:layout_weight="1"/>
 
-    <!-- (Opcional) un FAB para agregar cotización manual -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAgregar"
-        android:src="@drawable/ic_mas"
-        android:contentDescription="Agregar cotización"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"/>
+    <!-- El FAB para “Agregar cotización manual” se eliminó -->
 </LinearLayout>

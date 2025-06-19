@@ -1,49 +1,49 @@
+// app/src/main/java/com/project/rc_mecha_maint/ui/mas/talleres/FragmentTalleres.kt
 package com.project.rc_mecha_maint.ui.mas.talleres
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.rc_mecha_maint.R
+import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.databinding.FragmentTalleresBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class FragmentTalleres : Fragment() {
     private var _b: FragmentTalleresBinding? = null
     private val b get() = _b!!
-    private val vm by viewModels<WorkshopViewModel>()
+    private val adapter = WorkshopAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) = FragmentTalleresBinding.inflate(inflater, container, false)
-        .also { _b = it }.root
+    ): View {
+        _b = FragmentTalleresBinding.inflate(inflater, container, false)
+        return b.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vm.loadFromAssets()
-
-        val adapter = TallerAdapter(
-            onLlamar  = { t ->
-                startActivity(Intent(
-                    Intent.ACTION_DIAL, Uri.parse("tel:${t.telefono}")
-                ))
-            },
-            onCotizar = { t ->
-                val args = Bundle().apply { putParcelable("workshop", t) }
-                findNavController().navigate(R.id.action_global_nav_comparador, args)
-            }
-        )
+        // RecyclerView
         b.rvTalleres.layoutManager = LinearLayoutManager(requireContext())
-        b.rvTalleres.adapter       = adapter
+        b.rvTalleres.adapter = adapter
 
-        vm.talleres.observe(viewLifecycleOwner) { lista ->
-            adapter.submitList(lista)
+        // FAB: agregar nuevo taller
+        b.fabAgregarTaller.setOnClickListener {
+            AddEditTallerDialog.newInstance(null)
+                .show(parentFragmentManager, "AddEditTaller")
         }
 
-        b.fabAgregarTaller.setOnClickListener {
-            findNavController().navigate(R.id.addEditTallerDialog)
+        // Observar la lista de talleres
+        lifecycleScope.launch {
+            AppDatabase.getInstance(requireContext())
+                .workshopDao()
+                .getAll()
+                .collectLatest { list ->
+                    adapter.submitList(list)
+                }
         }
     }
 

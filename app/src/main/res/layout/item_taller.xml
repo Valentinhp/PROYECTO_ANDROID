@@ -1,3 +1,4 @@
+<!-- app/src/main/res/layout/item_taller.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -31,13 +32,20 @@
             android:id="@+id/btnLlamar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Llamar"/>
+            android:text="@string/llamar"/>
+
+        <Button
+            android:id="@+id/btnMapa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_mapa"
+            android:layout_marginStart="8dp"/>
 
         <Button
             android:id="@+id/btnCotizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cotizar"
+            android:text="@string/cotizar"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 </LinearLayout>

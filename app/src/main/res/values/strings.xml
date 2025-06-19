@@ -30,6 +30,11 @@
     <string name="edit">Editar</string>
     <string name="delete">Eliminar</string>
     <string name="guardar">Guardar</string>
+    <!-- Agregado: botón de cancelar en diálogo -->
+    <string name="cancelar">Cancelar</string>
+
+    <!-- Mensajes -->
+    <string name="msg_completa_campos">Por favor, completa todos los campos</string>
 
     <!-- Hints para campos de Taller -->
     <string name="hint_nombre">Nombre del taller</string>
@@ -39,7 +44,6 @@
     <string name="hint_telefono">Teléfono</string>
     <string name="hint_foto_url">URL de la foto</string>
 
-
     <!-- Array de servicios -->
     <string-array name="servicios">
         <item>Cambio de aceite</item>
@@ -48,4 +52,6 @@
         <item>Alineación</item>
         <item>Batería</item>
     </string-array>
+
+    <string name="cotizar">Cotizar</string>
 </resources>

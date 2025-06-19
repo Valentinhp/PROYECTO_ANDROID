@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 db.failureDao().insertAll(failures)
 
                 // — Talleres —
-                val talleresText = assets.open("talleres.json")
+                val talleresText = assets.open("workshops.json")
                     .bufferedReader()
                     .use { it.readText() }
                 val talleresType = object : TypeToken<List<Workshop>>() {}.type
