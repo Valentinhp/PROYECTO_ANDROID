@@ -31,4 +31,8 @@ interface WorkshopDao {
 
     @Query("SELECT COUNT(*) FROM workshop_table")
     fun count(): Flow<Int>
+
+    @Update
+    suspend fun update(workshop: Workshop)
+
 }

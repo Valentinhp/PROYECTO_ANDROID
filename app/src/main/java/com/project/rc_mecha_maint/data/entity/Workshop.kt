@@ -17,5 +17,7 @@ data class Workshop(
     val longitud: Double,
     val telefono: String,
     val fotoUrl: String,
-    val rating: Float = 0f      // ← nuevo campo
+    val rating: Float = 0f,      // ← nuevo campo
+    val ratingCount: Int = 0       // nuevo campo para contar cuántas veces fue calificado
+
 ) : Parcelable

@@ -21,5 +21,7 @@ data class History(
     val vehicleId: Long,
     val fechaTimestamp: Long,
     val descripcion: String,
-    val costo: Double
+    val costo: Double,
+    val calificacion: Int? = null // ⭐ Calificación opcional de 1 a 5
+
 )
