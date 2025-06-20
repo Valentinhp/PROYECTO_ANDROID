@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.RC_MECHA_MAINT_S" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryVariant</item>
@@ -7,10 +6,10 @@
         <item name="android:colorBackground">@color/colorSurfaceVariant</item>
         <item name="colorSurface">@color/colorSurface</item>
 
-        <!-- ===== Texto por defecto noche ===== -->
-        <item name="android:textColorPrimary">@color/onSurface</item>
-        <item name="android:textColorSecondary">@color/colorOutline</item>
-        <item name="android:textColorHint">@color/colorOutline</item>
-        <item name="android:textColor">@color/onPrimary</item>
+        <!-- estos son los onX que tus layouts esperan -->
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorOnBackground">@color/onSurface</item>
+        <item name="colorOnSurface">@color/onSurface</item>
     </style>
 </resources>

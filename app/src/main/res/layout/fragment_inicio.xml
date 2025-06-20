@@ -1,113 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollInicio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryVariant"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
-<LinearLayout
-android:orientation="vertical"
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-<!-- Logo de la app -->
-<ImageView
-    android:id="@+id/imgLogo"
-    android:layout_width="120dp"
-    android:layout_height="120dp"
-    android:layout_gravity="center"
-    android:src="@drawable/ic_logo"
-    android:contentDescription="Logo de la app"
-    android:layout_marginBottom="24dp" />
+        <!-- ───── Header ───── -->
+        <ImageView
+            android:id="@+id/imgLogoApp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_logo"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_logo" />
 
-<!-- Tarjeta: Próximo mantenimiento -->
-<com.google.android.material.card.MaterialCardView
-    android:id="@+id/cardProximo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/colorPrimary"
-app:cardCornerRadius="12dp"
-app:cardElevation="8dp">
+        <TextView
+            android:id="@+id/tvBienvenidoApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido a RC Mecha Maint"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginTop="8dp" />
 
-<LinearLayout
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvSaludo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buenos días, Valen"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:gravity="center"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="16dp" />
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/tvProximoTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Próximo mantenimiento"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/onPrimary" />
+        <!-- ───── Tarjeta Próximo mantenimiento ───── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardProximo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/colorPrimary"
+            android:layout_marginBottom="12dp">
 
-    <!-- Detalle dinámico -->
-    <TextView
-        android:id="@+id/tvProximoDetalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cargando..."
-        android:textSize="16sp"
-        android:textColor="@color/onPrimary"
-    android:layout_marginTop="4dp" />
-</LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-    <!-- Tarjeta: Total gastado este mes -->
-<com.google.android.material.card.MaterialCardView
-android:id="@+id/cardGasto"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="24dp"
-app:cardBackgroundColor="@color/colorAccentLight"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="8dp">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_maintenance"
+                    app:tint="?attr/colorOnPrimary"
+                    android:contentDescription="@string/app_logo" />
 
-<LinearLayout
-android:orientation="vertical"
-android:padding="16dp"
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1">
 
-<!-- Título -->
-<TextView
-    android:id="@+id/tvGastoTitulo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Total gastado este mes"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:textColor="@color/onPrimary" />
+                    <TextView
+                        android:id="@+id/tvProximoTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Próximo mantenimiento"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="?attr/colorOnPrimary"/>
 
-<!-- Detalle dinámico -->
-<TextView
-    android:id="@+id/tvGastoDetalle"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Cargando..."
-    android:textSize="16sp"
-    android:textColor="@color/onPrimary"
-android:layout_marginTop="4dp" />
-</LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tvProximoDetalle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cargando..."
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textColor="?attr/colorOnPrimary"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <!-- Botón principal -->
-<Button
-android:id="@+id/btnVerHistorial"
-android:layout_width="match_parent"
-android:layout_height="48dp"
-android:text="VER HISTORIAL COMPLETO"
-android:textAllCaps="false"
-android:textSize="16sp"
-android:textColor="@color/onSecondary"
-    android:backgroundTint="@color/colorSecondary" />
+        <!-- ───── Tarjeta Gastos del mes ───── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardGastos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/colorSecondary"
+            android:layout_marginBottom="12dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_money"
+                    app:tint="?attr/colorPrimary"
+                    android:contentDescription="@string/app_logo" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvGastoTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gastos este mes"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/tvGastoDetalle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cargando..."
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textColor="?attr/colorOnSurface"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ───── Tarjeta Vehículo principal ───── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardVehiculo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imgVehiculo"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_default_car"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/desc_foto_vehiculo" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvVehiculoMarcaModelo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Marca Modelo"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/tvVehiculoKilometraje"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kilometraje: 0 km"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textColor="?attr/colorOnSurface"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ───── Botón Historial ───── -->
+        <Button
+            android:id="@+id/btnVerHistorial"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver historial completo"
+            android:textAllCaps="false"/>
     </LinearLayout>
-    </ScrollView>
+</ScrollView>

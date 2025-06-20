@@ -54,4 +54,20 @@
     </string-array>
 
     <string name="cotizar">Cotizar</string>
+
+
+
+    <!-- Inicio -->
+    <string name="bienvenido_app_format">Bienvenido a %1$s</string>
+    <string name="saludo_manana">Buenos días</string>
+    <string name="saludo_tarde">Buenas tardes</string>
+    <string name="saludo_noche">Buenas noches</string>
+    <string name="sin_mantenimientos">No hay próximos mantenimientos</string>
+    <string name="gasto_mes_format">Total gastado este mes: $%1$.2f</string>
+    <string name="kilometraje_format">Kilometraje: %1$d km</string>
+
+    <!-- Accesibilidad -->
+    <string name="app_logo">Logo de la aplicación</string>
+    <string name="desc_foto_vehiculo">Foto del vehículo</string>
+
 </resources>
