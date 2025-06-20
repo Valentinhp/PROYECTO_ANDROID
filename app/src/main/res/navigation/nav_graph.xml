@@ -138,8 +138,10 @@
         android:name="com.project.rc_mecha_maint.ui.mas.comparador.FragmentComparador"
         android:label="Comparador"
         tools:layout="@layout/fragment_comparador">
-
-        <!--  ARGUMENTO DEFINITIVO  -->
+        <argument
+            android:name="failureId"
+            app:argType="integer"
+            android:defaultValue="-1" />
         <argument
             android:name="failureName"
             app:argType="string"
@@ -158,7 +160,7 @@
 
     <!-- Acciones Globales -->
     <action
-        android:id="@+id/action_global_nav_comparador"
+        android:id="@+id/action_global_fragmentComparador"
         app:destination="@id/nav_comparador"
         app:launchSingleTop="true" />
     <action

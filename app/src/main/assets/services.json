@@ -1,0 +1,362 @@
+[
+  {
+    "id": 1,
+    "failureId": 1,
+    "clave": "REVISIÓN_MOTOR",
+    "descripcion": "Revisión y puesta a punto de motor",
+    "precio": 1200.0,
+    "workshopId": 1
+  },
+  {
+    "id": 2,
+    "failureId": 1,
+    "clave": "SINCRONIZACIÓN_CADENA",
+    "descripcion": "Ajuste y sincronización de la cadena de distribución",
+    "precio": 900.0,
+    "workshopId": 2
+  },
+  {
+    "id": 3,
+    "failureId": 1,
+    "clave": "LIMPIEZA_INYECTORES_MOTOR",
+    "descripcion": "Limpieza profunda de inyectores y admisión",
+    "precio": 750.0,
+    "workshopId": 3
+  },
+  {
+    "id": 4,
+    "failureId": 1,
+    "clave": "CAMBIO_FILTRO_AIRE_Y_ACEITE",
+    "descripcion": "Sustitución de filtros de aire y aceite",
+    "precio": 450.0,
+    "workshopId": 4
+  },
+  {
+    "id": 5,
+    "failureId": 2,
+    "clave": "PURGA_SISTEMA_FRENOS",
+    "descripcion": "Purgado completo del circuito de frenos",
+    "precio": 300.0,
+    "workshopId": 1
+  },
+  {
+    "id": 6,
+    "failureId": 2,
+    "clave": "CAMBIO_PASTILLAS",
+    "descripcion": "Cambio de pastillas delanteras y traseras",
+    "precio": 620.0,
+    "workshopId": 2
+  },
+  {
+    "id": 7,
+    "failureId": 2,
+    "clave": "RECTIFICADO_DISCOS",
+    "descripcion": "Rectificado o reemplazo de discos de freno",
+    "precio": 850.0,
+    "workshopId": 3
+  },
+  {
+    "id": 8,
+    "failureId": 2,
+    "clave": "INSPECCION_TUBERIAS",
+    "descripcion": "Inspección y sustitución de líneas flexibles",
+    "precio": 400.0,
+    "workshopId": 4
+  },
+  {
+    "id": 9,
+    "failureId": 3,
+    "clave": "ALINEACIÓN_DIRECCION",
+    "descripcion": "Alineación de dirección y balanceo de neumáticos",
+    "precio": 420.0,
+    "workshopId": 1
+  },
+  {
+    "id": 10,
+    "failureId": 3,
+    "clave": "REEMPLAZO_ROTULAS",
+    "descripcion": "Sustitución de rótulas y terminales de dirección",
+    "precio": 980.0,
+    "workshopId": 2
+  },
+  {
+    "id": 11,
+    "failureId": 3,
+    "clave": "AJUSTE_BARRAS_ESTABILIZADOR",
+    "descripcion": "Cambio de bielas y montaje de barras estabilizadoras",
+    "precio": 650.0,
+    "workshopId": 3
+  },
+  {
+    "id": 12,
+    "failureId": 4,
+    "clave": "CAMBIO_JUNTA_CÁRTER",
+    "descripcion": "Reemplazo de junta de cárter y sellado",
+    "precio": 810.0,
+    "workshopId": 1
+  },
+  {
+    "id": 13,
+    "failureId": 4,
+    "clave": "AJUSTE_TORNILLOS_CÁRTER",
+    "descripcion": "Apriete y verificación de tornillos de cárter",
+    "precio": 200.0,
+    "workshopId": 2
+  },
+  {
+    "id": 14,
+    "failureId": 4,
+    "clave": "LIMPIEZA_SUPERFICIE_MOTOR",
+    "descripcion": "Limpieza de rebabas y superficie de acople",
+    "precio": 350.0,
+    "workshopId": 3
+  },
+  {
+    "id": 15,
+    "failureId": 5,
+    "clave": "CAMBIO_SENSOR_OXIGENO",
+    "descripcion": "Reemplazo de sensor O₂ y limpieza de conectores",
+    "precio": 720.0,
+    "workshopId": 2
+  },
+  {
+    "id": 16,
+    "failureId": 5,
+    "clave": "DIAGNOSTICO_ECU",
+    "descripcion": "Análisis de ECU y códigos de error",
+    "precio": 500.0,
+    "workshopId": 4
+  },
+  {
+    "id": 17,
+    "failureId": 5,
+    "clave": "LIMPIEZA_CABLEADO",
+    "descripcion": "Limpieza y revisión de cableado del sensor",
+    "precio": 280.0,
+    "workshopId": 3
+  },
+  {
+    "id": 18,
+    "failureId": 6,
+    "clave": "CAMBIO_TERMOSTATO",
+    "descripcion": "Sustitución de termostato y prueba de funcionamiento",
+    "precio": 520.0,
+    "workshopId": 1
+  },
+  {
+    "id": 19,
+    "failureId": 6,
+    "clave": "REVISION_SISTEMA_REFRIGERANTE",
+    "descripcion": "Revisión y carga de refrigerante",
+    "precio": 380.0,
+    "workshopId": 2
+  },
+  {
+    "id": 20,
+    "failureId": 7,
+    "clave": "REEMPLAZO_CORREA_DIST",
+    "descripcion": "Cambio de correa de distribución y tensores",
+    "precio": 1120.0,
+    "workshopId": 3
+  },
+  {
+    "id": 21,
+    "failureId": 7,
+    "clave": "VERIFICACION_MARCAJE",
+    "descripcion": "Verificación y ajuste del marcado de distribución",
+    "precio": 450.0,
+    "workshopId": 4
+  },
+  {
+    "id": 22,
+    "failureId": 8,
+    "clave": "CAMBIO_BOMBA_AGUA",
+    "descripcion": "Reemplazo de bomba de agua y sellos",
+    "precio": 670.0,
+    "workshopId": 2
+  },
+  {
+    "id": 23,
+    "failureId": 8,
+    "clave": "PRUEBA_PRESION",
+    "descripcion": "Prueba de presión del sistema de refrigeración",
+    "precio": 310.0,
+    "workshopId": 3
+  },
+  {
+    "id": 24,
+    "failureId": 9,
+    "clave": "REPARACION_ALTERNADOR",
+    "descripcion": "Reparación o intercambio de alternador",
+    "precio": 920.0,
+    "workshopId": 1
+  },
+  {
+    "id": 25,
+    "failureId": 9,
+    "clave": "CAMBIO_CORREA_ACCESORIOS",
+    "descripcion": "Reemplazo de correa de accesorios y polea",
+    "precio": 480.0,
+    "workshopId": 4
+  },
+  {
+    "id": 26,
+    "failureId": 10,
+    "clave": "CAMBIO_PASTILLAS_FRENOS",
+    "descripcion": "Sustitución de pastillas de freno",
+    "precio": 570.0,
+    "workshopId": 2
+  },
+  {
+    "id": 27,
+    "failureId": 10,
+    "clave": "LIMPIEZA_FRENOS",
+    "descripcion": "Limpieza de guías y pistones de caliper",
+    "precio": 260.0,
+    "workshopId": 3
+  },
+  {
+    "id": 28,
+    "failureId": 11,
+    "clave": "REEMPLAZO_AMORTIGUADORES",
+    "descripcion": "Cambio de amortiguadores delanteros y traseros",
+    "precio": 1250.0,
+    "workshopId": 1
+  },
+  {
+    "id": 29,
+    "failureId": 11,
+    "clave": "INSPECCION_SUSPENSION",
+    "descripcion": "Revisión de puntales y bujes",
+    "precio": 350.0,
+    "workshopId": 4
+  },
+  {
+    "id": 30,
+    "failureId": 12,
+    "clave": "AJUSTE_FRENO_MANO",
+    "descripcion": "Ajuste de cable y calibración de freno de mano",
+    "precio": 220.0,
+    "workshopId": 2
+  },
+  {
+    "id": 31,
+    "failureId": 12,
+    "clave": "PRUEBA_FRENADO",
+    "descripcion": "Prueba de funcionamiento en banco",
+    "precio": 180.0,
+    "workshopId": 3
+  },
+  {
+    "id": 32,
+    "failureId": 13,
+    "clave": "LIMPIEZA_O_REEMPLAZO_INYECTORES",
+    "descripcion": "Limpieza ultrasónica o cambio de inyectores",
+    "precio": 780.0,
+    "workshopId": 1
+  },
+  {
+    "id": 33,
+    "failureId": 14,
+    "clave": "REVISION_ELECTRICA_GENERAL",
+    "descripcion": "Chequeo de fusibles, relés y tomas a tierra",
+    "precio": 360.0,
+    "workshopId": 2
+  },
+  {
+    "id": 34,
+    "failureId": 14,
+    "clave": "DIAGNOSTICO_TABLERO",
+    "descripcion": "Lectura de códigos y diagnóstico de tablero",
+    "precio": 480.0,
+    "workshopId": 4
+  },
+  {
+    "id": 35,
+    "failureId": 15,
+    "clave": "CAMBIO_BUJIAS",
+    "descripcion": "Reemplazo de bujías y prueba de chispa",
+    "precio": 420.0,
+    "workshopId": 1
+  },
+  {
+    "id": 36,
+    "failureId": 15,
+    "clave": "REVISION_BOBINAS",
+    "descripcion": "Verificación y sustitución de bobinas de encendido",
+    "precio": 650.0,
+    "workshopId": 3
+  },
+  {
+    "id": 37,
+    "failureId": 16,
+    "clave": "REPARACION_TURBO",
+    "descripcion": "Reacondicionado o reemplazo de turbo",
+    "precio": 1400.0,
+    "workshopId": 2
+  },
+  {
+    "id": 38,
+    "failureId": 16,
+    "clave": "LIMPIEZA_SISTEMA_ADMISIÓN",
+    "descripcion": "Limpieza de conductos y válvula de descarga",
+    "precio": 580.0,
+    "workshopId": 4
+  },
+  {
+    "id": 39,
+    "failureId": 17,
+    "clave": "REPARACION_CAJA_CAMBIOS",
+    "descripcion": "Revisión y ajuste de sincronizadores",
+    "precio": 1450.0,
+    "workshopId": 1
+  },
+  {
+    "id": 40,
+    "failureId": 17,
+    "clave": "CAMBIO_ACEITE_CAJA",
+    "descripcion": "Cambio de aceite de transmisión y filtro",
+    "precio": 320.0,
+    "workshopId": 3
+  },
+  {
+    "id": 41,
+    "failureId": 18,
+    "clave": "DIAGNOSTICO_TRANSMISION",
+    "descripcion": "Análisis y ajuste de cambios",
+    "precio": 850.0,
+    "workshopId": 2
+  },
+  {
+    "id": 42,
+    "failureId": 19,
+    "clave": "REPARACIÓN_ESCAPE",
+    "descripcion": "Reparación o reemplazo de tramo de escape",
+    "precio": 720.0,
+    "workshopId": 1
+  },
+  {
+    "id": 43,
+    "failureId": 19,
+    "clave": "SOLDADURA_TUBERÍA",
+    "descripcion": "Soldadura y sellado de perforaciones",
+    "precio": 400.0,
+    "workshopId": 4
+  },
+  {
+    "id": 44,
+    "failureId": 20,
+    "clave": "REEMPLAZO_LINEA_COMBUSTIBLE",
+    "descripcion": "Sustitución de tubería y abrazaderas",
+    "precio": 610.0,
+    "workshopId": 2
+  },
+  {
+    "id": 45,
+    "failureId": 20,
+    "clave": "PRUEBA_PRESION_COMBUSTIBLE",
+    "descripcion": "Prueba de presión y verificación de fugas",
+    "precio": 350.0,
+    "workshopId": 3
+  }
+]

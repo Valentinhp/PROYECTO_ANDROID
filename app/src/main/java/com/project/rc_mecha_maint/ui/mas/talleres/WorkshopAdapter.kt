@@ -28,32 +28,31 @@ class WorkshopAdapter : ListAdapter<Workshop, WorkshopAdapter.VH>(DIFF) {
             b.tvNombreTaller.text    = w.nombre
             b.tvDireccionTaller.text = w.direccion
 
-            // Llamar
             b.btnLlamar.setOnClickListener {
                 it.context.startActivity(
                     Intent(Intent.ACTION_DIAL, Uri.parse("tel:${w.telefono}"))
                 )
             }
-            // Abrir Maps
             b.btnMapa.setOnClickListener {
                 val geo = "geo:${w.latitud},${w.longitud}?q=${Uri.encode(w.nombre)}"
                 it.context.startActivity(
                     Intent(Intent.ACTION_VIEW, Uri.parse(geo))
                 )
             }
-            // Ir a Comparador
             b.btnCotizar.setOnClickListener {
-                val bundle = bundleOf("workshop" to w)
+                // Pasamos valores válidos para comparador
+                val bundle = bundleOf(
+                    "failureId"   to -1,   // -1 = no filtrado por falla
+                    "failureName" to ""    // sin preselección
+                )
                 it.findNavController()
-                    .navigate(R.id.action_global_nav_comparador, bundle)
+                    .navigate(R.id.action_global_fragmentComparador, bundle)
             }
-            // Detalle Taller
             b.root.setOnClickListener {
                 val bundle = bundleOf("workshop" to w)
                 it.findNavController()
                     .navigate(R.id.action_talleres_to_detalleTaller, bundle)
             }
-            // Edición larga
             b.root.setOnLongClickListener {
                 AddEditTallerDialog.newInstance(w)
                     .show(
@@ -67,8 +66,7 @@ class WorkshopAdapter : ListAdapter<Workshop, WorkshopAdapter.VH>(DIFF) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        VH(ItemTallerBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false))
+        VH(ItemTallerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder.bind(getItem(position))

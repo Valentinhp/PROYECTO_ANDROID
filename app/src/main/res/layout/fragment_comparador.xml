@@ -1,23 +1,63 @@
 <!-- app/src/main/res/layout/fragment_comparador.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Spinner para elegir autoparte -->
-    <Spinner
-        android:id="@+id/spinnerAutopartes"
+    <!-- Pestañas para Autopartes y Servicios -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
 
-    <!-- RecyclerView con las cotizaciones -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvComparador"
+    <!-- Contenedor Autopartes -->
+    <LinearLayout
+        android:id="@+id/containerAutopartes"
+        android:orientation="vertical"
+        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent">
 
-    <!-- El FAB para “Agregar cotización manual” se eliminó -->
+        <!-- Spinner para elegir autoparte -->
+        <Spinner
+            android:id="@+id/spinnerAutopartes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- RecyclerView con las cotizaciones de autopartes -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvComparador"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- Contenedor Servicios -->
+    <LinearLayout
+        android:id="@+id/containerServicios"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Spinner para elegir servicio -->
+        <Spinner
+            android:id="@+id/spinnerServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- RecyclerView con las cotizaciones de servicios -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvServicios"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 </LinearLayout>

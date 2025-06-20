@@ -1,3 +1,4 @@
+// app/src/main/java/com/project/rc_mecha_maint/ui/mas/diagnostico/FragmentResultadoDiag.kt
 package com.project.rc_mecha_maint.ui.mas.diagnostico
 
 import android.os.Bundle
@@ -15,7 +16,6 @@ class FragmentResultadoDiag : Fragment() {
     private var _binding: FragmentResultadoDiagBinding? = null
     private val b get() = _binding!!
 
-    // Recibimos el objeto Failure
     private val args: FragmentResultadoDiagArgs by navArgs()
 
     override fun onCreateView(
@@ -32,23 +32,27 @@ class FragmentResultadoDiag : Fragment() {
         b.tvRecomendacion.text = "Recomendación: ${falla.recomendacion}"
         b.imgDiag.setImageResource(R.drawable.ic_diagnosis)
 
-        // Volver
         b.btnVolver.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // Ir a Comparador (pasa nombre de la falla vía bundle)
+        // Enviamos failureId como Int (toInt()) y failureName
         b.btnComparar.setOnClickListener {
-            val bundle = bundleOf("failureName" to falla.nombreFalla)
+            val bundle = bundleOf(
+                "failureId"   to falla.id.toInt(),
+                "failureName" to falla.nombreFalla
+            )
             findNavController().navigate(
-                R.id.action_global_nav_comparador,
+                R.id.action_global_fragmentComparador,
                 bundle
             )
         }
 
-        // Ir a Talleres (pasa id de la falla vía bundle)
+        // Ver talleres: failureId sigue siendo Long
         b.btnVerTalleres.setOnClickListener {
-            val bundle = bundleOf("failureId" to falla.id)
+            val bundle = bundleOf(
+                "failureId" to falla.id
+            )
             findNavController().navigate(
                 R.id.action_global_nav_talleres,
                 bundle
