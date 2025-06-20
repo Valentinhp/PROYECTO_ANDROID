@@ -24,11 +24,11 @@
             android:id="@+id/tvBienvenidoApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bienvenido a RC Mecha Maint"
+            android:text="Bienvenido a Rayos Mant"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="?attr/colorOnBackground"
+         android:textColor="?attr/colorOnSurface"
         android:layout_marginTop="8dp" />
 
         <TextView
