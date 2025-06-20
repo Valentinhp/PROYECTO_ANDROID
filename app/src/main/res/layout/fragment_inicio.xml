@@ -28,7 +28,7 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="?attr/colorOnBackground"
+            android:textColor="@color/colorBackground"
             android:layout_marginTop="8dp" />
 
         <TextView

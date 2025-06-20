@@ -9,87 +9,81 @@ import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.project.rc_mecha_maint.R
-import com.project.rc_mecha_maint.data.AppDatabase        // <–– Import correcto para la BD
+import com.project.rc_mecha_maint.data.AppDatabase
 import com.project.rc_mecha_maint.data.entity.Reminder
-import com.project.rc_mecha_maint.ui.recordatorios.ReminderViewModel  // (opcional: si necesitas el ViewModel, pero no es obligatorio aquí)
 
 class ReminderWorker(
-    private val context: Context,
+    appContext: Context,
     workerParams: WorkerParameters
-) : CoroutineWorker(context, workerParams) {
+) : CoroutineWorker(appContext, workerParams) {
 
     companion object {
-        const val KEY_REMINDER_ID = "reminder_id"
-        const val CHANNEL_ID = "recordatorio_channel"
-        const val CHANNEL_NAME = "Recordatorios"
+        // Debe coincidir con la clave usada al programar la WorkRequest
+        const val KEY_REMINDER_ID = "reminderId"
+        private const val CHANNEL_ID = "recordatorio_channel"
+        private const val CHANNEL_NAME = "Recordatorios"
     }
 
     override suspend fun doWork(): Result {
-        // 1) Obtenemos el reminderId desde los inputData
+        // 1) Obtener el ID del reminder de los inputData
         val reminderId = inputData.getLong(KEY_REMINDER_ID, -1L)
-        if (reminderId == -1L) {
-            // Si no vino un ID válido, fallamos
-            return Result.failure()
-        }
+        if (reminderId < 0) return Result.failure()
 
-        // 2) Obtenemos el DAO usando AppDatabase.getDatabase(context)
-        val db = AppDatabase.getInstance(context)
-        val reminderDao = db.reminderDao()
+        // 2) Cargar el Reminder desde la base de datos
+        val db = AppDatabase.getInstance(applicationContext)
+        val reminder = db.reminderDao().getReminderById(reminderId)
+            ?: return Result.success() // si ya no existe, salimos exitosos
 
-
-        // 3) Llamamos al nuevo método getReminderById (suspend)
-        val reminder: Reminder? = reminderDao.getReminderById(reminderId)
-
-        if (reminder == null) {
-            // Si el recordatorio ya fue borrado antes de que se ejecute el Worker, simplemente devolvemos success
-            return Result.success()
-        }
-
-        // 4) Mostramos la notificación
+        // 3) Mostrar la notificación
         showNotification(reminder)
-
-        // 5) (Opcional) Podrías actualizar o eliminar el recordatorio para marcarlo como “cumplido”. No lo hacemos aquí.
 
         return Result.success()
     }
 
     private fun showNotification(reminder: Reminder) {
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // 1) Crear canal en Android 8.0+
+        // Crear canal para Android O+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Canal para recordatorios de mantenimiento"
+            }
             notificationManager.createNotificationChannel(channel)
         }
 
-        // 2) Intent para abrir la app al pulsar la notificación (ajusta la Activity si es otra)
-        val intent = Intent(context, Class.forName("com.project.rc_mecha_maint.MainActivity"))
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        // Intent para abrir la MainActivity al pulsar la notificación
+        val intent = Intent(applicationContext, com.project.rc_mecha_maint.MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
         val pendingIntent = PendingIntent.getActivity(
-            context,
-            reminder.id.toInt(), // requestCode único (usa el ID del reminder)
+            applicationContext,
+            reminder.id.toInt(),  // requestCode único
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // 3) Armar la notificación
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notifications) // Asegúrate de tener este drawable
+        // Construir la notificación
+        val text = if (reminder.descripcion.isNotBlank()) {
+            reminder.descripcion
+        } else {
+            "Kilómetros: ${reminder.kilometraje}"
+        }
+
+        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notifications)  // verifica que exista este drawable
             .setContentTitle("Recordatorio: ${reminder.tipo}")
-            .setContentText(
-                if (reminder.descripcion.isNotEmpty()) reminder.descripcion
-                else "Kilómetros: ${reminder.kilometraje}"
-            )
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .build()
 
-        // 4) Mostrarla. Usamos el ID del reminder como “notificationId” para que no se solapen.
-        notificationManager.notify(reminder.id.toInt(), builder.build())
+        // Mostrar usando el ID del reminder para evitar duplicados
+        notificationManager.notify(reminder.id.toInt(), notification)
     }
 }

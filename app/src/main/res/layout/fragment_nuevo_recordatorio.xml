@@ -45,6 +45,24 @@
             android:backgroundTint="#2E5D7D"
             android:textColor="#D5D2D1"/>
 
+        <!-- Hora seleccionada -->
+        <TextView
+            android:id="@+id/tvHoraSeleccionada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora: --:--"
+            android:layout_marginTop="16dp"
+            android:textColor="#D5D2D1"/>
+
+        <Button
+            android:id="@+id/btnSeleccionarHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar hora"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#2E5D7D"
+            android:textColor="#D5D2D1"/>
+
         <!-- Kilometraje -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

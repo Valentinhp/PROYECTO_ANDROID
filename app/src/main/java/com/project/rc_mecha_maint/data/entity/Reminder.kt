@@ -3,7 +3,7 @@ package com.project.rc_mecha_maint.data.entity
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize  // <-- Import de Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Entidad Reminder para Room.
@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize  // <-- Import de Parcelize
 @Entity(tableName = "reminder_table")
 data class Reminder(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    var id: Long = 0L,        // ← Cambiado a var
 
     val tipo: String,
 
@@ -24,4 +24,4 @@ data class Reminder(
     val descripcion: String,
 
     val notificar: Boolean
-) : Parcelable  // <-- Implementa Parcelable gracias a @Parcelize
+) : Parcelable

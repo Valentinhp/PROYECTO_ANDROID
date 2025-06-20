@@ -11,7 +11,7 @@ interface ReminderDao {
     fun getAllReminders(): LiveData<List<Reminder>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(reminder: Reminder)
+    suspend fun insertReminder(reminder: Reminder): Long   // ← Ahora devuelve Long
 
     @Update
     suspend fun update(reminder: Reminder)
@@ -20,8 +20,8 @@ interface ReminderDao {
     suspend fun delete(reminder: Reminder)
 
     /**
-     * NUEVO: obtener un solo Reminder por su ID.
-     * Lo marcamos como suspend para poder llamarlo desde un CoroutineWorker.
+     * Obtener un solo Reminder por su ID.
+     * Suspend para poder llamarlo desde un CoroutineWorker.
      */
     @Query("SELECT * FROM reminder_table WHERE id = :id")
     suspend fun getReminderById(id: Long): Reminder?
