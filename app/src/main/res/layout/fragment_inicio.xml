@@ -38,8 +38,9 @@
             android:text="Buenos días, Valen"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:gravity="center"
-            android:textColor="?attr/colorOnBackground"
-            android:layout_marginBottom="16dp" />
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginBottom="16dp" />
+
 
         <!-- ───── Tarjeta Próximo mantenimiento ───── -->
         <com.google.android.material.card.MaterialCardView
