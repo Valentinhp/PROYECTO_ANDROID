@@ -1,329 +1,274 @@
-````markdown
-# RC Mecha Maint (PROYECTO_ANDROID)
+RC Mecha Maint (PROYECTO\_ANDROID)
 
-> **Aplicación Android completa para gestionar mantenimientos de vehículos, diagnosticar fallas, comparar precios de autopartes y registrar facturas.**
-
----
-
-## 📑 Tabla de contenido
-
-1. [Descripción](#descripción)  
-2. [Características principales](#características-principales)  
-3. [Tecnologías y dependencias](#tecnologías-y-dependencias)  
-4. [Capturas de pantalla](#capturas-de-pantalla)  
-5. [Requisitos de entorno](#requisitos-de-entorno)  
-6. [Instalación y puesta en marcha](#instalación-y-puesta-en-marcha)  
-7. [Configuración del proyecto](#configuración-del-proyecto)  
-8. [Estructura de carpetas](#estructura-de-carpetas)  
-9. [Detalles de los módulos](#detalles-de-los-módulos)  
-10. [Flujo de datos y arquitectura](#flujo-de-datos-y-arquitectura)  
-11. [Pruebas](#pruebas)  
-12. [Cómo contribuir](#cómo-contribuir)  
-13. [Convenciones de código](#convenciones-de-código)  
-14. [Empaquetado y lanzamiento](#empaquetado-y-lanzamiento)  
-15. [Preguntas frecuentes](#preguntas-frecuentes)  
-16. [Licencia](#licencia)  
-17. [Contacto](#contacto)  
+Aplicación Android completa para gestionar mantenimientos de vehículos, diagnosticar fallas, comparar precios de autopartes y registrar facturas.
 
 ---
 
-## 📖 Descripción
+1. Tabla de contenido
 
-RC Mecha Maint es una aplicación nativa de Android creada en Kotlin + Jetpack Compose (o XML según prefieras) que:
+   1. Descripción
+   2. Características principales
+   3. Tecnologías y dependencias
+   4. Capturas de pantalla
+   5. Requisitos de entorno
+   6. Instalación y puesta en marcha
+   7. Configuración del proyecto
+   8. Estructura de carpetas
+   9. Detalles de los módulos
+   10. Flujo de datos y arquitectura
+   11. Pruebas
+   12. Cómo contribuir
+   13. Convenciones de código
+   14. Empaquetado y lanzamiento
+   15. Preguntas frecuentes
+   16. Licencia
+   17. Contacto
 
-- Lleva **recordatorios** de próximos mantenimientos (aceite, frenos, llantas…).  
-- Realiza un **diagnóstico de fallas** basado en síntomas ingresados por el usuario.  
-- Permite **comparar precios** de autopartes entre distintos talleres.  
-- Gestiona el **historial de facturas**, con subida de imagen y visualización de datos.  
-- Administra una **lista de vehículos** y un **perfil de usuario**.  
+---
+
+Descripción
+
+RC Mecha Maint es una aplicación nativa de Android creada en Kotlin que:
+
+* Lleva recordatorios de próximos mantenimientos (aceite, frenos, llantas, etc.).
+* Realiza un diagnóstico de fallas basado en síntomas ingresados por el usuario.
+* Permite comparar precios de autopartes entre distintos talleres.
+* Gestiona el historial de facturas, con subida de imagen y visualización de datos.
+* Administra una lista de vehículos y un perfil de usuario.
 
 Su objetivo es centralizar todo lo relacionado con el mantenimiento automotriz en un solo lugar, con una interfaz clara y persistencia local usando Room.
 
 ---
 
-## ✨ Características principales
+Características principales
 
-- **Inicio** con tarjetas dinámicas: próximos mantenimientos y resumen rápido.  
-- **CRUD de Vehículos**: alta, edición y baja.  
-- **Módulo Diagnóstico**: entrada de síntomas→resultado de falla→recomendaciones.  
-- **Módulo Comparador**: lista de autopartes + precios por taller + filtros.  
-- **Módulo Facturas**: captura de foto (o galería), OCR opcional y almacenamiento.  
-- **Persistencia** con Room (DAO, Repository, ViewModel, LiveData/Flow).  
-- **Navegación** con Navigation Component y Safe Args.  
-- **Temas Claro/Oscuro** automáticos según sistema.  
-- **Notificaciones** locales para recordatorios programados.  
-
----
-
-## 🛠 Tecnologías y dependencias
-
-- **Lenguaje**: Kotlin (jvmTarget 17)  
-- **Plugins**:  
-  - Android Gradle Plugin  
-  - Kotlin Gradle Plugin  
-  - Navigation Safe Args  
-- **Arquitectura**: MVVM (ViewModel + LiveData/Flow)  
-- **Persistencia**: Room  
-- **Navegación**: Navigation Component  
-- **OCR (opcional)**: ML Kit Text Recognition  
-- **UI Components**: Material Components, ConstraintLayout, RecyclerView, CardView  
-- **Librerías auxiliares**:  
-  - Glide (carga de imágenes)  
-  - MPAndroidChart (gráficos en reportes)  
-  - Coroutines (tareas en background)  
-- **Testing**: JUnit, AndroidX Test, Espresso  
+* Inicio con tarjetas dinámicas: próximos mantenimientos y resumen rápido.
+* CRUD de Vehículos: alta, edición y baja.
+* Módulo Diagnóstico: entrada de síntomas, resultado de falla y recomendaciones.
+* Módulo Comparador: lista de autopartes, precios por taller y filtros.
+* Módulo Facturas: captura de foto (o galería), OCR opcional y almacenamiento.
+* Persistencia con Room (DAO, Repository, ViewModel, LiveData/Flow).
+* Navegación con Navigation Component y Safe Args.
+* Temas Claro/Oscuro automáticos según el sistema.
+* Notificaciones locales para recordatorios programados.
 
 ---
 
-## 📸 Capturas de pantalla
+Tecnologías y dependencias
 
-> _(añade capturas en `docs/screenshots/` y enlázalas aquí)_
-
-1. **Pantalla Inicio**  
-2. **CRUD Vehículos**  
-3. **Diagnóstico**  
-4. **Comparador de autopartes**  
-5. **Listado de facturas**  
-
----
-
-## 🔧 Requisitos de entorno
-
-- **JDK 17**  
-- **Android Studio Flamingo (2023.3.1)** o superior  
-- **Android SDK Platform 33**  
-- **Gradle 7.6** (wrapper incluido)  
-- Variables de entorno (solo si usas CLI):  
-  - `JAVA_HOME` → ruta al JDK 17  
-  - `ANDROID_HOME` → ruta al SDK Android  
+* Lenguaje: Kotlin (jvmTarget 17)
+* Plugins: Android Gradle Plugin, Kotlin Gradle Plugin, Navigation Safe Args
+* Arquitectura: MVVM (ViewModel y LiveData/Flow)
+* Persistencia: Room
+* Navegación: Navigation Component
+* OCR (opcional): ML Kit Text Recognition
+* Componentes de UI: Material Components, ConstraintLayout, RecyclerView, CardView
+* Librerías auxiliares: Glide (carga de imágenes), MPAndroidChart (gráficos en reportes), Coroutines (tareas en background)
+* Testing: JUnit, AndroidX Test, Espresso
 
 ---
 
-## 🚀 Instalación y puesta en marcha
+Capturas de pantalla
 
-1. **Clonar repositorio**  
-   ```bash
-   git clone https://github.com/Valentinhp/PROYECTO_ANDROID.git
-   cd PROYECTO_ANDROID
-````
+Añade las capturas en docs/screenshots/ y enlázalas aquí:
 
-2. **Abrir en Android Studio**
-
-   * `File` → `Open` → seleccionar la carpeta del proyecto.
-3. **Configurar JDK**
-
-   * `File` → `Project Structure` → `SDK Location` → apuntar a **Java 17**.
-4. **Sincronizar Gradle**
-
-   * Android Studio propondrá sincronizar; acepta.
-5. **Ejecutar la app**
-
-   * Conecta un emulador o dispositivo con API ≥ 33.
-   * Pulsa ▶️ (“Run app”).
+1. Pantalla Inicio
+2. CRUD Vehículos
+3. Diagnóstico
+4. Comparador de autopartes
+5. Listado de facturas
 
 ---
 
-## ⚙️ Configuración del proyecto
+Requisitos de entorno
 
-* **`gradle.properties`**
-
-  ```properties
-  org.gradle.jvmargs=-Xmx2048m
-  kotlin.code.style=official
-  ```
-* **`app/build.gradle.kts`**
-
-  * `minSdk = 21` (o el que prefieras)
-  * `targetSdk = 33`
-  * Habilita ViewBinding o Jetpack Compose:
-
-    ```kotlin
-    buildFeatures {
-      viewBinding = true
-      compose = false
-    }
-    ```
-* **Variables Secretas** (si las tuvieras):
-
-  * Crear `local.properties` con claves de API (no comitear).
+* JDK 17
+* Android Studio Flamingo (2023.3.1) o superior
+* Android SDK Platform 33
+* Gradle 7.6 (wrapper incluido)
+* Variables de entorno (si usas línea de comandos):
+  JAVA\_HOME → ruta al JDK 17
+  ANDROID\_HOME → ruta al SDK Android
 
 ---
 
-## 📂 Estructura de carpetas
+Instalación y puesta en marcha
 
-```
-PROYECTO_ANDROID/
+1. Clonar repositorio
+   git clone [https://github.com/Valentinhp/PROYECTO\_ANDROID.git](https://github.com/Valentinhp/PROYECTO_ANDROID.git)
+   cd PROYECTO\_ANDROID
+
+2. Abrir en Android Studio
+   En el menú File, selecciona Open y elige la carpeta del proyecto.
+
+3. Configurar JDK
+   En File > Project Structure > SDK Location, apunta a Java 17.
+
+4. Sincronizar Gradle
+   Cuando Android Studio lo solicite, acepta la sincronización.
+
+5. Ejecutar la app
+   Conecta un emulador o dispositivo con API 33 o superior y pulsa el botón Run.
+
+---
+
+Configuración del proyecto
+
+Archivo gradle.properties:
+org.gradle.jvmargs=-Xmx2048m
+kotlin.code.style=official
+
+En app/build.gradle.kts:
+minSdk = 21 (o el que prefieras)
+targetSdk = 33
+En buildFeatures habilita viewBinding o Compose:
+viewBinding = true
+compose = false
+
+Variables Secretas (si las tuvieras):
+Crea local.properties con claves de API (no subir al repositorio).
+
+---
+
+Estructura de carpetas
+
+PROYECTO\_ANDROID/
 ├─ app/
-│  ├─ src/
-│  │  ├─ main/
-│  │  │  ├─ java/com/project/rc_mecha_maint/
-│  │  │  │  ├─ ui/
-│  │  │  │  │  ├─ inicio/
-│  │  │  │  │  ├─ vehiculos/
-│  │  │  │  │  ├─ diagnostico/
-│  │  │  │  │  ├─ comparador/
-│  │  │  │  │  └─ facturas/
-│  │  │  │  ├─ data/
-│  │  │  │  │  ├─ local/       (Room: entidades, DAOs)
-│  │  │  │  │  ├─ repository/
-│  │  │  │  │  └─ model/
-│  │  │  │  └─ util/            (extensiones, helpers, toasts)
-│  │  │  └─ res/
-│  │  │     ├─ layout/
-│  │  │     ├─ drawable/
-│  │  │     ├─ values/          (strings, colors, themes)
-│  │  │     └─ navigation/      (archivos nav_graph.xml)
-│  └─ build.gradle.kts
+│   ├─ src/
+│   │   ├─ main/
+│   │   │   ├─ java/com/project/rc\_mecha\_maint/
+│   │   │   │   ├─ ui/
+│   │   │   │   │   ├─ inicio/
+│   │   │   │   │   ├─ vehiculos/
+│   │   │   │   │   ├─ diagnostico/
+│   │   │   │   │   ├─ comparador/
+│   │   │   │   │   └─ facturas/
+│   │   │   │   ├─ data/
+│   │   │   │   │   ├─ local/    (Room: entidades, DAOs)
+│   │   │   │   │   ├─ repository/
+│   │   │   │   │   └─ model/
+│   │   │   │   └─ util/         (extensiones, helpers, toasts)
+│   │   │   └─ res/
+│   │   │       ├─ layout/
+│   │   │       ├─ drawable/
+│   │   │       ├─ values/      (strings, colors, themes)
+│   │   │       └─ navigation/  (archivos nav\_graph.xml)
+│   └─ build.gradle.kts
 ├─ build.gradle.kts
 ├─ settings.gradle.kts
 ├─ gradle/
-│  └─ wrapper/
+│   └─ wrapper/
 ├─ gradle.properties
 ├─ requirements.txt
-└─ README.md
-```
+└─ README.txt (este archivo)
 
 ---
 
-## 🔍 Detalles de los módulos
+Detalles de los módulos
 
-### 1. UI (`ui/…`)
+1. UI (en la carpeta ui/…):
 
-* **Fragments**: una clase por pantalla.
-* **Adapters**: para RecyclerView en listados.
-* **ViewModels**: lógica UI + obtención de datos.
+   * Fragments: una clase por pantalla.
+   * Adapters: para los RecyclerView.
+   * ViewModels: lógica de UI y obtención de datos.
 
-### 2. Data (`data/…`)
+2. Data (en la carpeta data/…):
 
-* **Entities**: tablas de Room (`@Entity`).
-* **DAOs**: consultas a la base de datos.
-* **Database**: clase abstracta `AppDatabase`.
-* **Repositories**: un solo punto de acceso a datos (local + remoto).
+   * Entities: tablas de Room marcadas con @Entity.
+   * DAOs: interfaces con las consultas a la base de datos.
+   * Database: clase abstracta AppDatabase.
+   * Repositories: punto único de acceso a datos (local y remoto).
 
-### 3. Utilidades (`util/…`)
+3. Utilidades (en util/…):
 
-* Extensiones de Kotlin (`Context.toast()`, formateo de fechas…).
-* Helpers para conversiones (timestamp → fecha).
-
----
-
-## 🔄 Flujo de datos y arquitectura
-
-1. **View (Fragment)** → 2. **ViewModel** → 3. **Repository** → 4. **DAO (Room)**
-2. **LiveData / Flow** retorna el resultado al ViewModel → se observa desde el Fragment.
-
-Para operaciones de borde (OCR, red) usa **Coroutines** y **Dispatchers.IO**.
+   * Extensiones de Kotlin, por ejemplo Context.toast().
+   * Helpers para conversiones de timestamp a fecha, etc.
 
 ---
 
-## ✅ Pruebas
+Flujo de datos y arquitectura
 
-* **Unit tests** en `app/src/test/java/…`
-
-  ```bash
-  ./gradlew test
-  ```
-* **Instrumented tests** en `app/src/androidTest/java/…`
-
-  ```bash
-  ./gradlew connectedAndroidTest
-  ```
-* Usa **Espresso** para UI testing y **Mockito** para mocks (si lo agregas).
+El flujo típico es:
+View (Fragment) -> ViewModel -> Repository -> DAO (Room)
+El resultado se devuelve como LiveData o Flow al ViewModel y se observa desde el Fragment.
+Para operaciones de red u OCR utiliza Coroutines con Dispatchers.IO.
 
 ---
 
-## 🤝 Cómo contribuir
+Pruebas
 
-1. Haz **fork** del proyecto.
-2. Crea una rama con tu feature/bugfix:
+* Unit tests en app/src/test/java/…
+  Ejecutar con: ./gradlew test
 
-   ```bash
-   git checkout -b feature/nombre-descriptivo
-   ```
-3. Implementa tu cambio y asegúrate de que compile.
+* Instrumented tests en app/src/androidTest/java/…
+  Ejecutar con: ./gradlew connectedAndroidTest
+
+Se recomienda usar Espresso para pruebas de UI y Mockito para mocks si lo necesitas.
+
+---
+
+Cómo contribuir
+
+1. Haz fork del proyecto.
+2. Crea una rama descriptiva: git checkout -b feature/nombre-descriptivo
+3. Implementa tu cambio y verifica que compile.
 4. Añade pruebas si aplica.
-5. Haz **commit** con mensaje claro:
-
-   ```
+5. Haz commit con un mensaje claro, por ejemplo:
    feat: agrega validación de fechas en Recordatorios
-   ```
-6. Envía un **Pull Request**, describe tu cambio y por qué ayuda al proyecto.
+6. Envía un Pull Request describiendo tu aporte y el motivo.
 
 ---
 
-## 📏 Convenciones de código
+Convenciones de código
 
-* Usa **Kotlin official style guide**.
-* Nombres en **camelCase** para variables y métodos.
-* Clases y archivos en **PascalCase**.
-* Máximo 120 caracteres por línea.
-* Comentarios `// TODO:` para pendientes.
-* Documenta funciones públicas con KDoc:
-
-  ```kotlin
-  /**
-   * Calcula los días restantes hasta la próxima fecha de mantenimiento.
-   */
-  fun calcularDiasRestantes(...): Int { … }
-  ```
+* Sigue la guía oficial de estilo de Kotlin.
+* Variables y métodos en camelCase.
+* Clases y archivos en PascalCase.
+* Líneas de código de máximo 120 caracteres.
+* Usa comentarios // TODO: para tareas pendientes.
+* Documenta funciones públicas con KDoc.
 
 ---
 
-## 🚚 Empaquetado y lanzamiento
+Empaquetado y lanzamiento
 
-1. Configura **signingConfigs** en `app/build.gradle.kts` con tu keystore.
-2. Habilita minificación y obfuscación (ProGuard/R8):
+1. Configura signingConfigs en app/build.gradle.kts con tu keystore.
+2. Activa minificación y obfuscación en buildTypes -> release:
 
-   ```kotlin
-   buildTypes {
-     release {
-       minifyEnabled = true
-       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-     }
-   }
-   ```
-3. Genera APK o AAB:
-
-   ```bash
+   * minifyEnabled = true
+   * proguardFiles(getDefault..., "proguard-rules.pro")
+3. Genera el APK o AAB:
    ./gradlew assembleRelease
-   # o
+   o
    ./gradlew bundleRelease
-   ```
 4. Sube el AAB al Play Console.
 
 ---
 
-## ❓ Preguntas frecuentes
+Preguntas frecuentes
 
-* **¿Por qué Room en lugar de SQLite directo?**
-  Room simplifica el acceso a la base y evita boilerplate.
+* ¿Por qué usar Room en lugar de SQLite directo?
+  Porque Room reduce boilerplate y gestiona el esquema y las migraciones.
 
-* **¿Cómo habilito temas Dark/Light?**
-  Se detecta automáticamente según el modo del sistema. Puedes forzar con:
+* ¿Cómo habilitar temas Claro y Oscuro?
+  Se detectan automáticamente según el sistema. Para forzar uno:
+  AppCompatDelegate.setDefaultNightMode(MODE\_NIGHT\_YES)
 
-  ```kotlin
-  AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-  ```
-
-* **¿Puedo usar Jetpack Compose?**
-  Sí: en `buildFeatures { compose = true }` y configura `composeOptions`.
+* ¿Puedo usar Jetpack Compose?
+  Sí. En build.gradle.kts activa compose en buildFeatures y configura composeOptions.
 
 ---
 
-## 📄 Licencia
+Licencia
 
-Este proyecto está bajo la **MIT License**.
-Consulta el archivo `LICENSE` para detalles.
+Este proyecto está bajo la MIT License. Consulta el archivo LICENSE para más detalles.
 
 ---
 
-## 📬 Contacto
+Contacto
 
-* **Autor:** Valentín H.
-* **Correo:** [tuemail@ejemplo.com](mailto:tuemail@ejemplo.com)
-* **GitHub:** [github.com/Valentinhp](https://github.com/Valentinhp)
+Autor: Valentín H.
+Correo: [tuemail@ejemplo.com](mailto:tuemail@ejemplo.com)
+GitHub: [https://github.com/Valentinhp](https://github.com/Valentinhp)
 
-¡Gracias por usar y contribuir a RC Mecha Maint! 🚀
-
-```
-```
+¡Gracias por usar y contribuir a RC Mecha Maint!
