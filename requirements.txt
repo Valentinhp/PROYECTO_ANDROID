@@ -1,14 +1,13 @@
-# requirements.txt
-# Requisitos de entorno para compilar PROYECTO_ANDROID
+## Requisitos de entorno para compilar PROYECTO_ANDROID
 
-# Java
-JDK==17
+### Java
+- JDK 17
 
-# Android
-Android_SDK==33
-Android_Studio==Flamingo
+### Android
+- Android SDK Platform 33  
+- Android Studio Flamingo (2023.3.x)
 
-# Build
-Gradle==7.6
-Android_Gradle_Plugin==8.1.0
-Kotlin==1.8.21
+### Herramientas de compilación
+- Gradle 7.6 (wrapper incluido)  
+- Android Gradle Plugin 8.1.0  
+- Kotlin 1.8.21  
