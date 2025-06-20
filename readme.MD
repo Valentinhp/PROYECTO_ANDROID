@@ -1,5 +1,4 @@
-============================================================
-RC Mecha Maint (PROYECTO_ANDROID)
+RAYOS MANT (PROYECTO_ANDROID)
 Aplicación Android para gestionar mantenimientos, diagnóstico,
 comparador de precios y registro de facturas
 TABLA DE CONTENIDO
