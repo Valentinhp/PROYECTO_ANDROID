@@ -16,11 +16,12 @@ class FragmentDiagnostico : Fragment() {
     private val b get() = _b!!
     private lateinit var vm: DiagnosticoViewModel
     private val selectedIds = mutableListOf<Long>()
+    private lateinit var adapter: SintomaAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) = FragmentDiagnosticoBinding.inflate(inflater, container, false).also {
-        _b = it
+    ): View {
+        _b = FragmentDiagnosticoBinding.inflate(inflater, container, false)
 
         // Init ViewModel
         val db = AppDatabase.getInstance(requireContext())
@@ -28,29 +29,37 @@ class FragmentDiagnostico : Fragment() {
         val factory = DiagnosticoViewModelFactory(repo)
         vm = ViewModelProvider(this, factory)[DiagnosticoViewModel::class.java]
 
-        // RecyclerView
-        val adapter = SintomaAdapter { id, checked ->
+        // Adapter como propiedad
+        adapter = SintomaAdapter { id, checked ->
             if (checked) selectedIds.add(id) else selectedIds.remove(id)
         }
-        it.rvSintomas.layoutManager = LinearLayoutManager(context)
-        it.rvSintomas.adapter = adapter
 
-        // Carga síntomas
-        vm.allSymptoms.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        with(b) {
+            rvSintomas.layoutManager = LinearLayoutManager(context)
+            rvSintomas.adapter = adapter
 
-        // Botón Diagnosticar
-        it.btnDiagnosticar.setOnClickListener {
-            vm.diagnose(selectedIds).observe(viewLifecycleOwner) { falla ->
-                if (falla == null) {
-                    requireContext().toast("No se encontró coincidencia")
-                } else {
-                    val action = FragmentDiagnosticoDirections
-                        .actionFragmentDiagnosticoToFragmentResultadoDiag(falla)
-                    findNavController().navigate(action)
+            // Carga síntomas una sola vez
+            vm.allSymptoms.observe(viewLifecycleOwner) { adapter.submitList(it) }
+
+            btnDiagnosticar.setOnClickListener {
+                // Usar observeOnce para no acumular observers
+                vm.diagnose(selectedIds).observe(viewLifecycleOwner) { falla ->
+                    if (falla == null) {
+                        requireContext().toast("No se encontró coincidencia")
+                    } else {
+                        val action = FragmentDiagnosticoDirections
+                            .actionFragmentDiagnosticoToFragmentResultadoDiag(falla)
+                        findNavController().navigate(action)
+                    }
+                    // Siempre limpiar selección y UI después
+                    selectedIds.clear()
+                    adapter.clearAllChecks()
                 }
             }
         }
-    }.root
+
+        return b.root
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
