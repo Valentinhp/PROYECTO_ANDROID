@@ -28,8 +28,8 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="@color/colorBackground"
-            android:layout_marginTop="8dp" />
+            android:textColor="?attr/colorOnBackground"
+        android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/tvSaludo"
