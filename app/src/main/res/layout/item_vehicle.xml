@@ -2,12 +2,14 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardVehicle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/colorSurface">
+    app:cardBackgroundColor="@color/colorSurface"
+    app:rippleColor="?attr/colorControlHighlight">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -15,15 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- MINIATURA -->
-        <ImageView
+        <!-- MINIATURA con esquinas redondeadas -->
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgVehicleThumbnail"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Miniatura vehículo"
+            android:contentDescription="@string/desc_vehicle_thumbnail"
             android:src="@drawable/ic_directions_car"
-            android:layout_marginEnd="12dp"/>
+            android:layout_marginEnd="12dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.VehicleThumbnail" />
 
         <!-- Datos del vehículo -->
         <LinearLayout
@@ -32,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <!-- Marca y Modelo -->
             <TextView
                 android:id="@+id/tvVehicleName"
                 android:layout_width="wrap_content"
@@ -40,49 +42,45 @@
                 android:text="Marca Modelo"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/onSurface"/>
+                android:textColor="?attr/colorOnSurface"/>
 
-            <!-- Año y Matrícula -->
             <TextView
                 android:id="@+id/tvVehicleInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Año: 2022 • Matrícula: ABC123"
                 android:textSize="14sp"
-                android:textColor="@color/colorOutline"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_marginTop="4dp"/>
 
-            <!-- NUEVO: Kilometraje -->
             <TextView
                 android:id="@+id/tvKilometraje"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 km"
                 android:textSize="14sp"
-                android:textColor="@color/colorOutline"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_marginTop="4dp"/>
 
-            <!-- NUEVO: Tipo de Combustible -->
             <TextView
                 android:id="@+id/tvTipoCombustible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gasolina"
                 android:textSize="14sp"
-                android:textColor="@color/colorOutline"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_marginTop="2dp"/>
-
         </LinearLayout>
 
-        <!-- Botones de acción -->
+        <!-- Botones editar/eliminar -->
         <ImageButton
             android:id="@+id/buttonEdit"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_edit"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/colorPrimaryVariant"
-            android:contentDescription="Editar vehículo"/>
+            app:tint="?attr/colorOnPrimary"
+            android:contentDescription="@string/desc_edit_vehicle"/>
 
         <ImageButton
             android:id="@+id/buttonDelete"
@@ -90,9 +88,8 @@
             android:layout_height="36dp"
             android:src="@drawable/ic_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/colorSecondaryVariant"
-            android:contentDescription="Eliminar vehículo"
+            app:tint="?attr/colorOnSecondary"
+            android:contentDescription="@string/desc_delete_vehicle"
             android:layout_marginStart="8dp"/>
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

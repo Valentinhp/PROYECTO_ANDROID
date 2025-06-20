@@ -70,4 +70,11 @@
     <string name="app_logo">Logo de la aplicación</string>
     <string name="desc_foto_vehiculo">Foto del vehículo</string>
 
+    <string name="vehiculos_title">Vehículos</string>
+    <string name="add_vehicle">Agregar vehículo</string>
+    <string name="desc_vehicle_thumbnail">Miniatura del vehículo</string>
+    <string name="desc_edit_vehicle">Editar vehículo</string>
+    <string name="desc_delete_vehicle">Eliminar vehículo</string>
+
+
 </resources>

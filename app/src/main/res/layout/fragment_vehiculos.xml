@@ -4,33 +4,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="?android:attr/colorBackground">
 
-    <!-- Pull-to-refresh + lista -->
+    <!-- AppBarLayout contenedor de la Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title="@string/vehiculos_title"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Contenedor de la lista, anclado para desplazar con la Toolbar -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshVehicles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_marginTop="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewVehicles"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
-            android:clipToPadding="false"
             android:scrollbars="vertical"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- FAB para agregar -->
+    <!-- FAB para agregar vehículo -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddVehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Agregar vehículo"
-        android:src="@drawable/ic_mas"
-        app:tint="@color/onSecondary"
-        app:backgroundTint="@color/colorSecondary"
+        android:contentDescription="@string/add_vehicle"
+        app:srcCompat="@drawable/ic_mas"
+        android:tint="?attr/colorOnSecondary"
+        app:backgroundTint="?attr/colorSecondary"
         app:layout_anchor="@id/recyclerViewVehicles"
         app:layout_anchorGravity="bottom|end"
         android:layout_margin="16dp"/>

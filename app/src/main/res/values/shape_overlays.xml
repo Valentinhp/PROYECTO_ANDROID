@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Overlay para miniaturas de vehículo, heredando tu overlay pequeño -->
+    <style
+        name="ShapeAppearanceOverlay.App.VehicleThumbnail"
+        parent="ShapeAppearanceOverlay.App.SmallComponent.Corner.Rounded">
+        <!-- 8dp de radio en todas las esquinas -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+</resources>

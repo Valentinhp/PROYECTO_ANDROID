@@ -1,15 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tema noche -->
     <style name="Theme.RC_MECHA_MAINT_S" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Colores invertidos/variant -->
         <item name="colorPrimary">@color/colorPrimaryVariant</item>
         <item name="android:colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorSecondaryVariant</item>
         <item name="android:colorBackground">@color/colorSurfaceVariant</item>
         <item name="colorSurface">@color/colorSurface</item>
 
-        <!-- estos son los onX que tus layouts esperan -->
+        <!-- on-colors -->
         <item name="colorOnPrimary">@color/onPrimary</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
-        <item name="colorOnBackground">@color/onSurface</item>
+        <item name="colorOnBackground">@color/onBackground</item>
         <item name="colorOnSurface">@color/onSurface</item>
     </style>
 </resources>

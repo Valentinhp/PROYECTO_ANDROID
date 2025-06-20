@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tema principal (claro/por defecto) -->
     <style name="Theme.RC_MECHA_MAINT_S" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Colores básicos ya definidos -->
+        <!-- Colores básicos -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryVariant</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
 
-        <!-- ===== Texto por defecto ===== -->
-        <!-- Texto principal (la mayoría de TextView) -->
+        <!-- Textos -->
         <item name="android:textColorPrimary">@color/onBackground</item>
-        <!-- Texto secundario (subtítulos, detalles) -->
         <item name="android:textColorSecondary">@color/colorOutline</item>
-        <!-- Hint, placeholder, deshabilitado -->
         <item name="android:textColorHint">@color/colorOutline</item>
-        <!-- Texto en botones y elementos primarios -->
         <item name="android:textColor">@color/onPrimary</item>
+
+        <!-- on-colors que tus layouts usan -->
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorOnBackground">@color/onBackground</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+    </style>
+
+    <!-- ShapeAppearanceOverlay para esquinas redondeadas pequeñas -->
+    <style name="ShapeAppearanceOverlay.App.SmallComponent.Corner.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>
