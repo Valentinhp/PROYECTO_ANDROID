@@ -1,23 +1,166 @@
 {
   "symptoms": [
-    { "id": 1, "nombre": "Ruido Motor",   "categoria": "Motor" },
-    { "id": 2, "nombre": "Fuga de Aceite", "categoria": "Motor" },
-    { "id": 3, "nombre": "Pedal Duro",     "categoria": "Frenos" }
+    { "id": 1,  "nombre": "Ruido Motor",            "categoria": "Motor" },
+    { "id": 2,  "nombre": "Fuga de Aceite",         "categoria": "Motor" },
+    { "id": 3,  "nombre": "Pedal Duro",             "categoria": "Frenos" },
+    { "id": 4,  "nombre": "Vibración Volante",      "categoria": "Dirección" },
+    { "id": 5,  "nombre": "Luz Check Engine",       "categoria": "Eléctrico" },
+    { "id": 6,  "nombre": "Humo Excesivo",          "categoria": "Escape" },
+    { "id": 7,  "nombre": "Sobrecalentamiento",      "categoria": "Refrigeración" },
+    { "id": 8,  "nombre": "Freno de Mano Flojo",     "categoria": "Frenos" },
+    { "id": 9,  "nombre": "Fallo de Arranque",       "categoria": "Eléctrico" },
+    { "id": 10, "nombre": "Luces Parpadean",        "categoria": "Eléctrico" },
+    { "id": 11, "nombre": "Frenos Chirrían",         "categoria": "Frenos" },
+    { "id": 12, "nombre": "Rebote al Frenar",       "categoria": "Frenos" },
+    { "id": 13, "nombre": "Golpeteo Suspensión",    "categoria": "Suspensión" },
+    { "id": 14, "nombre": "Dirección Rígida",       "categoria": "Dirección" },
+    { "id": 15, "nombre": "Olor a Combustible",     "categoria": "Combustible" },
+    { "id": 16, "nombre": "Falla de Turbo",         "categoria": "Motor" },
+    { "id": 17, "nombre": "Golpeteo Cambio de Marchas","categoria": "Transmisión" },
+    { "id": 18, "nombre": "Vibración en Marcha",    "categoria": "Transmisión" },
+    { "id": 19, "nombre": "Escape Roto",            "categoria": "Escape" },
+    { "id": 20, "nombre": "Calefacción Fría",       "categoria": "Refrigeración" }
   ],
   "failures": [
     {
       "id": 1,
       "nombreFalla":   "Falla de Motor",
-      "descripcion":   "El motor hace ruido excesivo.",
-      "recomendacion": "Revisa nivel de aceite y filtros.",
-      "sintomas":      [1,2]
+      "descripcion":   "El motor hace ruido excesivo y pierde potencia.",
+      "recomendacion": "Revisa nivel de aceite, filtros y sincronización de cadena.",
+      "sintomas":      [1,2,6,16]
     },
     {
       "id": 2,
       "nombreFalla":   "Problema de Frenos",
-      "descripcion":   "El pedal está muy duro.",
-      "recomendacion": "Purgar sistema de frenos.",
-      "sintomas":      [3]
+      "descripcion":   "El pedal está muy duro y no frena bien.",
+      "recomendacion": "Purgar sistema de frenos y verificar pastillas y líquido.",
+      "sintomas":      [3,8,11,12]
+    },
+    {
+      "id": 3,
+      "nombreFalla":   "Desalineación de Dirección",
+      "descripcion":   "El volante vibra al conducir a cierta velocidad.",
+      "recomendacion": "Alinear dirección y balancear neumáticos.",
+      "sintomas":      [4,14]
+    },
+    {
+      "id": 4,
+      "nombreFalla":   "Fuga de Aceite de Cárter",
+      "descripcion":   "Aparecen manchas de aceite debajo del motor.",
+      "recomendacion": "Reemplazar junta de cárter y tornillos de ajuste.",
+      "sintomas":      [2]
+    },
+    {
+      "id": 5,
+      "nombreFalla":   "Sensor de Oxígeno Dañado",
+      "descripcion":   "Se enciende luz Check Engine y hay pérdida de potencia.",
+      "recomendacion": "Sustituir sensor O₂ y limpiar conectores.",
+      "sintomas":      [5,6]
+    },
+    {
+      "id": 6,
+      "nombreFalla":   "Termostato Pegado",
+      "descripcion":   "El motor se sobrecalienta rápidamente.",
+      "recomendacion": "Cambiar termostato y revisar nivel de refrigerante.",
+      "sintomas":      [7,20]
+    },
+    {
+      "id": 7,
+      "nombreFalla":   "Correa de Distribución Desgastada",
+      "descripcion":   "Ruido rítmico en la parte frontal del motor.",
+      "recomendacion": "Reemplazar correa de distribución y tensores.",
+      "sintomas":      [1,16]
+    },
+    {
+      "id": 8,
+      "nombreFalla":   "Bomba de Agua Dañada",
+      "descripcion":   "Se escucha chirrido y hay pérdida de refrigerante.",
+      "recomendacion": "Sustituir bomba de agua y revisar mangueras.",
+      "sintomas":      [6,7]
+    },
+    {
+      "id": 9,
+      "nombreFalla":   "Alternador Defectuoso",
+      "descripcion":   "La batería no carga y las luces parpadean.",
+      "recomendacion": "Verificar alternador y correa de accesorios.",
+      "sintomas":      [10,9]
+    },
+    {
+      "id": 10,
+      "nombreFalla":   "Pastillas de Freno Gastadas",
+      "descripcion":   "Ruido al frenar y distancia de frenado aumentada.",
+      "recomendacion": "Cambiar pastillas delanteras y traseras.",
+      "sintomas":      [11,12]
+    },
+    {
+      "id": 11,
+      "nombreFalla":   "Amortiguadores Desgastados",
+      "descripcion":   "Vehículo rebota tras pasar baches.",
+      "recomendacion": "Sustituir amortiguadores delanteros y traseros.",
+      "sintomas":      [13]
+    },
+    {
+      "id": 12,
+      "nombreFalla":   "Freno de Mano Mal Ajustado",
+      "descripcion":   "El freno de mano no mantiene el vehículo detenido.",
+      "recomendacion": "Ajustar tensión del cable de freno de mano.",
+      "sintomas":      [8]
+    },
+    {
+      "id": 13,
+      "nombreFalla":   "Fallo en Inyectores",
+      "descripcion":   "Olor a combustible y pérdida de rendimiento.",
+      "recomendacion": "Limpiar o reemplazar inyectores.",
+      "sintomas":      [15]
+    },
+    {
+      "id": 14,
+      "nombreFalla":   "Problema Eléctrico General",
+      "descripcion":   "Múltiples luces del tablero parpadean.",
+      "recomendacion": "Revisar conexiones a tierra y fusibles.",
+      "sintomas":      [5,10]
+    },
+    {
+      "id": 15,
+      "nombreFalla":   "Bujías Gastadas",
+      "descripcion":   "Dificultad para arrancar y pérdida de potencia.",
+      "recomendacion": "Reemplazar juego de bujías y verificar bobinas.",
+      "sintomas":      [9]
+    },
+    {
+      "id": 16,
+      "nombreFalla":   "Engranes de Transmisión Dañados",
+      "descripcion":   "Golpeteo al cambiar de marcha.",
+      "recomendacion": "Revisar y cambiar engranes del transmisor.",
+      "sintomas":      [17,18]
+    },
+    {
+      "id": 17,
+      "nombreFalla":   "Escape Perforado",
+      "descripcion":   "Ruido fuerte y fuga de gases debajo del auto.",
+      "recomendacion": "Reparar o cambiar tramo de escape.",
+      "sintomas":      [19,6]
+    },
+    {
+      "id": 18,
+      "nombreFalla":   "Compresor de A/C Dañado",
+      "descripcion":   "El aire acondicionado no enfría.",
+      "recomendacion": "Revisar compresor y nivel de gas refrigerante.",
+      "sintomas":      [20]
+    },
+    {
+      "id": 19,
+      "nombreFalla":   "Válvula EGR Obstruida",
+      "descripcion":   "Se enciende luz Check Engine y hay sacudidas.",
+      "recomendacion": "Limpiar o reemplazar válvula EGR.",
+      "sintomas":      [5,6]
+    },
+    {
+      "id": 20,
+      "nombreFalla":   "Caño de Combustible Dañado",
+      "descripcion":   "Olor intenso a gasolina y riesgo de fuga.",
+      "recomendacion": "Reemplazar línea de combustible.",
+      "sintomas":      [15]
     }
   ]
 }

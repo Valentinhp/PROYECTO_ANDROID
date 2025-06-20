@@ -1,20 +1,43 @@
 [
-  {
-    "clave": "FILTRO_ACEITE",
-    "descripcion": "Filtro de aceite 10W-40",
-    "precio": 250.0,
-    "workshopId": 1
-  },
-  {
-    "clave": "FILTRO_ACEITE",
-    "descripcion": "Filtro de aceite 10W-40",
-    "precio": 270.0,
-    "workshopId": 2
-  },
-  {
-    "clave": "PASTILLAS_FRENO",
-    "descripcion": "Pastillas de freno delanteras",
-    "precio": 450.0,
-    "workshopId": 1
-  }
+  { "clave": "FILTRO_ACEITE",        "descripcion": "Filtro de aceite 10W-40",                   "precio": 245.0,   "workshopId": 1 },
+  { "clave": "FILTRO_ACEITE",        "descripcion": "Filtro de aceite 10W-40",                   "precio": 260.0,   "workshopId": 2 },
+  { "clave": "FILTRO_ACEITE",        "descripcion": "Filtro de aceite 10W-40",                   "precio": 250.0,   "workshopId": 3 },
+  { "clave": "FILTRO_ACEITE",        "descripcion": "Filtro de aceite 10W-40",                   "precio": 270.0,   "workshopId": 4 },
+  { "clave": "FILTRO_ACEITE",        "descripcion": "Filtro de aceite 10W-40",                   "precio": 255.0,   "workshopId": 5 },
+
+  { "clave": "PASTILLAS_FRENO",      "descripcion": "Pastillas delanteras cerámicas",            "precio": 480.0,   "workshopId": 1 },
+  { "clave": "PASTILLAS_FRENO",      "descripcion": "Pastillas delanteras cerámicas",            "precio": 500.0,   "workshopId": 2 },
+  { "clave": "PASTILLAS_FRENO",      "descripcion": "Pastillas delanteras cerámicas",            "precio": 495.0,   "workshopId": 3 },
+  { "clave": "PASTILLAS_FRENO",      "descripcion": "Pastillas delanteras cerámicas",            "precio": 510.0,   "workshopId": 4 },
+  { "clave": "PASTILLAS_FRENO",      "descripcion": "Pastillas delanteras cerámicas",            "precio": 485.0,   "workshopId": 5 },
+
+  { "clave": "BATERIA",              "descripcion": "Batería 12V 60Ah estándar",                   "precio": 980.0,   "workshopId": 1 },
+  { "clave": "BATERIA",              "descripcion": "Batería 12V 60Ah estándar",                   "precio": 1000.0,  "workshopId": 2 },
+  { "clave": "BATERIA",              "descripcion": "Batería 12V 60Ah estándar",                   "precio": 995.0,   "workshopId": 3 },
+  { "clave": "BATERIA",              "descripcion": "Batería 12V 60Ah estándar",                   "precio": 1020.0,  "workshopId": 4 },
+  { "clave": "BATERIA",              "descripcion": "Batería 12V 60Ah estándar",                   "precio": 990.0,   "workshopId": 5 },
+
+  { "clave": "BUJIAS",               "descripcion": "Set 4 bujías de iridio",                      "precio": 580.0,   "workshopId": 1 },
+  { "clave": "BUJIAS",               "descripcion": "Set 4 bujías de iridio",                      "precio": 600.0,   "workshopId": 2 },
+  { "clave": "BUJIAS",               "descripcion": "Set 4 bujías de iridio",                      "precio": 590.0,   "workshopId": 3 },
+  { "clave": "BUJIAS",               "descripcion": "Set 4 bujías de iridio",                      "precio": 610.0,   "workshopId": 4 },
+  { "clave": "BUJIAS",               "descripcion": "Set 4 bujías de iridio",                      "precio": 595.0,   "workshopId": 5 },
+
+  { "clave": "CORREA_DISTRIBUCION",  "descripcion": "Correa de distribución estándar",             "precio": 780.0,   "workshopId": 1 },
+  { "clave": "CORREA_DISTRIBUCION",  "descripcion": "Correa de distribución estándar",             "precio": 800.0,   "workshopId": 2 },
+  { "clave": "CORREA_DISTRIBUCION",  "descripcion": "Correa de distribución estándar",             "precio": 795.0,   "workshopId": 3 },
+  { "clave": "CORREA_DISTRIBUCION",  "descripcion": "Correa de distribución estándar",             "precio": 815.0,   "workshopId": 4 },
+  { "clave": "CORREA_DISTRIBUCION",  "descripcion": "Correa de distribución estándar",             "precio": 805.0,   "workshopId": 5 },
+
+  { "clave": "AMORTIGUADORES",       "descripcion": "Amortiguadores delanteros estándar",          "precio": 2450.0,  "workshopId": 1 },
+  { "clave": "AMORTIGUADORES",       "descripcion": "Amortiguadores delanteros estándar",          "precio": 2500.0,  "workshopId": 2 },
+  { "clave": "AMORTIGUADORES",       "descripcion": "Amortiguadores delanteros estándar",          "precio": 2480.0,  "workshopId": 3 },
+  { "clave": "AMORTIGUADORES",       "descripcion": "Amortiguadores delanteros estándar",          "precio": 2520.0,  "workshopId": 4 },
+  { "clave": "AMORTIGUADORES",       "descripcion": "Amortiguadores delanteros estándar",          "precio": 2475.0,  "workshopId": 5 },
+
+  { "clave": "ACEITE_MOTOR",         "descripcion": "Aceite motor 5W-30 sintético",                "precio": 680.0,   "workshopId": 1 },
+  { "clave": "ACEITE_MOTOR",         "descripcion": "Aceite motor 5W-30 sintético",                "precio": 700.0,   "workshopId": 2 },
+  { "clave": "ACEITE_MOTOR",         "descripcion": "Aceite motor 5W-30 sintético",                "precio": 690.0,   "workshopId": 3 },
+  { "clave": "ACEITE_MOTOR",         "descripcion": "Aceite motor 5W-30 sintético",                "precio": 710.0,   "workshopId": 4 },
+  { "clave": "ACEITE_MOTOR",         "descripcion": "Aceite motor 5W-30 sintético",                "precio": 695.0,   "workshopId": 5 }
 ]

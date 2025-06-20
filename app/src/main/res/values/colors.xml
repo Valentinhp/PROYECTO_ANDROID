@@ -27,4 +27,6 @@
     <!-- Alias para usar en layouts -->
     <color name="profile_bg">@color/colorSurface</color>
     <color name="bottom_sheet_background">@color/colorSurfaceVariant</color>
+    <color name="redCustom">#F44336</color>
+
 </resources>

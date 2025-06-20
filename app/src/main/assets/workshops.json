@@ -18,5 +18,105 @@
     "telefono": "4497654321",
     "fotoUrl": "https://picsum.photos/seed/lopez/400/300",
     "rating": 3.8
+  },
+  {
+    "id": 3,
+    "nombre": "Servicio Total",
+    "direccion": "Blvd. Adolfo Ruiz Cortines 200, Aguascalientes",
+    "latitud": 21.8780,
+    "longitud": -102.3005,
+    "telefono": "4495551234",
+    "fotoUrl": "https://picsum.photos/seed/total/400/300",
+    "rating": 4.5
+  },
+  {
+    "id": 4,
+    "nombre": "Taller El Rápido",
+    "direccion": "Calle 5 de Mayo 98, Aguascalientes",
+    "latitud": 21.8822,
+    "longitud": -102.2933,
+    "telefono": "4499988776",
+    "fotoUrl": "https://picsum.photos/seed/rapido/400/300",
+    "rating": 4.0
+  },
+  {
+    "id": 5,
+    "nombre": "Mecánicos Unidos",
+    "direccion": "Av. Universidad 50, Aguascalientes",
+    "latitud": 21.8795,
+    "longitud": -102.2980,
+    "telefono": "4491122334",
+    "fotoUrl": "https://picsum.photos/seed/unidos/400/300",
+    "rating": 3.9
+  },
+  {
+    "id": 6,
+    "nombre": "Garage Premium",
+    "direccion": "Camino Real 45, Aguascalientes",
+    "latitud": 21.8833,
+    "longitud": -102.2999,
+    "telefono": "4498765432",
+    "fotoUrl": "https://picsum.photos/seed/premium/400/300",
+    "rating": 4.7
+  },
+  {
+    "id": 7,
+    "nombre": "Taller 24/7",
+    "direccion": "Av. Independencia 10, Aguascalientes",
+    "latitud": 21.8811,
+    "longitud": -102.2955,
+    "telefono": "4493334445",
+    "fotoUrl": "https://picsum.photos/seed/247/400/300",
+    "rating": 4.1
+  },
+  {
+    "id": 8,
+    "nombre": "Reparaciones Rápidas",
+    "direccion": "Paseo de la Republica 220, Aguascalientes",
+    "latitud": 21.8840,
+    "longitud": -102.2922,
+    "telefono": "4496677889",
+    "fotoUrl": "https://picsum.photos/seed/rapidas/400/300",
+    "rating": 4.3
+  },
+  {
+    "id": 9,
+    "nombre": "Mecánica Avanzada",
+    "direccion": "Av. Aguascalientes 150, Aguascalientes",
+    "latitud": 21.8825,
+    "longitud": -102.2940,
+    "telefono": "4492233445",
+    "fotoUrl": "https://picsum.photos/seed/avanzada/400/300",
+    "rating": 4.4
+  },
+  {
+    "id": 10,
+    "nombre": "Taller del Centro",
+    "direccion": "Calle Hidalgo 10, Aguascalientes",
+    "latitud": 21.8818,
+    "longitud": -102.2928,
+    "telefono": "4493344556",
+    "fotoUrl": "https://picsum.photos/seed/centro/400/300",
+    "rating": 4.0
+  },
+  {
+    "id": 11,
+    "nombre": "Servicio Exprés Plus",
+    "direccion": "Av. Convención 75, Aguascalientes",
+    "latitud": 21.8790,
+    "longitud": -102.2975,
+    "telefono": "4494455667",
+    "fotoUrl": "https://picsum.photos/seed/exprés/400/300",
+    "rating": 4.6
+  },
+  {
+    "id": 12,
+    "nombre": "Volante & Frenos",
+    "direccion": "Calle 16 de Septiembre 80, Aguascalientes",
+    "latitud": 21.8838,
+    "longitud": -102.2930,
+    "telefono": "4495566778",
+    "fotoUrl": "https://picsum.photos/seed/volante/400/300",
+    "rating": 4.3
   }
 ]
