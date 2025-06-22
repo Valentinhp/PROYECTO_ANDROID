@@ -1,6 +1,7 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- App -->
-    <string name="app_name">RAYOS MANT</string>
+    <string name="app_name" tools:replace="app_name">Rayos Smart mechanic</string>
 
     <!-- Navegación -->
     <string name="title_home">Home</string>
@@ -55,8 +56,6 @@
 
     <string name="cotizar">Cotizar</string>
 
-
-
     <!-- Inicio -->
     <string name="bienvenido_app_format">Bienvenido a %1$s</string>
     <string name="saludo_manana">Buenos días</string>
@@ -75,6 +74,4 @@
     <string name="desc_vehicle_thumbnail">Miniatura del vehículo</string>
     <string name="desc_edit_vehicle">Editar vehículo</string>
     <string name="desc_delete_vehicle">Eliminar vehículo</string>
-
-
 </resources>
