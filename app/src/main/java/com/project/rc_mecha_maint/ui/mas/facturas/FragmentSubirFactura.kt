@@ -105,6 +105,12 @@ class FragmentSubirFactura : Fragment() {
     }
 
     private fun procesarOCR() {
+        // ← Validación añadida para evitar OCR sin imagen
+        if (!this::imageUri.isInitialized) {
+            toast("Agrega primero una imagen para procesar OCR")
+            return
+        }
+
         try {
             val img     = InputImage.fromFilePath(requireContext(), imageUri)
             val client  = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
@@ -169,11 +175,8 @@ class FragmentSubirFactura : Fragment() {
                     }
 
                     // ----- Estrellas -----
-                    // 1) Contamos rellenas (★ o *)
                     val blackStars = rawText.count { it == '★' || it == '*' }
-                    // 2) Contamos vacías (☆)
                     val whiteStars = rawText.count { it == '☆' }
-                    // Decidimos rating
                     val rating = when {
                         blackStars in 1..5 -> blackStars
                         whiteStars in 1..5 -> 5 - whiteStars
@@ -194,6 +197,12 @@ class FragmentSubirFactura : Fragment() {
     }
 
     private fun guardarFactura(talleres: List<com.project.rc_mecha_maint.data.entity.Workshop>) {
+        // ← Validación añadida para evitar crash sin imagen
+        if (!this::imageUri.isInitialized) {
+            toast("Debes agregar una imagen de la factura")
+            return
+        }
+
         val concepto  = binding.editConcepto.text.toString().trim()
         val monto     = binding.editMontoOCR.text.toString().replace(",", ".").toDoubleOrNull()
         val fecha     = binding.editFechaOCR.text.toString().trim()
