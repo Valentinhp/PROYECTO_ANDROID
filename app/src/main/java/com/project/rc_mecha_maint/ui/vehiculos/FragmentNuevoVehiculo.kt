@@ -1,5 +1,7 @@
 package com.project.rc_mecha_maint.ui.vehiculos
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -11,28 +13,26 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.project.rc_mecha_maint.R
 import com.project.rc_mecha_maint.data.entity.Vehicle
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 class FragmentNuevoVehiculo : Fragment() {
 
-    // Para navegación segura y recibir datos si venimos a EDITAR
-    private val args: FragmentNuevoVehiculoArgs by navArgs()
     private val vehicleViewModel: VehicleViewModel by viewModels {
         VehicleViewModelFactory(requireActivity().application)
     }
 
-    // Vistas existentes
     private lateinit var imgPhoto: ImageView
     private lateinit var btnTakePhoto: Button
     private lateinit var btnChooseGallery: Button
@@ -41,25 +41,24 @@ class FragmentNuevoVehiculo : Fragment() {
     private lateinit var inputLayoutModelo: TextInputLayout
     private lateinit var inputLayoutAnio: TextInputLayout
     private lateinit var inputLayoutMatricula: TextInputLayout
+    private lateinit var inputLayoutKilometraje: TextInputLayout
+    private lateinit var inputLayoutTipoCombustible: TextInputLayout
 
     private lateinit var editTextMarca: TextInputEditText
     private lateinit var editTextModelo: TextInputEditText
     private lateinit var editTextAnio: TextInputEditText
     private lateinit var editTextMatricula: TextInputEditText
-
-    // **Nuevas vistas para Kilometraje y Tipo de Combustible**
-    private lateinit var inputLayoutKilometraje: TextInputLayout
-    private lateinit var inputLayoutTipoCombustible: TextInputLayout
     private lateinit var editTextKilometraje: TextInputEditText
     private lateinit var editTextTipoCombustible: TextInputEditText
 
     private lateinit var buttonSave: Button
 
-    // Para guardar la URI de la foto
     private var photoUri: Uri? = null
+
+    // Vehículo a editar, si viene en bundle
     private var vehicleToEdit: Vehicle? = null
 
-    // Lanzador para tomar foto con cámara
+    /** 1) Lanzador para tomar foto vía cámara */
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { success ->
@@ -70,13 +69,44 @@ class FragmentNuevoVehiculo : Fragment() {
         }
     }
 
-    // Lanzador para elegir foto de galería
+    /** 2) Lanzador para pedir permiso de cámara */
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            // Si concedió el permiso, ahora sí lanzamos la cámara
+            launchCamera()
+        } else {
+            Toast.makeText(requireContext(),
+                "Necesito permiso de cámara para tomar fotos",
+                Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /** 3) Lanzador para elegir foto de galería (copiando a archivo interno) */
     private val pickGalleryLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        if (uri != null) {
-            photoUri = uri
-            imgPhoto.setImageURI(photoUri)
+        uri?.let { selectedUri ->
+            try {
+                val input = requireContext().contentResolver
+                    .openInputStream(selectedUri)
+                    ?: throw Exception("No pude abrir imagen")
+                val file = createImageFile()
+                FileOutputStream(file).use { out ->
+                    input.copyTo(out)
+                }
+                val savedUri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.fileprovider",
+                    file
+                )
+                photoUri = savedUri
+                imgPhoto.setImageURI(photoUri)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(),
+                    "Error al copiar imagen", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -84,44 +114,41 @@ class FragmentNuevoVehiculo : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        // Inflamos el layout
-        val view = inflater.inflate(R.layout.fragment_nuevo_vehiculo, container, false)
+    ): View = inflater.inflate(R.layout.fragment_nuevo_vehiculo, container, false).also { view ->
 
-        // 1) Vinculamos vistas de imagen y botones
+        // Vincular vistas
         imgPhoto         = view.findViewById(R.id.imgVehiclePhoto)
         btnTakePhoto     = view.findViewById(R.id.btnTakePhoto)
         btnChooseGallery = view.findViewById(R.id.btnChooseGallery)
 
-        // 2) Vinculamos layouts y EditText de los campos existentes
         inputLayoutMarca      = view.findViewById(R.id.inputLayoutMarca)
         inputLayoutModelo     = view.findViewById(R.id.inputLayoutModelo)
         inputLayoutAnio       = view.findViewById(R.id.inputLayoutAnio)
         inputLayoutMatricula  = view.findViewById(R.id.inputLayoutMatricula)
+        inputLayoutKilometraje     = view.findViewById(R.id.inputLayoutKilometraje)
+        inputLayoutTipoCombustible = view.findViewById(R.id.inputLayoutTipoCombustible)
 
         editTextMarca         = view.findViewById(R.id.editTextMarca)
         editTextModelo        = view.findViewById(R.id.editTextModelo)
         editTextAnio          = view.findViewById(R.id.editTextAnio)
         editTextMatricula     = view.findViewById(R.id.editTextMatricula)
+        editTextKilometraje   = view.findViewById(R.id.editTextKilometraje)
+        editTextTipoCombustible = view.findViewById(R.id.editTextTipoCombustible)
 
-        // 3) Vinculamos los nuevos layouts y EditText
-        inputLayoutKilometraje       = view.findViewById(R.id.inputLayoutKilometraje)
-        inputLayoutTipoCombustible   = view.findViewById(R.id.inputLayoutTipoCombustible)
-
-        editTextKilometraje          = view.findViewById(R.id.editTextKilometraje)
-        editTextTipoCombustible      = view.findViewById(R.id.editTextTipoCombustible)
-
-        // 4) Botón guardar
         buttonSave = view.findViewById(R.id.buttonSave)
 
-        // Verificamos si venimos a EDITAR un vehículo existente
-        vehicleToEdit = try {
-            args.vehicle
-        } catch (_: Exception) {
-            null
+        // Leer argumento opcional “vehicle” si viene
+        arguments?.let { bundle ->
+            if (bundle.containsKey("vehicle")) {
+                vehicleToEdit = try {
+                    FragmentNuevoVehiculoArgs.fromBundle(bundle).vehicle
+                } catch (_: Exception) {
+                    null
+                }
+            }
         }
 
-        // Si es edición, llenamos los campos con datos existentes
+        // Si editamos, precargamos campos
         vehicleToEdit?.let { v ->
             editTextMarca.setText(v.marca)
             editTextModelo.setText(v.modelo)
@@ -135,80 +162,79 @@ class FragmentNuevoVehiculo : Fragment() {
             }
         }
 
-        // Configuramos los click listeners de foto/galería
+        // Botón “Tomar foto”: primero pedimos permiso si es necesario
         btnTakePhoto.setOnClickListener {
-            val file = createImageFile()
-            photoUri = FileProvider.getUriForFile(
-                requireContext(),
-                "${requireContext().packageName}.fileprovider",
-                file
-            )
-            takePictureLauncher.launch(photoUri)
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(), Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // Ya tiene permiso: lanzamos cámara
+                    launchCamera()
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                    Toast.makeText(requireContext(),
+                        "Necesitamos el permiso de cámara para tomar fotos",
+                        Toast.LENGTH_SHORT).show()
+                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                }
+                else -> {
+                    // Primera vez o nunca preguntó: lanzamos petición
+                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                }
+            }
         }
+
+        // Botón “Elegir galería”
         btnChooseGallery.setOnClickListener {
             pickGalleryLauncher.launch("image/*")
         }
 
-        // Al dar guardar, llamamos a saveVehicle()
+        // Guardar vehículo
         buttonSave.setOnClickListener { saveVehicle() }
-
-        return view
     }
 
-    /**
-     * Lee todos los campos, valida, crea o actualiza Vehicle y cierra el fragment
-     */
+    /** Invocado una vez que sabemos que tenemos permiso de cámara */
+    private fun launchCamera() {
+        val file = createImageFile()
+        // obtenemos la URI para FileProvider
+        photoUri = FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.fileprovider",
+            file
+        )
+        takePictureLauncher.launch(photoUri)
+    }
+
     private fun saveVehicle() {
-        // 1) Leemos texto y quitamos espacios sobrantes
         val marca     = editTextMarca.text.toString().trim()
         val modelo    = editTextModelo.text.toString().trim()
-        val anioStr   = editTextAnio.text.toString().trim()
+        val anio      = editTextAnio.text.toString().toIntOrNull()
         val matricula = editTextMatricula.text.toString().trim()
-        val kmStr     = editTextKilometraje.text.toString().trim()
+        val km        = editTextKilometraje.text.toString().toIntOrNull()
         val comb      = editTextTipoCombustible.text.toString().trim()
 
-        var valid = true
+        var ok = true
+        if (marca.isEmpty())      { inputLayoutMarca.error = "Escribe la marca"; ok = false }
+        else inputLayoutMarca.error = null
 
-        // 2) Validaciones de cada campo
-        if (TextUtils.isEmpty(marca)) {
-            inputLayoutMarca.error = "Escribe la marca"
-            valid = false
-        } else inputLayoutMarca.error = null
+        if (modelo.isEmpty())     { inputLayoutModelo.error = "Escribe el modelo"; ok = false }
+        else inputLayoutModelo.error = null
 
-        if (TextUtils.isEmpty(modelo)) {
-            inputLayoutModelo.error = "Escribe el modelo"
-            valid = false
-        } else inputLayoutModelo.error = null
+        if (anio == null)         { inputLayoutAnio.error = "Año inválido"; ok = false }
+        else inputLayoutAnio.error = null
 
-        val anio = anioStr.toIntOrNull()
-        if (anioStr.isEmpty() || anio == null) {
-            inputLayoutAnio.error = "Año inválido"
-            valid = false
-        } else inputLayoutAnio.error = null
+        if (matricula.isEmpty())  { inputLayoutMatricula.error = "Escribe matrícula"; ok = false }
+        else inputLayoutMatricula.error = null
 
-        if (TextUtils.isEmpty(matricula)) {
-            inputLayoutMatricula.error = "Escribe la matrícula"
-            valid = false
-        } else inputLayoutMatricula.error = null
+        if (km == null || km < 0) { inputLayoutKilometraje.error = "Kilometraje inválido"; ok = false }
+        else inputLayoutKilometraje.error = null
 
-        // Validamos kilometraje (entero >= 0)
-        val km = kmStr.toIntOrNull()
-        if (kmStr.isEmpty() || km == null || km < 0) {
-            inputLayoutKilometraje.error = "Kilometraje inválido"
-            valid = false
-        } else inputLayoutKilometraje.error = null
+        if (comb.isEmpty())       { inputLayoutTipoCombustible.error = "Escribe combustible"; ok = false }
+        else inputLayoutTipoCombustible.error = null
 
-        // Validamos tipo de combustible (no vacío)
-        if (TextUtils.isEmpty(comb)) {
-            inputLayoutTipoCombustible.error = "Escribe el combustible"
-            valid = false
-        } else inputLayoutTipoCombustible.error = null
+        if (!ok) return
 
-        if (!valid) return  // si algo falla, salimos
-
-        // 3) Creamos o actualizamos el objeto Vehicle
         if (vehicleToEdit == null) {
-            // Nuevo vehículo
             val newV = Vehicle(
                 marca           = marca,
                 modelo          = modelo,
@@ -216,12 +242,11 @@ class FragmentNuevoVehiculo : Fragment() {
                 matricula       = matricula,
                 kilometraje     = km!!,
                 tipoCombustible = comb,
-                photoUri        = photoUri?.toString()
+                photoUri        = photoUri?.toString() ?: ""
             )
             vehicleViewModel.insertVehicle(newV)
             Toast.makeText(requireContext(), "Vehículo agregado", Toast.LENGTH_SHORT).show()
         } else {
-            // Actualización de existente
             val upd = vehicleToEdit!!.copy(
                 marca           = marca,
                 modelo          = modelo,
@@ -229,19 +254,16 @@ class FragmentNuevoVehiculo : Fragment() {
                 matricula       = matricula,
                 kilometraje     = km!!,
                 tipoCombustible = comb,
-                photoUri        = photoUri?.toString()
+                photoUri        = photoUri?.toString() ?: ""
             )
             vehicleViewModel.updateVehicle(upd)
             Toast.makeText(requireContext(), "Vehículo actualizado", Toast.LENGTH_SHORT).show()
         }
 
-        // 4) Volvemos atrás
         findNavController().popBackStack()
     }
 
-    /**
-     * Crea un archivo temporal para guardar la foto
-     */
+    /** Crea un archivo temporal en external-files/Pictures */
     private fun createImageFile(): File {
         val ts = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val dir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
