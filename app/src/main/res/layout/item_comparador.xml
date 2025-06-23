@@ -1,4 +1,3 @@
-<!-- app/src/main/res/layout/item_comparador.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardElevation="4dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="?attr/colorSurface">  <!-- Asegura fondo de tarjeta acorde al tema -->
 
     <LinearLayout
         android:orientation="horizontal"
@@ -19,19 +19,23 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />  <!-- Texto adaptativo al tema -->
 
         <TextView
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />  <!-- Texto adaptativo al tema -->
 
         <Button
             android:id="@+id/btnLlamar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Llamar"/>
+            android:text="Llamar"
+            android:textColor="?attr/colorOnSurface"
+        android:backgroundTint="?attr/colorPrimary" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
